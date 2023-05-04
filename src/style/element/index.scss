@@ -1,0 +1,49 @@
+/*菜单*/
+.el-menu {
+  border: none !important;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.el-menu-item, .el-sub-menu__title {
+  color: #505968;
+}
+
+.el-menu--horizontal > .el-menu-item, .el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
+  line-height: 48px !important;
+}
+
+
+/*侧边栏*/
+.el-drawer__close-btn {
+  padding: 0 !important;
+}
+
+.el-drawer__header {
+  margin-bottom: 0 !important;
+}
+
+
+/* 面包屑*/
+.el-breadcrumb {
+  .el-breadcrumb__inner.is-link {
+    color: #606266;
+    font-weight: unset;
+  }
+  .el-breadcrumb__item:last-child .el-breadcrumb__inner{
+    color: #606266;
+    opacity: .7;
+  }
+}
+
+/* 表格*/
+.el-table thead{
+  color: #303133 !important;
+}
+.el-table th.el-table__cell{
+  background-color: #f5f7fa !important;
+}
+
