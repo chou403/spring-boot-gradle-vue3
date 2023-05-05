@@ -15,11 +15,11 @@ setGlobeConfigure();
 
 
 onMounted(()=>{
-  let loading = document.getElementById('loading')
-  if(loading){
-    setTimeout(()=>{
-      document.body.removeChild(<HTMLElement>loading)
-    },2000)
-  }
+  // let loading = document.getElementById('loading')
+  // if(loading){
+  //   setTimeout(()=>{
+  //     document.body.removeChild(<HTMLElement>loading)
+  //   },2000)
+  // }
 })
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="success">Success</el-button>
+    <el-button type="primary">首页</el-button>
   </div>
 </template>
 
