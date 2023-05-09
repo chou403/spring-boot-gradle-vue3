@@ -9,7 +9,7 @@ enum Api {
 
 /** 登录*/
 export function loginApi(data:LoginParamsType) {
-    return http.post<LoginResult>(Api.Login,{data})
+    return http.post<LoginResult>(Api.Login,data)
 }
 
 /** 获取登录用户信息*/

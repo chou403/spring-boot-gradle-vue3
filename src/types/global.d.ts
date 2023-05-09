@@ -1,4 +1,5 @@
-import type { RouteComponent } from "vue-router";
+import type {RouteComponent} from "vue-router";
+
 /**
  * 全局类型声明
  */
@@ -25,9 +26,9 @@ declare global {
             /** 是否在菜单中显示（默认`true`）`可选` */
             isMenu?: boolean;
             /** 是否缓存路由（默认`false`）`可选` */
-            isCache?:boolean;
+            isCache?: boolean;
             /** 是否是首页（默认`false`）`可选` */
-            isHome?:boolean;
+            isHome?: boolean;
         };
         /** 子路由配置项 */
         children?: Array<RouteChildrenConfigsTable>;
@@ -53,12 +54,13 @@ declare global {
             /** 是否在菜单中显示（默认`true`）`可选` */
             isMenu?: boolean;
             /** 是否缓存路由`可选` */
-            isCache?:boolean;
+            isCache?: boolean;
             /** 是否是首页（默认`false`）`可选` */
-            isHome?:boolean;
+            isHome?: boolean;
         };
         /** 子路由配置项 */
         children?: Array<RouteChildrenConfigsTable>;
     }
+
 }
 

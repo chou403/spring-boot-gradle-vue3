@@ -33,6 +33,6 @@
   position: relative;
   overflow-x: hidden;
   background-color: #f8f8f8;
-  padding: 10px;
+  padding: 15px;
 }
 </style>

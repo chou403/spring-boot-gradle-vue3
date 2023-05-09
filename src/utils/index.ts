@@ -39,7 +39,7 @@ export function dateFormat (timestamp: number|string|Date, format = 'YYYY-MM-DD 
 }
 
 /** 时间加减 */
-export function computeDate(num:number, type:computeDateType, timestamp:number|string|Date=new Date()):Date{
+export function computeDate(num:number, type:computeDateType, timestamp:number|string|Date=new Date()):Date|string{
     const date = new Date(timestamp)
     switch (type) {
         case computeDateType.year:

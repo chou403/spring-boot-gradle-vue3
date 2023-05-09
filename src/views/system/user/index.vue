@@ -1,63 +1,141 @@
 <template>
-  <el-card shadow="never">
-    <el-table :data="tableData" border style="width: 100%">
-      <el-table-column v-for="item in options" :key="item.prop" :prop="item.prop" :label="item.label" align="center"/>
-    </el-table>
-    <div class="pagination-box">
-      <el-pagination
-          v-model:current-page="currentPage"
-          v-model:page-size="pageSize"
-          :page-sizes="[5, 8, 10]"
-          background
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
-      />
-    </div>
-  </el-card>
+  <CustomPage :url="pageConfig.url" :columns="pageConfig.columns" :search="pageConfig.search" :operations="pageConfig.operations"/>
 </template>
 
 <script lang="ts" setup>
-import {getSysUserListApi} from "@/api/system";
-import {ref} from "vue";
-import {GetSysUserListResult} from "@/api/types/systemTypes";
-
-
-const pageSize = ref(10)
-const currentPage  = ref(1)
-const options=[
-  {
-    label:'用户名',
-    prop:'username',
+const pageConfig=({
+  url:"/sysUser/getSysUserList",
+  columns:[
+    {
+      label:'用户名',
+      name:'username',
+    },
+    {
+      label:'性别',
+      name:'gender',
+    },
+    {
+      label:'盐值',
+      name:'salt',
+    },
+    {
+      label:'邮箱',
+      name:'email',
+    },
+    {
+      label:'手机号',
+      name:'phone',
+    },
+  ],
+  search:{
+    configure:[
+      {
+        label: '用户名',
+        name: 'username',
+        placeholder: '请输入用户名',
+        type: 'input'
+      },
+      {
+        label: '昵称',
+        name: 'nickname',
+        placeholder: '请输入昵称',
+        type: 'input'
+      }
+    ]
   },
-  {
-    label:'性别',
-    prop:'gender',
-  },
-  {
-    label:'邮箱',
-    prop:'email',
-  },
-  {
-    label:'手机号',
-    prop:'phone',
-  },
-]
+  operations:{
+    configure:[
+      {
+        label: '用户名',
+        name: 'username',
+        placeholder: '请输入用户名',
+        type: 'input'
+      },
+      {
+        label: '昵称',
+        name: 'nickname',
+        placeholder: '请输入昵称',
+        type: 'input'
+      },
+      {
+        label: '密码',
+        name: 'password',
+        placeholder: '请输入密码',
+        type: 'password'
+      },
+      {
+        label: '手机号',
+        name: 'phone',
+        placeholder: '请输入手机号',
+        type: 'input'
+      },
+      {
+        label: '邮箱',
+        name: 'email',
+        placeholder: '请输入邮箱',
+        type: 'input'
+      },
+      {
+        label: '盐值',
+        name: 'salt',
+        placeholder: '请输入盐值',
+        type: 'input'
+      },
+      {
+        label: '部门',
+        name: 'deptId',
+        type: 'select',
+        placeholder: '请选择部门',
+        custom:{
+          url:'/sysDept/getSysDeptList',
+        },
+      },
+      {
+        label: '性别',
+        name: 'gender',
+        type: 'radio',
+        options: [
+          {
+            name: '男',
+            id: 1,
+          },
+          {
+            name: '女',
+            id: 0,
+          }
+        ]
+      },
+      {
+        label: '状态',
+        name: 'status',
+        type: 'radio',
+        options: [
+          {
+            name: '启用',
+            id: true,
+          },
+          {
+            name: '禁用',
+            id: false,
+          }
+        ]
+      },
+    ],
+    delOptions:{
+      url:'/sysUser/deleteSysUser/'
+    },
+    addOptions:{
+      url:'/sysUser/addSysUser',
+    },
+    editOptions:{
+      url:'/sysUser/updateSysUser',
+    }
+  }
+})
 
-const tableData:GetSysUserListResult = ref([])
-
-function getSysUserList() {
-  getSysUserListApi({pageIndex:1}).then(res=>{
-    tableData.value=res.list;
-  })
-}
-getSysUserList();
 
 </script>
 
 <style lang="scss" scoped>
-.pagination-box{
-  display: flex;
-  justify-content: flex-end;
-  padding: 15px 0;
-}
+
 </style>

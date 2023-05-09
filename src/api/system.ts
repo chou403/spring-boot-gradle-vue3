@@ -7,6 +7,6 @@ enum Api {
 
 /** 获取系统用户分页列表*/
 export function getSysUserListApi(data:GetSysUserListParamsType) {
-    return http.post<GetSysUserListResult>(Api.GetSysUserList,{data})
+    return http.post<GetSysUserListResult>(Api.GetSysUserList, data)
 }
 

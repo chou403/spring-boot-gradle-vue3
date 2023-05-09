@@ -20,6 +20,15 @@ export default {
             }
         },
         {
+            path: "/dept",
+            name: "Dept",
+            component: () => import("@/views/system/dept/index.vue"),
+            meta: {
+                title: "部门管理",
+                icon:'User'
+            }
+        },
+        {
             path: "/role",
             name: "Role",
             component: () => import("@/views/system/role/index.vue"),
