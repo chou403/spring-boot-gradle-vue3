@@ -16,15 +16,7 @@
 <script lang="ts" setup>
 import {reactive, onMounted} from 'vue'
 import {http} from "@/utils/http";
-
-type customType = {
-  /** 接口地址*/
-  url: string
-  /** option的label属性名称,默认：name*/
-  labelName?: string
-  /** option的value属性名称,默认：id*/
-  valueName?: string
-}
+import {customType} from "@/components/Custom/types";
 
 type optionType = {
   url: string
@@ -34,8 +26,8 @@ type optionType = {
 
 const props = withDefaults(defineProps<{
   value: any,
-  options?: Array<optionType>|undefined,
-  custom?: Record<any, customType>|undefined,
+  options?: NullType<Array<optionType>>,
+  custom?: NullType<customType>,
 }>(), {
 })
 

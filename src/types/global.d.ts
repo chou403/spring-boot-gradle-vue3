@@ -4,7 +4,7 @@ import type {RouteComponent} from "vue-router";
  * 全局类型声明
  */
 declare global {
-    declare type NullType<T> = T | null;
+    declare type NullType<T> = T | null | undefined;
 
     /**
      * @description 路由配置表

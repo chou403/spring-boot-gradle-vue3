@@ -87,3 +87,23 @@ export function lighten(color:string, level:number) {
         rgba[i] = Math.floor((255 - rgba[i]) * level + rgba[i])
     return rgbToHex(rgba[0], rgba[1], rgba[2])
 }
+
+/** 数组层级格式化 */
+export function formatCascade(arr:Array<any>=[],parentName:string="parentId",idName:string='id') {
+    return arr.map((item)=>{
+        if(item[parentName]){
+            let index=arr.findIndex(p=>p[idName]==item[parentName])
+            if(index>=0){
+                if(arr[index].children){
+                    arr[index].children.push(item)
+                }else{
+                    arr[index].children=[item]
+                }
+            }else{
+                return item
+            }
+        }else{
+            return item
+        }
+    }).filter(p=>p)
+}

@@ -1,10 +1,9 @@
 <template>
-  <CustomPage :url="pageConfig.url" :columns="pageConfig.columns" :search="pageConfig.search" :operations="pageConfig.operations"/>
+  <CustomPage :columns="pageConfig.columns" :search="pageConfig.search" :operations="pageConfig.operations"/>
 </template>
 
 <script lang="ts" setup>
-const pageConfig=({
-  url:"/sysUser/getSysUserList",
+const pageConfig={
   columns:[
     {
       label:'用户名',
@@ -121,6 +120,9 @@ const pageConfig=({
         ]
       },
     ],
+    getOptions:{
+      url:'/sysUser/getSysUserList'
+    },
     delOptions:{
       url:'/sysUser/deleteSysUser/'
     },
@@ -131,7 +133,7 @@ const pageConfig=({
       url:'/sysUser/updateSysUser',
     }
   }
-})
+}
 
 
 </script>

@@ -3,53 +3,62 @@
 </template>
 
 <script lang="ts" setup>
-const pageConfig=({
-  url:"/sysDept/getSysDeptList",
-  columns:[
+const pageConfig = {
+  columns: [
     {
-      label:'部门名称',
-      name:'name',
+      label: '部门名称',
+      name: 'name',
     },
     {
-      label:'状态',
-      name:'status',
-      tagConfig:{
-        0:{
-          color:'danger',
-          text:'禁用'
+      label: '状态',
+      name: 'status',
+      tagConfig: {
+        0: {
+          color: 'danger',
+          text: '禁用'
         },
         1: {
-          color:'success',
-          text:'启用'
+          color: 'success',
+          text: '启用'
         },
       }
     },
     {
-      label:'排序',
-      name:'sort',
+      label: '排序',
+      name: 'sort',
     },
   ],
-  operations:{
-    configure:[
+  operations: {
+    configure: [
+      {
+        label: '上级部门',
+        name: 'parentId',
+        placeholder: '请选择上级部门',
+        span: 24,
+        type: 'cascade',
+        custom:{
+          url:'/sysDept/getSysDeptList'
+        }
+      },
       {
         label: '部门名称',
         name: 'name',
         placeholder: '请输入部门名称',
-        span:24,
+        span: 24,
         type: 'input'
       },
       {
         label: '排序',
         name: 'sort',
         placeholder: '请输入排序',
-        span:24,
+        span: 24,
         type: 'number'
       },
       {
         label: '状态',
         name: 'status',
         type: 'radio',
-        span:24,
+        span: 24,
         options: [
           {
             name: '启用',
@@ -62,17 +71,22 @@ const pageConfig=({
         ]
       },
     ],
-    delOptions:{
-      url:'/sysDept/deleteSysDept/'
+    getOptions: {
+      url: '/sysDept/getSysDeptList',
+      type:'tree',
+      pageSize:99999
     },
-    addOptions:{
-      url:'/sysDept/addSysDept',
+    delOptions: {
+      url: '/sysDept/deleteSysDept/'
     },
-    editOptions:{
-      url:'/sysDept/updateSysDept',
+    addOptions: {
+      url: '/sysDept/addSysDept',
+    },
+    editOptions: {
+      url: '/sysDept/updateSysDept',
     }
   }
-})
+}
 
 
 </script>

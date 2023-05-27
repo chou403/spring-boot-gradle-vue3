@@ -36,6 +36,15 @@ export default {
                 title: "角色管理",
                 icon:'User'
             }
-        }
+        },
+        {
+            path: "/menu",
+            name: "Menu",
+            component: () => import("@/views/system/menu/index.vue"),
+            meta: {
+                title: "菜单管理",
+                icon:'User'
+            }
+        },
     ]
 } as RouteConfigsTable;

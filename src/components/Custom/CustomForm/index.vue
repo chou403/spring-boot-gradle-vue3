@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="true" :title="form.id?'修改':'新增'">
+  <el-dialog :model-value="true" destroy-on-close :title="form.id?'修改':'新增'" @close="closeDialog">
     <el-form :model="form" label-width="90px">
       <el-row>
         <template v-for="(item,index) in props.operations.configure" :key="index">
@@ -36,6 +36,12 @@
           <el-col v-else-if="item.type==='select'" :span="item?.span||12">
             <el-form-item :label="item.label">
               <custom-select v-model:value="form[item.name]" :placeholder="item.placeholder" :options="item.options"
+                             :custom="item.custom"/>
+            </el-form-item>
+          </el-col>
+          <el-col v-else-if="item.type==='cascade'" :span="item?.span||12">
+            <el-form-item :label="item.label">
+              <custom-cascader v-model:value="form[item.name]" :placeholder="item.placeholder" :options="item.options"
                              :custom="item.custom"/>
             </el-form-item>
           </el-col>

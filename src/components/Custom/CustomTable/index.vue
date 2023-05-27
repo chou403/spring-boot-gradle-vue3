@@ -8,7 +8,7 @@
         新 增
       </el-button>
     </div>
-    <el-table :data="props.data" border style="width: 100%">
+    <el-table :data="props.data" row-key="id" border style="width: 100%">
       <el-table-column v-for="item in props.columns" :key="item.name" :prop="item.name" :label="item.label"
                        align="center">
         <template v-if="item.tagConfig" #default="scope">
@@ -21,7 +21,7 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" align="center">
         <template #default="{row}">
-          <el-button link type="primary" @click="editTable(row)">
+          <el-button v-if="operations.editOptions.url" link type="primary" @click="editTable(row)">
             <el-icon class="mr5">
               <EditPen/>
             </el-icon>
@@ -43,9 +43,9 @@
 </template>
 
 <script lang="ts" setup>
-import {columnsType, operationsType} from "@/components/Custom/types";
+import {columnsType, operationsType, optionsType} from "@/components/Custom/types";
 import {http} from '@/utils/http'
-import {reactive} from "vue";
+import {reactive,onMounted} from "vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 
 const props = defineProps<{
@@ -56,10 +56,10 @@ const props = defineProps<{
 
 
 const emits = defineEmits<{
-  (event: 'change'): void
+  (event: 'refresh'): void
 }>()
 
-const formData = reactive({
+const formData:any = reactive({
   isShow: false,
   row: null,
 })
@@ -82,22 +82,24 @@ const editTable = (row: any) => {
 }
 /** 删除*/
 const delTable = (row: any) => {
-  ElMessageBox.confirm(
-      '是否确认删除本条数据？',
-      '提示',
-      {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
-        type: 'warning',
-      })
-      .then(() => {
-        http.post<any>(props.operations.delOptions.url + row.id).then(() => {
-          ElMessage.success('删除成功');
-          tableRefresh();
+  if(props.operations?.delOptions){
+    ElMessageBox.confirm(
+        '是否确认删除本条数据？',
+        '提示',
+        {
+          confirmButtonText: '确认',
+          cancelButtonText: '取消',
+          type: 'warning',
         })
-      })
-
+        .then(() => {
+          http.post<any>(props.operations?.delOptions?.url + row.id).then(() => {
+            ElMessage.success('删除成功');
+            tableRefresh();
+          })
+        })
+  }
 }
+
 </script>
 
 <style lang="scss" scoped>
