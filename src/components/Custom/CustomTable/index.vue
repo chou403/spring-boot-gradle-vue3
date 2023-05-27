@@ -8,7 +8,7 @@
         新 增
       </el-button>
     </div>
-    <el-table :data="props.data" row-key="id" border style="width: 100%">
+    <el-table table-layout="auto" :data="props.data" row-key="id" border style="width: 100%">
       <el-table-column v-for="item in props.columns" :key="item.name" :prop="item.name" :label="item.label"
                        align="center">
         <template v-if="item.tagConfig" #default="scope">
@@ -19,7 +19,7 @@
           >
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" align="center">
+      <el-table-column label="操作" align="center" fixed="right">
         <template #default="{row}">
           <el-button v-if="operations.editOptions.url" link type="primary" @click="editTable(row)">
             <el-icon class="mr5">

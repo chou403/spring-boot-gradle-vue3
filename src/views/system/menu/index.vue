@@ -11,6 +11,26 @@ const pageConfig = {
       name: 'name',
     },
     {
+      label: '图标',
+      name: 'icon',
+    },
+    {
+      label: '路径',
+      name: 'routeUrl',
+    },
+    {
+      label: '页面路径',
+      name: 'componentPath',
+    },
+    {
+      label: '权限标识',
+      name: 'code',
+    },
+    {
+      label: '排序',
+      name: 'sort',
+    },
+    {
       label: '状态',
       name: 'status',
       tagConfig: {
@@ -23,22 +43,6 @@ const pageConfig = {
           text: '启用'
         },
       }
-    },
-    {
-      label: '权限标识',
-      name: 'code',
-    },
-    {
-      label: '图标',
-      name: 'icon',
-    },
-    {
-      label: '路径',
-      name: 'routeUrl',
-    },
-    {
-      label: '页面路径',
-      name: 'componentPath',
     },
   ],
   operations: {

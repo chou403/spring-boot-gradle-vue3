@@ -30,7 +30,7 @@ const {configure} = storeToRefs(useConfigStoreHook())
   height: inherit;
   display: flex;
   .layout-left{
-    width: 220px;
+    flex:0 0 220px;
     display: flex;
     flex-direction: column;
     border-right: 1px solid var(--el-menu-border-color);
@@ -40,7 +40,8 @@ const {configure} = storeToRefs(useConfigStoreHook())
     }
   }
   .layout-right{
-    flex: 1;
+    flex:1;
+    min-width: 800px;
   }
 }
 </style>
