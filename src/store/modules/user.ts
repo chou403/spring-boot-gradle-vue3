@@ -37,7 +37,7 @@ export const useUserStore = defineStore({
   },
   actions: {
     /**
-     * @description:退出登录
+     * @description:登录
      * */
     async login(data:LoginParamsType){
       return new Promise((resolve, reject)=>{

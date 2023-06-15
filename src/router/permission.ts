@@ -3,22 +3,34 @@
  *
  */
 
-import {router} from "@/router/index";
-import type {  RouteLocationNormalized,NavigationGuardNext } from "vue-router";
-import {startNProgress,closeNProgress} from "@/utils/nprogress";
-import {getToken} from "@/utils/auth";
+import { router } from "@/router/index";
+import type { RouteLocationNormalized, NavigationGuardNext, RouteRecordRaw } from "vue-router";
+import { startNProgress, closeNProgress } from "@/utils/nprogress";
+import { getToken } from "@/utils/auth";
+import { initBackEndControlRoutes } from "@/router/backEnd"
+
+// 添加动态路由
+export const addDynamicRoutes = async (routes: any) => {
+    console.log(routes);
+    // 添加路由
+    routes.forEach((route: RouteRecordRaw) => {
+        const routeName: any = route.name;
+        if (!router.hasRoute(routeName)) router.addRoute(route);
+    })
+}
 
 /** 路由白名单 */
 const whiteList = ["/login"];
 
-router.beforeEach((to:RouteLocationNormalized, from:RouteLocationNormalized,next:NavigationGuardNext) => {
+router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
     startNProgress();
-    if(getToken()){
+    if (getToken()) {
+        initBackEndControlRoutes()
         next();
-    }else{
-        if(whiteList.includes(to.path)){
+    } else {
+        if (whiteList.includes(to.path)) {
             next();
-        }else{
+        } else {
             next(`/login?redirect=${to.fullPath}`)
         }
     }

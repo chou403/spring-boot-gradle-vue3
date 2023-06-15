@@ -105,7 +105,9 @@ const login = () => {
     --el-input-inner-height: 45px;
     font-size: 16px;
   }
-  .el-icon{
+
+  .el-icon {
     font-size: 16px;
   }
-}</style>
+}
+</style>
