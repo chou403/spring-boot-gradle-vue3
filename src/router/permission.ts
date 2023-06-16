@@ -9,9 +9,7 @@ import { startNProgress, closeNProgress } from "@/utils/nprogress";
 import { getToken } from "@/utils/auth";
 import { initBackEndControlRoutes } from "@/router/backEnd"
 import { useUserStoreHook } from "@/store/modules/user";
-import {storeToRefs} from 'pinia'
 
-const { menuList } = storeToRefs(useUserStoreHook());
 // 添加动态路由
 export const addDynamicRoutes = async (routes: any) => {
     useUserStoreHook().setMenu(routes);
@@ -27,18 +25,30 @@ const whiteList = ["/login"];
 
 router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
     startNProgress();
-    if (getToken() && menuList.value.length > 0) {
+    if (whiteList.includes(to.path)) {
         next();
-    } else if (getToken()) {
-        initBackEndControlRoutes()
-        next();
-    } else {
-        if (whiteList.includes(to.path)) {
+    }else if(getToken()){
+        if(useUserStoreHook().menuList>0){
             next();
-        } else {
-            next(`/login?redirect=${to.fullPath}`)
+        }else{
+            // await initBackEndControlRoutes()
+            next();
         }
+    }else{
+        next(`/login?redirect=${to.fullPath}`)
     }
+    // if (getToken() && menuList.value.length > 0) {
+    //     next();
+    // } else if (getToken()) {
+    //     await initBackEndControlRoutes()
+    //     next();
+    // } else {
+    //     if (whiteList.includes(to.path)) {
+    //         next();
+    //     } else {
+    //         next(`/login?redirect=${to.fullPath}`)
+    //     }
+    // }
 })
 
 router.afterEach(() => {

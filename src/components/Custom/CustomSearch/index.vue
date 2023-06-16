@@ -42,10 +42,10 @@
       <el-col :span="defaultConfigure.span">
         <el-form-item label-width="0">
           <el-button type="primary" @click="onSearch">
-            <el-icon><Search /></el-icon><span class="search-btn__left">查询</span>
+            <el-icon><ele-search /></el-icon><span class="search-btn__left">查询</span>
           </el-button>
           <el-button @click="onReset">
-            <el-icon><Refresh /></el-icon><span class="search-btn__left">重置</span>
+            <el-icon><ele-refresh /></el-icon><span class="search-btn__left">重置</span>
           </el-button>
         </el-form-item>
       </el-col>

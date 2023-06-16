@@ -4,7 +4,7 @@
       <template #operate="row">
         <el-button link type="primary" @click="openAuthDialog(row)">
           <el-icon class="mr5">
-            <Key/>
+            <ele-key/>
           </el-icon>
           授权
         </el-button>
