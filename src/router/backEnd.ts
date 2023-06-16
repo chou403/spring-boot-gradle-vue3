@@ -107,9 +107,6 @@ export function dynamicImport(dynamicViewsModules: Record<string, Function>, com
 
   const matchKeys = keys.filter((key) => {
     const k = key.replace(/..\/views|../, '');
-    console.log(k);
-    console.log(component);
-    
     return k.startsWith(`${component}`) || k.startsWith(`/${component}`);
   });
   if (matchKeys?.length === 1) {

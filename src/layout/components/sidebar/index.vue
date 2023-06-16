@@ -25,9 +25,7 @@ const router = useRouter();
 
 const {configure} = storeToRefs(useConfigStoreHook())
 
-const {menuList} = useUserStoreHook();
-console.log(menuList);
-
+const {menuList} = storeToRefs(useUserStoreHook());
 // 选择菜单
 const menuSelect = (path:string) => {
   router.push(path)

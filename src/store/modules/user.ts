@@ -26,7 +26,7 @@ export const useUserStore = defineStore({
       userId:'',
       username:''
     },
-    menuList:[]
+    menuList: []
   }),
   getters:{
     /** 获取本地用户信息*/
