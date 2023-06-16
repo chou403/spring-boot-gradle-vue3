@@ -15,7 +15,7 @@ const modules: Record<string, any> = import.meta.glob(
 const routes: Array<RouteConfigsTable> = [];
 
 Object.keys(modules).forEach(key => {
-    // routes.push(modules[key].default);
+    routes.push(modules[key].default);
 });
 
 useUserStoreHook().setMenu(routes);

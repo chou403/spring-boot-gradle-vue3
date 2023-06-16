@@ -1,7 +1,11 @@
 <template>
   <el-card shadow="never" style="height: 100%" :body-style="{height:'100%',padding:'10px'}">
-    <CustomSearch v-if="search" :search="search" @onSearch="tableSearch"/>
-    <CustomTable :data="data.tableData" :columns="props.columns" :operations="props.operations" @refresh="tableRefresh"/>
+    <CustomSearch v-if="search" :options="search.options" @onSearch="tableSearch"/>
+    <CustomTable :data="data.tableData" :columns="props.columns" :operations="props.operations" @refresh="tableRefresh">
+      <template #operate>
+        <slot name="operate"></slot>
+      </template>
+    </CustomTable>
     <CustomPagination v-model:currentPage="data.paginationData.pageIndex" v-model:pageSize="data.paginationData.pageSize" :total="data.paginationData.total" @changeSize="changeSize"/>
   </el-card>
 </template>

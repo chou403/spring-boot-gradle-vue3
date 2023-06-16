@@ -75,7 +75,6 @@ export const useUserStore = defineStore({
       logoutApi().then(()=>{
         removeToken();
         localStorage.removeItem('userinfo');
-        this.$reset();
         router.push("/login");
       })
     },

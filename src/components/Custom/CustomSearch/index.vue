@@ -1,7 +1,7 @@
 <template>
   <el-form :model="form" label-width="80px">
     <el-row :gutter="20">
-      <template v-for="(item,index) in props.search.configure" :key="index">
+      <template v-for="(item,index) in props.options" :key="index">
         <el-col v-if="!item.type||item.type==='input'" :span="item?.span||defaultConfigure.span">
           <el-form-item :label="item.label">
             <el-input v-model="form[item.name]" :placeholder="item.placeholder"/>
@@ -57,7 +57,7 @@
 import {onMounted, ref} from "vue";
 
 const props = defineProps<{
-  search: any,
+  options: any,
 }>()
 
 const emits = defineEmits<{

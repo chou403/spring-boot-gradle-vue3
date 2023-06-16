@@ -5,7 +5,6 @@
         v-model:page-size="paginationData.pageSize"
         :page-sizes="[5, 8, 10]"
         background
-        hide-on-single-page
         layout="total, sizes, prev, pager, next, jumper"
         :total="props.total"
         @size-change="changeSize"
