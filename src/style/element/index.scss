@@ -16,6 +16,26 @@
   line-height: 48px !important;
 }
 
+/*级联选择器*/
+.el-cascader{
+  width: 100%;
+}
+
+/*对话框 dialog*/
+.el-dialog__body{
+  max-height: calc(90vh - 80px)!important;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px !important;
+}
+.el-overlay .el-overlay-dialog{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .el-dialog{
+    margin: auto !important;
+  }
+}
 
 /*侧边栏*/
 .el-drawer__close-btn {

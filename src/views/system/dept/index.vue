@@ -1,13 +1,63 @@
 <template>
-  <CustomPage :url="pageConfig.url" :columns="pageConfig.columns" :operations="pageConfig.operations"/>
+  <el-card shadow="never" style="height: 100%" :body-style="{height:'100%',padding:'10px'}">
+    <custom-search :options="options" @onSearch="onSearch"/>
+    <custom-table :data="tableData.data" :operations="tableData.operations" :columns="tableData.columns" @refresh="getTableList"/>
+    <custom-pagination v-model:currentPage="pageParams.pageIndex" v-model:pageSize="pageParams.pageSize" :total="pageParams.total" @changeSize="changeSize"/>
+  </el-card>
 </template>
 
 <script lang="ts" setup>
-const pageConfig = {
+import {getSysDeptListApi} from "@/api/system";
+import {reactive, ref} from "vue";
+import {formatCascade} from "@/utils";
+
+/** 搜索*/
+const options=[
+  {
+    label: '用户名',
+    name: 'username',
+    placeholder: '请输入用户名',
+    type: 'input'
+  },
+  {
+    label: '昵称',
+    name: 'nickname',
+    placeholder: '请输入昵称',
+    type: 'input'
+  }
+]
+// 搜索参数
+let searchParams=ref({
+})
+// 搜索
+const onSearch = (value:any) => {
+  searchParams.value=value;
+  pageParams.pageIndex=1;
+  getTableList();
+}
+
+/** 分页*/
+// 分页参数
+const pageParams=reactive({
+  pageIndex:1,
+  pageSize:99999,
+  total:0
+})
+// 翻页
+const changeSize = (page:number) => {
+  pageParams.pageIndex=page;
+  getTableList();
+}
+
+/** 表格*/
+// 表格数据
+const tableData=reactive({
+  data:[],
   columns: [
     {
       label: '部门名称',
       name: 'name',
+      width:300
     },
     {
       label: '状态',
@@ -28,7 +78,7 @@ const pageConfig = {
       name: 'sort',
     },
   ],
-  operations: {
+  operations:{
     configure: [
       {
         label: '上级部门',
@@ -71,24 +121,28 @@ const pageConfig = {
         ]
       },
     ],
-    getOptions: {
-      url: '/sysDept/getSysDeptList',
-      type:'tree',
-      pageSize:99999
-    },
-    delOptions: {
-      url: '/sysDept/deleteSysDept/'
-    },
     addOptions: {
       url: '/sysDept/addSysDept',
     },
-    editOptions: {
-      url: '/sysDept/updateSysDept',
+    editOptions:{
+      url:'/sysDept/updateSysDept'
+    },
+    delOptions:{
+      url:'/sysDept/deleteSysDept/'
+    },
+    detailOptions:{
+      url:'/sysDept/getSysDept/'
     }
   }
+})
+// 获取表格数据
+const getTableList = () => {
+  getSysDeptListApi({...pageParams,...searchParams}).then(res=>{
+    tableData.data=formatCascade(res.list||[]);
+    pageParams.total=res.total||0;
+  })
 }
-
-
+getTableList();
 </script>
 
 <style lang="scss" scoped>

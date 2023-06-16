@@ -5,8 +5,8 @@
         <template v-if="configure.layoutMode!==1">
           <div class="switch__sidebar icon__button">
             <el-icon size="16" color="#606266" @click="useConfigStoreHook().toggleSidebar">
-              <Expand v-if="configure.isCollapse"/>
-              <Fold v-else/>
+              <ele-expand v-if="configure.isCollapse"/>
+              <ele-fold v-else/>
             </el-icon>
           </div>
           <div class="breadcrumb__box">

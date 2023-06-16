@@ -6,7 +6,7 @@ export default {
     redirect: "/dashboard",
     meta: {
         title: "首页",
-        icon: 'House'
+        icon: 'ele-house'
     },
     children: [
         {

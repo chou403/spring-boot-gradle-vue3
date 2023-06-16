@@ -12,46 +12,22 @@ const pageConfig={
     {
       label:'性别',
       name:'gender',
-      tagConfig: {
-        0: {
-          color: 'danger',
-          text: '女'
-        },
-        1: {
-          color: 'success',
-          text: '男'
-        },
-        2: {
-          color: 'info',
-          text: '未知'
-        },
-      }
     },
     {
-      label:'手机号',
-      name:'phone',
+      label:'盐值',
+      name:'salt',
     },
     {
       label:'邮箱',
       name:'email',
     },
     {
-      label: '状态',
-      name: 'status',
-      tagConfig: {
-        false: {
-          color: 'danger',
-          text: '禁用'
-        },
-        true: {
-          color: 'success',
-          text: '启用'
-        },
-      }
+      label:'手机号',
+      name:'phone',
     },
   ],
   search:{
-    options:[
+    configure:[
       {
         label: '用户名',
         name: 'username',
@@ -107,7 +83,7 @@ const pageConfig={
       {
         label: '部门',
         name: 'deptId',
-        type: 'cascade',
+        type: 'select',
         placeholder: '请选择部门',
         custom:{
           url:'/sysDept/getSysDeptList',
@@ -155,9 +131,6 @@ const pageConfig={
     },
     editOptions:{
       url:'/sysUser/updateSysUser',
-    },
-    detailOptions:{
-      url:'/sysUser/getSysUser/'
     }
   }
 }

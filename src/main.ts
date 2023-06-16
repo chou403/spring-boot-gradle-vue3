@@ -5,6 +5,7 @@ import {setupRouter} from "@/router";
 import {setGlobalComponent} from "@/components/Custom";
 import ElementPlus from "element-plus";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue"
+import 'virtual:svg-icons-register'
 
 
 // import "element-plus/dist/index.css";
@@ -18,8 +19,11 @@ import "@/router/permission"
 const app = createApp(App)
 
 /** 注册element icon图标组件*/
+app.config.globalProperties.$icons=[]
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component)
+    let name='ele-'+key.replace(/([a-z])([A-Z])/g,'$1-$2').toLocaleLowerCase()
+    app.config.globalProperties.$icons.push(name)
+    app.component(name, component)
 }
 
 /** 配置 store*/

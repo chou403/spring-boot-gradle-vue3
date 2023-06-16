@@ -1,5 +1,5 @@
 <template>
-  <el-checkbox-group v-model="data.value" @change="onChange">
+  <el-checkbox-group v-model="data.value">
     <template v-if="custom">
       <el-checkbox v-for="item in data.options" :key="item[custom.valueName||defaultConfig.valueName]" :label="item[custom.valueName||defaultConfig.valueName]" border>{{ item[custom.labelName||defaultConfig.labelName] }}</el-checkbox>
     </template>
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive, onMounted} from 'vue'
+import {reactive, onMounted, computed} from 'vue'
 import {http} from "@/utils/http";
 
 type customType = {
@@ -48,7 +48,12 @@ const emits = defineEmits<{
 }>()
 
 const data: any = reactive({
-  value: [],
+  value: computed({
+    get:()=>props.value,
+    set:val=>{
+      emits('update:value', val);
+    }
+  }),
   options: []
 })
 
@@ -63,14 +68,8 @@ function getOptions() {
   })
 }
 
-
-const onChange = (val: any) => {
-  emits('update:value', val);
-}
-
 onMounted(()=>{
   getOptions();
-  data.value=props.value;
 })
 </script>
 

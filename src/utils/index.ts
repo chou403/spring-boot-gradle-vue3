@@ -89,7 +89,7 @@ export function lighten(color:string, level:number) {
 }
 
 /** 数组层级格式化 */
-export function formatCascade(arr:Array<any>=[],parentName:string="parentId",idName:string='id') {
+export function formatCascade(arr:Array<any>=[],parentName:string="parentId",idName:string='id'):any {
     return arr.map((item)=>{
         if(item[parentName]){
             let index=arr.findIndex(p=>p[idName]==item[parentName])
@@ -107,3 +107,36 @@ export function formatCascade(arr:Array<any>=[],parentName:string="parentId",idN
         }
     }).filter(p=>p)
 }
+
+/** 获取父级数组 */
+export function getCascadeParent(list:Array<any>=[],parentId:string,parentName:string="parentId",idName:string='id') {
+    for (const i in list) {
+        if(list[i][idName]==parentId){
+            return [list[i][idName]]
+        }
+        if (list[i].children) {
+            let node:any = getCascadeParent(list[i].children, parentId,parentName,idName)
+            if (node !== undefined) {
+                node.unshift(list[i][idName])
+                return node
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

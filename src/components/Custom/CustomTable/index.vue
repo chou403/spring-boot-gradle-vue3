@@ -1,15 +1,15 @@
 <template>
   <div class="">
-    <div v-if="operations.addOptions.url" class="table-btn-box mb10">
-      <el-button type="primary" @click="formData.isShow=true">
+    <div v-if="operations?.addOptions?.url" class="table-btn-box mb10">
+      <el-button type="primary" @click="openFormDialog">
         <el-icon class="mr5">
-          <FolderAdd/>
+          <ele-folder-add/>
         </el-icon>
         新 增
       </el-button>
     </div>
     <el-table table-layout="auto" :data="props.data" row-key="id" border style="width: 100%">
-      <el-table-column v-for="item in props.columns" :key="item.name" :prop="item.name" :label="item.label"
+      <el-table-column :width="item.width" v-for="item in props.columns" :key="item.name" :prop="item.name" :label="item.label"
                        align="center">
         <template v-if="item.tagConfig" #default="scope">
           <el-tag
@@ -19,17 +19,18 @@
           >
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" fixed="right">
+      <el-table-column v-if="operations?.editOptions?.url||operations?.delOptions?.url" label="操作" align="center" fixed="right">
         <template #default="{row}">
-          <el-button v-if="operations.editOptions.url" link type="primary" @click="editTable(row)">
+          <el-button v-if="operations?.editOptions?.url" link type="primary" @click="openFormDialog(row)">
             <el-icon class="mr5">
-              <EditPen/>
+              <ele-edit-pen/>
             </el-icon>
             修改
           </el-button>
-          <el-button v-if="operations.delOptions.url" @click="delTable(row)" link type="danger">
+          <slot name="operate" :row="row"></slot>
+          <el-button v-if="operations?.delOptions?.url" @click="delTable(row)" link type="danger">
             <el-icon class="mr5">
-              <Delete/>
+              <ele-delete/>
             </el-icon>
             删除
           </el-button>
@@ -37,8 +38,10 @@
       </el-table-column>
     </el-table>
 
-    <custom-form v-if="formData.isShow" @close="closeFormDialog" :row="formData.row" :operations="props.operations"
-                 @change="tableRefresh"/>
+    <slot name="form">
+      <custom-form v-if="formData.isShow" @close="closeFormDialog" :row="formData.row" :operations="props.operations"
+                   @change="tableRefresh"/>
+    </slot>
   </div>
 </template>
 
@@ -57,6 +60,8 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   (event: 'refresh'): void
+  (event: 'open',data:any): void
+  (event: 'close'): void
 }>()
 
 const formData:any = reactive({
@@ -67,7 +72,9 @@ const formData:any = reactive({
 /** 关闭弹框*/
 const closeFormDialog = () => {
   formData.isShow = false;
+  formData.row = {};
   formData.id = '';
+  emits('close')
 }
 
 /** 刷新表格*/
@@ -75,10 +82,11 @@ function tableRefresh() {
   emits('refresh')
 }
 
-/** 编辑*/
-const editTable = (row: any) => {
-  formData.row = row;
+/** 打开弹框*/
+const openFormDialog = (row?: any) => {
+  if(row)formData.row = row;
   formData.isShow = true;
+  emits('open',row)
 }
 /** 删除*/
 const delTable = (row: any) => {
@@ -96,7 +104,7 @@ const delTable = (row: any) => {
             ElMessage.success('删除成功');
             tableRefresh();
           })
-        })
+        }).catch(()=>{})
   }
 }
 

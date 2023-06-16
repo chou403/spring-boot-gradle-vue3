@@ -102,7 +102,11 @@ const closeDialog = () => {
 }
 
 onMounted(() => {
-  if (props.row) {
+  if(props.row?.id&&props.operations.detailOptions?.url){
+    http.post<any>(props.operations.detailOptions.url+props.row.id).then((res) => {
+      form.value = Object.assign({}, form.value, res);
+    })
+  }else if (props.row) {
     form.value = Object.assign({}, form.value, props.row);
   }
 })
