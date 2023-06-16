@@ -1,7 +1,7 @@
 import { getSysMenuListApi } from "@/api/menu"
 import { addDynamicRoutes } from "@/router/permission"
 
-const layouModules: any = import.meta.glob('../layout/routerView/*.{vue,tsx}');
+const layouModules: any = import.meta.glob('../layout/*.{vue,tsx}');
 const viewsModules: any = import.meta.glob('../views/**/*.{vue,tsx}');
 /**
  * 获取目录下的 .vue、.tsx 全部文件
@@ -21,10 +21,8 @@ export async function initBackEndControlRoutes() {
   });
   console.log(res);
 
-  const result = await backEndComponent(formatRoute(groupedRoutes(res.list)));
+  const result = backEndComponent(formatRoute(groupedRoutes(res.list)));
   addDynamicRoutes(result);
-  console.log(result);
-
 }
 
 /**
@@ -65,12 +63,12 @@ function formatRoute(routes: any[]) {
     let obj: any = {
       path: p.routeUrl,
       name: p.routeName,
-      component: p.componentPath,
+      component: p.componentPath === 'Layout' ? '/layout/index' : p.componentPath,
       meta: {
         title: p.name,
         isLink: p.isLink ? p.linkUrl : '',
-        isHide: p.isShow,
-        isKeepAlive: p.isCache,
+        isMenu: !p.isShow,
+        isCache: p.isCache,
         // roles: ['admin'],
         icon: p.icon
       },
@@ -109,6 +107,9 @@ export function dynamicImport(dynamicViewsModules: Record<string, Function>, com
 
   const matchKeys = keys.filter((key) => {
     const k = key.replace(/..\/views|../, '');
+    console.log(k);
+    console.log(component);
+    
     return k.startsWith(`${component}`) || k.startsWith(`/${component}`);
   });
   if (matchKeys?.length === 1) {

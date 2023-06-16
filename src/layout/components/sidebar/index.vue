@@ -26,6 +26,7 @@ const router = useRouter();
 const {configure} = storeToRefs(useConfigStoreHook())
 
 const {menuList} = useUserStoreHook();
+console.log(menuList);
 
 // 选择菜单
 const menuSelect = (path:string) => {
