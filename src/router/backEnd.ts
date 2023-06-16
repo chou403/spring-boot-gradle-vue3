@@ -42,14 +42,21 @@ function groupedRoutes(routes: any[]) {
     result[parentId].push(route)
     return result
   }, {})
+  // 按照路由表中的顺序进行排序
+
+
 
   // 将每个一级路由转换为一个菜单项，并将其下属的所有二级路由添加到菜单项的 `children` 字段中
-  return topLevelRoutes.map(route => {
+  let result = topLevelRoutes.map(route => {
     const children = groupedChildRoutes[route.id]
     if (children) {
       route.children = children
     }
     return route
+  })
+
+  return result.sort((a, b) => {
+    return a.sort - b.sort
   })
 }
 

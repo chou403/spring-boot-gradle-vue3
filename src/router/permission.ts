@@ -14,8 +14,6 @@ import {storeToRefs} from 'pinia'
 const { menuList } = storeToRefs(useUserStoreHook());
 // 添加动态路由
 export const addDynamicRoutes = async (routes: any) => {
-    console.log(routes);
-    
     useUserStoreHook().setMenu(routes);
     // 添加路由
     routes.forEach((route: RouteRecordRaw) => {
