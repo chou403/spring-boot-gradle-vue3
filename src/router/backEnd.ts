@@ -1,4 +1,4 @@
-import { getSysMenuListApi } from "@/api/menu"
+import { getNavMenuTreeList } from "@/api/menu"
 import { addDynamicRoutes } from "@/router/permission"
 
 const layouModules: any = import.meta.glob('../layout/*.{vue,tsx}');
@@ -15,50 +15,51 @@ const dynamicViewsModules: Record<string, Function> = Object.assign({}, { ...lay
  */
 export async function initBackEndControlRoutes() {
   // 获取路由菜单数据
-  const res = await getSysMenuListApi({
+  const res = await getNavMenuTreeList({
     "pageIndex": 1,
     "pageSize": 9999,
   });
   console.log(res);
 
-  const result = backEndComponent(formatRoute(groupedRoutes(res.list)));
+  const result = backEndComponent(formatRoute(res));
+  console.log(result);
   addDynamicRoutes(result);
 }
 
-/**
- * 后端路由 列表数据转成树形数据
- * @param routes 后端返回的路由表数组
- * @returns 返回嵌套路由菜单
- */
-function groupedRoutes(routes: any[]) {
-  // 将所有的一级路由和二级路由都提取出来
-  const topLevelRoutes = routes.filter(route => route.parentId === null)
-  const childRoutes = routes.filter(route => route.parentId !== null)
+// /**
+//  * 后端路由 列表数据转成树形数据
+//  * @param routes 后端返回的路由表数组
+//  * @returns 返回嵌套路由菜单
+//  */
+// function groupedRoutes(routes: any[]) {
+//   // 将所有的一级路由和二级路由都提取出来
+//   const topLevelRoutes = routes.filter(route => route.parentId === null)
+//   const childRoutes = routes.filter(route => route.parentId !== null)
 
-  // 将一级路由和二级路由分别进行分组
-  const groupedChildRoutes = childRoutes.reduce((result, route) => {
-    const parentId = route.parentId
-    result[parentId] = result[parentId] || []
-    result[parentId].push(route)
-    return result
-  }, {})
-  // 按照路由表中的顺序进行排序
+//   // 将一级路由和二级路由分别进行分组
+//   const groupedChildRoutes = childRoutes.reduce((result, route) => {
+//     const parentId = route.parentId
+//     result[parentId] = result[parentId] || []
+//     result[parentId].push(route)
+//     return result
+//   }, {})
+//   // 按照路由表中的顺序进行排序
 
 
 
-  // 将每个一级路由转换为一个菜单项，并将其下属的所有二级路由添加到菜单项的 `children` 字段中
-  let result = topLevelRoutes.map(route => {
-    const children = groupedChildRoutes[route.id]
-    if (children) {
-      route.children = children
-    }
-    return route
-  })
+//   // 将每个一级路由转换为一个菜单项，并将其下属的所有二级路由添加到菜单项的 `children` 字段中
+//   let result = topLevelRoutes.map(route => {
+//     const children = groupedChildRoutes[route.id]
+//     if (children) {
+//       route.children = children
+//     }
+//     return route
+//   })
 
-  return result.sort((a, b) => {
-    return a.sort - b.sort
-  })
-}
+//   return result.sort((a, b) => {
+//     return a.sort - b.sort
+//   })
+// }
 
 /**
  * 后端路由 将数据格式化成路由数据
@@ -67,16 +68,39 @@ function groupedRoutes(routes: any[]) {
  */
 function formatRoute(routes: any[]) {
   return routes.filter((p: any) => p.routeUrl && p.componentPath).map((p: any) => {
+    if (p.isHome) {
+      let obj = {
+        path: "/",
+        component: '/layout/index',
+        redirect: p.routeUrl,
+        meta: {
+          title: p.name,
+          icon: p.icon
+        },
+        children: [
+          {
+            path: p.routeUrl,
+            name: p.code,
+            component: p.componentPath,
+            meta: {
+              title: p.name,
+              icon: p.icon,
+              isHome: true
+            }
+          }
+        ]
+      }
+      return obj;
+    }
     let obj: any = {
       path: p.routeUrl,
       name: p.routeName,
-      component: p.componentPath === 'Layout' ? '/layout/index' : p.componentPath,
+      component: p.parentId === '0' ? '/layout/index' : p.componentPath,
       meta: {
         title: p.name,
         isLink: p.isLink ? p.linkUrl : '',
         isMenu: !p.isShow,
         isCache: p.isCache,
-        // roles: ['admin'],
         icon: p.icon
       },
     }

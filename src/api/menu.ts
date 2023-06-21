@@ -3,6 +3,7 @@ import {http} from '@/utils/http'
 enum Api {
     getAllSysMenuTreeList = '/sysMenu/getAllSysMenuTreeList',
     getSysMenuTreeList = '/sysMenu/getSysMenuTreeList',
+    getNavMenuTreeList = '/sysMenu/getNavMenuTreeList',
     addSysMenu = '/sysMenu/addSysMenu',
     getSysMenu = '/sysMenu/getSysMenu/',
     updateSysMenu = '/sysMenu/updateSysMenu',
@@ -13,6 +14,10 @@ enum Api {
 // 获取所有的系统菜单树形列表
 export function getAllSysMenuTreeList(data:any) {
     return http.post<any>(Api.getAllSysMenuTreeList, data)
+}
+// 获取当前用户的导航菜单
+export function getNavMenuTreeList(data:any) {
+    return http.post<any>(Api.getNavMenuTreeList, data)
 }
 // 获取启用的系统菜单树形列表
 export function getSysMenuTreeList(data:any) {

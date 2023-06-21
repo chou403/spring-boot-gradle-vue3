@@ -27,14 +27,15 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
     startNProgress();
     if (whiteList.includes(to.path)) {
         next();
-    }else if(getToken()){
-        if(useUserStoreHook().menuList>0){
+    } else if (getToken()) {
+        if (useUserStoreHook().menuList.length > 0) {
             next();
-        }else{
-            // await initBackEndControlRoutes()
+        } else {
+            await initBackEndControlRoutes()
+           console.log( router.getRoutes());
             next();
         }
-    }else{
+    } else {
         next(`/login?redirect=${to.fullPath}`)
     }
     // if (getToken() && menuList.value.length > 0) {
