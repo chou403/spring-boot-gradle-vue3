@@ -72,7 +72,7 @@
       </el-button>
     </div>
     <!--    表格-->
-    <el-table :data="tableData.data" border style="width: 100%" row-key="id">
+    <el-table :data="tableData.data" border style="width: 100%" row-key="id" @sort-change="sortChange">
       <el-table-column prop="username" label="用户名" align="center"/>
       <el-table-column prop="nickname" label="昵称" align="center"/>
       <el-table-column prop="roleName" label="角色" align="center"/>
@@ -92,7 +92,7 @@
           <el-tag v-else type="danger" disable-transitions>禁用</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" label="创建时间" align="center" width="180"/>
+      <el-table-column prop="createTime" sortable label="创建时间" align="center" width="180"/>
       <el-table-column label="操作" fixed="right" align="center" width="200">
         <template #default="{row}">
           <el-button link type="primary" @click="openDialog(row)">
@@ -229,7 +229,9 @@ const formRef = ref<FormInstance>()
 
 
 /** 查询*/
-let queryForm = ref({})
+let queryForm = ref({
+
+})
 // 查询
 const onSearch = () => {
   pageData.pageIndex = 1;
@@ -255,6 +257,9 @@ const changePage = (page: number) => {
   getTableList();
 }
 
+/** 排序*/
+const orderBy=ref({})
+
 /** 表格*/
 // 表格数据
 const tableData = reactive({
@@ -262,7 +267,7 @@ const tableData = reactive({
 })
 // 获取表格列表
 const getTableList = () => {
-  getSysUserList({...pageData, ...queryForm.value}).then(res => {
+  getSysUserList({...pageData, ...queryForm.value,orderBy:{...orderBy.value}}).then(res => {
     tableData.data = res.list || [];
     pageData.total = res.total;
   })
@@ -284,6 +289,19 @@ const delTable = (row: any) => {
         })
       }).catch(() => {
   })
+}
+// 排序
+const sortChange = ({ column, prop, order }) => {
+  console.log(column, prop, order)
+  if(order){
+    orderBy.value.column=prop;
+    orderBy.value.asc=order==="ascending";
+  }else{
+    orderBy.value={}
+  }
+
+  pageData.pageIndex = 1;
+  getTableList();
 }
 
 /** 添加，编辑*/

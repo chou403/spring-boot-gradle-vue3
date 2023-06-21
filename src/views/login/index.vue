@@ -21,6 +21,7 @@ import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStoreHook } from "@/store/modules/user";
 import { User, Lock } from "@element-plus/icons-vue"
+import md5 from "js-md5"
 
 const router = useRouter();
 
@@ -42,7 +43,8 @@ const rules = reactive({
 })
 const login = () => {
   useUserStoreHook().login({
-    ...ruleForm
+    username: ruleForm.username,
+    password: md5(ruleForm.password)
   }).then(() => {
     router.push('/')
   })
