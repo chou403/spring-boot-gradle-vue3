@@ -7,9 +7,6 @@
       <el-checkbox v-for="item in options" :key="item.id" :label="item.id" border>{{ item.name }}</el-checkbox>
     </template>
   </el-checkbox-group>
-  <el-radio-group>
-
-  </el-radio-group>
 </template>
 
 <script lang="ts" setup>

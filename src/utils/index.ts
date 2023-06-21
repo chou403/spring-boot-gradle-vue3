@@ -88,6 +88,14 @@ export function lighten(color:string, level:number) {
     return rgbToHex(rgba[0], rgba[1], rgba[2])
 }
 
+/** class设置 */
+export function toggleClass(flag: boolean, clsName: string, target?: HTMLElement) {
+    const targetEl = target || document.body;
+    let { className } = targetEl;
+    className = className.replace(clsName, "").trim();
+    targetEl.className = flag ? `${className} ${clsName} ` : className;
+}
+
 /** 数组层级格式化 */
 export function formatCascade(arr:Array<any>=[],parentName:string="parentId",idName:string='id'):any {
     return arr.map((item)=>{

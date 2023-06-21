@@ -6,7 +6,7 @@
         <slot name="operate"></slot>
       </template>
     </CustomTable>
-    <CustomPagination v-model:currentPage="data.paginationData.pageIndex" v-model:pageSize="data.paginationData.pageSize" :total="data.paginationData.total" @changeSize="changeSize"/>
+    <CustomPagination v-model:currentPage="data.paginationData.pageIndex" v-model:pageSize="data.paginationData.pageSize" :total="data.paginationData.total" @changePage="changePage"/>
   </el-card>
 </template>
 
@@ -35,7 +35,7 @@ let data:any=reactive({
 })
 
 /** 翻页*/
-const changeSize = (page:number) => {
+const changePage = (page:number) => {
   data.paginationData.pageIndex=page;
   getList();
 }

@@ -21,10 +21,16 @@ body,html,#app {
   color: #606266;
 }
 
+.card-box{
+  height: 100%;
+  overflow-y: auto;
+}
+
 
 @import "element";
 @import "variables";
 @import "basic";
 @import "common";
+@import "theme";
 
 

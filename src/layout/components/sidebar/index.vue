@@ -6,6 +6,7 @@
           :collapse="configure.isCollapse&&configure.layoutMode!==1"
           :mode="configure.layoutMode===1?'horizontal':'vertical'"
           class="el-menu-vertical"
+          :default-active="defaultActive"
           @select="menuSelect"
       >
         <sidebar-item v-for="routes in menuList" :key="routes.path" :menu="routes"/>
@@ -20,12 +21,14 @@ import {storeToRefs} from 'pinia'
 import {useConfigStoreHook} from "@/store/modules/config";
 import {useUserStoreHook} from "@/store/modules/user";
 import { useRouter } from "vue-router";
+import {computed} from "vue";
 
 const router = useRouter();
 
 const {configure} = storeToRefs(useConfigStoreHook())
-
 const {menuList} = storeToRefs(useUserStoreHook());
+
+const defaultActive=computed(()=>useRouter().currentRoute.value.path)
 // 选择菜单
 const menuSelect = (path:string) => {
   router.push(path)

@@ -1,10 +1,10 @@
 <template>
   <el-sub-menu v-if="props.menu?.children&&props.menu.name" :index="props.menu.path">
     <template #title>
-       <div class="menu-icon">
-         <component :is="props.menu.meta.icon" :inline-tamplate="true"/>
-       </div>
-       <span class="menu-txt">{{ props.menu.meta.title }}</span>
+      <div class="menu-icon">
+        <component :is="props.menu.meta.icon" :inline-tamplate="true"/>
+      </div>
+      <span class="menu-txt">{{ props.menu.meta.title }}</span>
     </template>
     <template v-for="child in props.menu?.children">
       <el-menu-item
@@ -12,8 +12,10 @@
           :key="child.path"
           :index="child.path"
       >
+        <div class="menu-icon">
           <component :is="child.meta.icon" :inline-tamplate="true"/>
-          <span class="menu-txt">{{ child.meta.title }}</span>
+        </div>
+        <span class="menu-txt">{{ child.meta.title }}</span>
       </el-menu-item>
       <sidebar-item
           v-else
@@ -22,10 +24,10 @@
   </el-sub-menu>
   <template v-else>
     <el-menu-item :index="props.menu.path" @click="">
-        <div class="menu-icon">
-          <component :is="props.menu.meta.icon" :inline-tamplate="true"/>
-        </div>
-        <span class="menu-txt">{{ props.menu.meta.title }}</span>
+      <div class="menu-icon">
+        <component :is="props.menu.meta.icon" :inline-tamplate="true"/>
+      </div>
+      <span class="menu-txt">{{ props.menu.meta.title }}</span>
     </el-menu-item>
   </template>
 </template>
@@ -43,14 +45,32 @@ const props = defineProps({
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .menu-txt {
   margin-left: 10px;
+  z-index: 1;
 }
-.menu-icon{
+
+.menu-icon {
   vertical-align: middle;
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
+}
+
+.el-menu-item {
+  &.is-active{
+    color: #fff !important;
+    &:before {
+      background: var(--el-color-primary) !important;
+      border-radius: 3px;
+      clear: both;
+      content: "";
+      inset: 0 8px;
+      margin: 4px 0;
+      position: absolute;
+    }
+  }
 }
 </style>

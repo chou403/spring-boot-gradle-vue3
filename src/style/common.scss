@@ -12,9 +12,38 @@
   }
 }
 
+.avatar-form{
+  .el-form-item__content{
+    margin-left: 0 !important;
+    justify-content: center;
+  }
+}
 
 .search-btn__left{
   margin-left: 5px;
+}
+
+.inline-block{
+  display: inline-block;
+}
+.flex{
+  display: flex;
+}
+.flex-inline{
+  display: inline-flex;
+}
+.item-center{
+  align-items: center;
+}
+.justify-center{
+  justify-content: center;
+}
+.flex-center{
+  justify-content: center;
+  align-items: center;
+}
+.flex-between{
+  justify-content: space-between;
 }
 
 

@@ -8,8 +8,10 @@ export enum layoutModeEnum {
 export type configType = {
     isCollapse: boolean
     themeColor: string
+    isGrey: boolean
+    isWeakness: boolean
     locale: string
-    layoutMode:layoutModeEnum
+    layoutMode: layoutModeEnum
 }
 
 export type configStoreType = {

@@ -16,6 +16,17 @@
   line-height: 48px !important;
 }
 
+/** Card 卡片*/
+.el-card__body{
+  padding: 10px;
+  height: 100%;
+}
+
+/** 下拉框*/
+.el-select{
+  width: 100%;
+}
+
 /*级联选择器*/
 .el-cascader{
   width: 100%;

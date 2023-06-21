@@ -10,7 +10,7 @@
       append-to-body
   >
     <div class="config-box">
-<!--      界面布局-->
+      <!--      界面布局-->
       <div class="layout-configure config-item-box">
         <el-divider>界面布局</el-divider>
         <div class="layout-box">
@@ -46,13 +46,29 @@
           </div>
         </div>
       </div>
-<!--      全局配置-->
+      <!--      全局配置-->
       <div class="theme-color config-item-box">
         <el-divider>全局配置</el-divider>
         <div class="config-item">
           <div class="config-item__label">主题色</div>
           <div class="config-item__value">
             <el-color-picker v-model="useConfigStoreHook().configure.themeColor" @change="themeColorChange"/>
+          </div>
+        </div>
+      </div>
+      <!--      界面显示-->
+      <div class="theme-color config-item-box">
+        <el-divider>界面显示</el-divider>
+        <div class="config-item">
+          <div class="config-item__label">灰色模式</div>
+          <div class="config-item__value">
+            <el-switch v-model="useConfigStoreHook().configure.isGrey"  @change="greyChange"/>
+          </div>
+        </div>
+        <div class="config-item">
+          <div class="config-item__label">色弱模式</div>
+          <div class="config-item__value">
+            <el-switch v-model="useConfigStoreHook().configure.isWeakness"  @change="weaknessChange"/>
           </div>
         </div>
       </div>
@@ -64,7 +80,7 @@
 import {ref} from "vue";
 import {storeToRefs} from 'pinia'
 import {useConfigStoreHook} from "@/store/modules/config";
-import {useThemeColor} from "@/layout/hook/useThemeColor";
+import {useConfigure} from "@/layout/hook/useConfigure";
 
 const {configure} = storeToRefs(useConfigStoreHook())
 
@@ -73,8 +89,20 @@ const isShowDrawer = ref(false)
 /** 修改主题色*/
 const themeColorChange = (color: string) => {
   useConfigStoreHook().storageConfigureChange('themeColor', color);
-  useThemeColor().setThemeColor(color);
+  useConfigure().setThemeColor(color);
 }
+
+/** 修改灰色模式*/
+const greyChange = (isGrey: boolean) => {
+  useConfigStoreHook().storageConfigureChange('isGrey', isGrey);
+  useConfigure().setGrey(isGrey);
+}
+/** 修改色弱模式*/
+const weaknessChange = (isWeakness: boolean) => {
+  useConfigStoreHook().storageConfigureChange('isWeakness', isWeakness);
+  useConfigure().setWeakness(isWeakness);
+}
+
 
 /** 选择界面布局模式*/
 const layoutModeChange = (val: number) => {

@@ -9,6 +9,9 @@ export const useConfigStore = defineStore({
         configure: {
             isCollapse: false,
             themeColor: '#409eff',
+            sidebarBgColor:'#f00',
+            isGrey:false,
+            isWeakness:false,
             locale:'zh',
             layoutMode:0,
         } as configType

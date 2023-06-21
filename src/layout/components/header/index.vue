@@ -35,9 +35,7 @@
         </div>
       </div>
     </div>
-    <div class="tag__box">
-
-    </div>
+    <Tags/>
   </div>
 </template>
 
@@ -45,6 +43,7 @@
 import ThemeColorPicker from "./ThemeColorPicker/index.vue"
 import Notify from "./Notify/index.vue"
 import User from "./User/index.vue"
+import Tags from "./Tags/index.vue"
 import Sidebar from '@/layout/components/sidebar/index.vue'
 import Logo from '@/layout/components/sidebar/logo.vue'
 import {useRoute} from "vue-router";
@@ -56,7 +55,12 @@ const {configure} = storeToRefs(useConfigStoreHook())
 const route = useRoute();
 // 获取面包屑路由
 const getBreadcrumb = () => {
-  return route.matched.filter((item) => item.meta && item.meta.title&&item.path!=='/')
+  let matched:any=route.matched.filter((item) => item.meta && item.meta.title&&item.path!=='/'&& item.meta.title!=='首页')
+  matched.unshift({
+    path:'/',
+    meta:{title:'首页'}
+  })
+  return matched;
 }
 </script>
 

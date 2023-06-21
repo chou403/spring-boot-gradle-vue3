@@ -8,7 +8,7 @@
       <el-input
           v-model="data.value"
           disabled
-          placeholder="Please input"
+          placeholder="请选择图标"
       >
         <template #prepend>
           <el-button v-if="data.value.indexOf('local')>=0">
@@ -62,7 +62,6 @@ const data: any = reactive({
   value: computed({
     get:()=>props.value||'',
     set:val=>{
-      console.log(val)
       emits('update:value', val);
     }
   }),
@@ -83,7 +82,9 @@ const changeIcon = (value: string) => {
 .el-tabs__content {
   padding: 0 !important;
 }
-
+.el-input.is-disabled .el-input__inner{
+  cursor: pointer !important;
+}
 .icon-box {
   display: flex;
   flex-wrap: wrap;
