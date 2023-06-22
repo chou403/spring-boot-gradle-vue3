@@ -38,14 +38,14 @@
     <div class="table-btn-box mb10">
       <el-button type="primary" @click="openDialog">
         <el-icon class="mr5">
-          <ele-folder-add/>
+          <ele-circle-plus/>
         </el-icon>
         新 增
       </el-button>
     </div>
     <!--    表格-->
-    <el-table :data="tableData.data" border style="width: 100%" row-key="id">
-      <el-table-column prop="name" label="部门名称" align="center" width="300"/>
+    <el-table :data="tableData.data" border style="width: 100%" row-key="id" default-expand-all>
+      <el-table-column prop="name" label="部门名称" width="300"/>
       <el-table-column prop="status" label="状态" align="center">
         <template #default="scope">
           <el-tag v-if="scope.row.status" type="success" disable-transitions>启用</el-tag>

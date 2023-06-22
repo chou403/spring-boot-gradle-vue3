@@ -1,5 +1,6 @@
-import { getNavMenuTreeList } from "@/api/menu"
-import { addDynamicRoutes } from "@/router/permission"
+import {getNavMenuTreeList} from "@/api/menu"
+import {addDynamicRoutes} from "@/router/permission"
+import Layout from "@/layout/index.vue"
 
 const layouModules: any = import.meta.glob('../layout/*.{vue,tsx}');
 const viewsModules: any = import.meta.glob('../views/**/*.{vue,tsx}');
@@ -15,15 +16,10 @@ const dynamicViewsModules: Record<string, Function> = Object.assign({}, { ...lay
  */
 export async function initBackEndControlRoutes() {
   // 获取路由菜单数据
-  const res = await getNavMenuTreeList({
-    "pageIndex": 1,
-    "pageSize": 9999,
-  });
-  console.log(res);
+  const res = await getNavMenuTreeList({});
 
   const result = backEndComponent(formatRoute(res));
-  console.log(result);
-  addDynamicRoutes(result);
+  await addDynamicRoutes(result);
 }
 
 // /**
@@ -69,7 +65,7 @@ export async function initBackEndControlRoutes() {
 function formatRoute(routes: any[]) {
   return routes.filter((p: any) => p.routeUrl && p.componentPath).map((p: any) => {
     if (p.isHome) {
-      let obj = {
+      return {
         path: "/",
         component: '/layout/index',
         redirect: p.routeUrl,
@@ -89,8 +85,7 @@ function formatRoute(routes: any[]) {
             }
           }
         ]
-      }
-      return obj;
+      };
     }
     let obj: any = {
       path: p.routeUrl,

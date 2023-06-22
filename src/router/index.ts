@@ -18,12 +18,14 @@ Object.keys(modules).forEach(key => {
     routes.push(modules[key].default);
 });
 
-useUserStoreHook().setMenu(routes);
+console.log(124124,routes)
+// useUserStoreHook().setMenu(routes);
 
 
 export const router: Router = createRouter({
     history: createWebHashHistory(),
-    routes: [...basicRoutes,...routes] as RouteRecordRaw[]
+    // routes: [...basicRoutes,...routes] as RouteRecordRaw[]
+    routes: [...basicRoutes] as RouteRecordRaw[]
 })
 
 

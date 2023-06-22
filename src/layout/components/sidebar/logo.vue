@@ -1,10 +1,11 @@
 <template>
   <div class="logo-box" :class="{'width':configure.isCollapse}">
     <div v-if="configure.isCollapse" class="logo-content">
-      <i class="iconfont icon-logo_skype logo-txt"></i>
+      <img class="logo-img logo-txt" src="../../../assets/logo.png" alt="">
     </div>
     <div v-else class="logo-content">
-      <span class="logo-txt">SPRING BOOT</span>
+      <img class="logo-img" src="../../../assets/logo.png" alt="">
+      <span class="logo-txt ml5">SPRING-BOOT-PLUS</span>
     </div>
   </div>
 </template>
@@ -17,6 +18,9 @@ const {configure} = storeToRefs(useConfigStoreHook())
 </script>
 
 <style lang="scss" scoped>
+.logo-img{
+  width: 24px;
+}
 .logo-box{
   width: 220px;
   &.width{
@@ -31,7 +35,7 @@ const {configure} = storeToRefs(useConfigStoreHook())
   }
   .logo-txt{
     font-weight: bold;
-    font-size: 20px;
+    font-size: 16px;
     color: var(--el-color-primary);
     white-space: nowrap;
     animation: logoAnimation .3s ease;

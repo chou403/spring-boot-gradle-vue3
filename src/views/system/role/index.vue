@@ -43,7 +43,7 @@
     <div class="table-btn-box mb10">
       <el-button type="primary" @click="openDialog">
         <el-icon class="mr5">
-          <ele-folder-add/>
+          <ele-circle-plus/>
         </el-icon>
         新 增
       </el-button>
@@ -135,7 +135,15 @@
 <script lang="ts" setup>
 import {reactive, ref} from "vue";
 import {ElMessage, ElMessageBox, FormInstance, FormRules} from "element-plus";
-import {addSysRole, deleteSysRole, getSysRole, getSysRoleList, setRoleMenus, updateSysRole} from "@/api/role";
+import {
+  addSysRole,
+  deleteSysRole,
+  getMenuIdsByRoleId,
+  getSysRole,
+  getSysRoleList,
+  setRoleMenus,
+  updateSysRole
+} from "@/api/role";
 import {getSysMenuTreeList} from "@/api/menu";
 
 const formRef = ref<FormInstance>()
@@ -272,6 +280,12 @@ let authData = reactive({
   id:null,
   data: []
 })
+// 获取角色权限
+const getRoleAuth = () => {
+  getMenuIdsByRoleId(authData.id).then(res=>{
+    authRef.value.setCheckedKeys(res)
+  })
+}
 // 打开授权弹框
 const openAuthDialog = (row: any) => {
   getSysMenuTreeList({}).then((res: any) => {
@@ -279,6 +293,7 @@ const openAuthDialog = (row: any) => {
   })
   if(row?.id){
     authData.id=row.id
+    getRoleAuth();
   }
   authData.isShow = true;
 }

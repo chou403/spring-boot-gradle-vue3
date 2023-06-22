@@ -31,24 +31,12 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
         if (useUserStoreHook().menuList.length > 0) {
             next();
         } else {
-            // await initBackEndControlRoutes()
-            next();
+            await initBackEndControlRoutes()
+            next({ path: to.path, query: to.query });
         }
     } else {
         next(`/login?redirect=${to.fullPath}`)
     }
-    // if (getToken() && menuList.value.length > 0) {
-    //     next();
-    // } else if (getToken()) {
-    //     await initBackEndControlRoutes()
-    //     next();
-    // } else {
-    //     if (whiteList.includes(to.path)) {
-    //         next();
-    //     } else {
-    //         next(`/login?redirect=${to.fullPath}`)
-    //     }
-    // }
 })
 
 router.afterEach(() => {

@@ -3,6 +3,7 @@ import {http} from '@/utils/http'
 enum Api {
     updateSysRole = '/sysRole/updateSysRole',
     getSysRoleAllList = '/sysRole/getSysRoleAllList',
+    getMenuIdsByRoleId = '/sysRole/getMenuIdsByRoleId/',
     setRoleMenus = '/sysRole/setRoleMenus',
     getSysRoleList = '/sysRole/getSysRoleList',
     getSysRole = '/sysRole/getSysRole/',
@@ -18,6 +19,10 @@ export function getSysRoleList(data:any) {
 // 系统所有角色列表
 export function getSysRoleAllList(data:any) {
     return http.post<any>(Api.getSysRoleAllList, data)
+}
+// 获取角色权限
+export function getMenuIdsByRoleId(id:any) {
+    return http.post<any>(Api.getMenuIdsByRoleId+id)
 }
 // 设置角色权限
 export function setRoleMenus(data:any) {

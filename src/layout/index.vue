@@ -36,7 +36,7 @@ const {configure} = storeToRefs(useConfigStoreHook())
     border-right: 1px solid var(--el-menu-border-color);
     transition: width .3s ease;
     &.hideSidebar{
-      width: 64px !important;
+      flex:0 0 64px !important;
     }
   }
   .layout-right{

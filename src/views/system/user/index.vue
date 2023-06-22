@@ -27,7 +27,7 @@
         </el-col>
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
           <el-form-item label="部门">
-            <custom-cascader v-model:value="queryForm.deptId" :options="deptList" placeholder="请选择部门"/>
+            <custom-tree-select v-model:value="queryForm.deptId" :options="deptList" placeholder="请选择部门"/>
           </el-form-item>
         </el-col>
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
@@ -66,7 +66,7 @@
     <div class="table-btn-box mb10">
       <el-button type="primary" @click="openDialog">
         <el-icon class="mr5">
-          <ele-folder-add/>
+          <ele-circle-plus/>
         </el-icon>
         新 增
       </el-button>
@@ -95,15 +95,17 @@
       <el-table-column prop="createTime" sortable label="创建时间" align="center" width="180"/>
       <el-table-column label="操作" fixed="right" align="center" width="200">
         <template #default="{row}">
-          <el-button link type="primary" @click="openDialog(row)">
-            修改
-          </el-button>
-          <el-button link type="primary" @click="openPswDialog(row)">
-            重置密码
-          </el-button>
-          <el-button @click="delTable(row)" link type="danger">
-            删除
-          </el-button>
+          <template v-if="!row.isAdmin">
+            <el-button link type="primary" @click="openDialog(row)">
+              修改
+            </el-button>
+            <el-button link type="primary" @click="openPswDialog(row)">
+              重置密码
+            </el-button>
+            <el-button @click="delTable(row)" link type="danger">
+              删除
+            </el-button>
+          </template>
         </template>
       </el-table-column>
     </el-table>
@@ -116,11 +118,6 @@
       <el-dialog :model-value="true" destroy-on-close :title="dialogData.title" @close="closeDialog">
         <el-form :model="form" ref="formRef" :rules="rules" label-width="90px">
           <el-row>
-            <el-col :span="24">
-              <el-form-item label="头像">
-                <Avatar v-model:value="form.head"/>
-              </el-form-item>
-            </el-col>
             <el-col :span="12">
               <el-form-item label="用户名" prop="username">
                 <el-input v-model="form.username" :disabled="!!form.id" placeholder="请输入用户名"/>
@@ -230,7 +227,6 @@ const formRef = ref<FormInstance>()
 
 /** 查询*/
 let queryForm = ref({
-
 })
 // 查询
 const onSearch = () => {
@@ -294,7 +290,7 @@ const delTable = (row: any) => {
 const sortChange = ({ column, prop, order }) => {
   console.log(column, prop, order)
   if(order){
-    orderBy.value.column=prop;
+    orderBy.value.column="create_time";
     orderBy.value.asc=order==="ascending";
   }else{
     orderBy.value={}

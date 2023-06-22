@@ -57,13 +57,13 @@
     <div class="table-btn-box mb10">
       <el-button type="primary" @click="openDialog">
         <el-icon class="mr5">
-          <ele-folder-add/>
+          <ele-circle-plus/>
         </el-icon>
         新 增
       </el-button>
     </div>
     <!--    表格-->
-    <el-table :data="tableData.data" border style="width: 100%" row-key="id">
+    <el-table :data="tableData.data" border style="width: 100%" row-key="id" :expand-row-keys="expandRowKeys">
       <el-table-column prop="name" label="菜单名称" align="center" width="300">
         <template #default="scope">
           <div class="flex-inline flex item-center">
@@ -240,7 +240,7 @@
   </el-card>
 </template>
 <script lang="ts" setup>
-import {reactive, ref} from "vue";
+import {computed, reactive, ref} from "vue";
 import {getCascadeParent} from "@/utils";
 import {ElMessage, ElMessageBox, FormInstance, FormRules} from "element-plus";
 import {addSysMenu, deleteSysMenu, getAllSysMenuTreeList, getSysMenu, updateSysMenu} from "@/api/menu";
@@ -265,6 +265,10 @@ const onReset = () => {
 // 表格数据
 const tableData = reactive({
   data: [],
+})
+// 默认展开第一级
+const expandRowKeys=computed(()=>{
+  return tableData.data.map((p:any)=>p.id)
 })
 // 获取表格列表
 const getTableList = () => {

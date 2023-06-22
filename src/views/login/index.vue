@@ -4,11 +4,11 @@
       <div class="sys-name mb30"><i class="iconfont icon-logo_skype logo-txt"></i>SPRING BOOT</div>
       <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules">
         <el-form-item class="mb25" prop="username">
-          <el-input :prefix-icon="User" size="large" clearable v-model="ruleForm.username" placeholder="请输入用户名" />
+          <el-input :prefix-icon="User" size="large" clearable v-model="ruleForm.username" placeholder="请输入用户名"/>
         </el-form-item>
         <el-form-item class="mb25" prop="password">
           <el-input :prefix-icon="Lock" size="large" show-password clearable v-model="ruleForm.password"
-            placeholder="请输入密码" />
+                    placeholder="请输入密码"/>
         </el-form-item>
         <el-button size="large" type="primary" @click="login">登录</el-button>
       </el-form>
@@ -17,10 +17,10 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue";
-import { useRouter } from "vue-router";
-import { useUserStoreHook } from "@/store/modules/user";
-import { User, Lock } from "@element-plus/icons-vue"
+import {reactive} from "vue";
+import {useRouter} from "vue-router";
+import {useUserStoreHook} from "@/store/modules/user";
+import {Lock, User} from "@element-plus/icons-vue"
 import md5 from "js-md5"
 
 const router = useRouter();
@@ -45,8 +45,8 @@ const login = () => {
   useUserStoreHook().login({
     username: ruleForm.username,
     password: md5(ruleForm.password)
-  }).then(() => {
-    router.push('/')
+  }).then(async () => {
+    await router.push('/')
   })
 }
 
