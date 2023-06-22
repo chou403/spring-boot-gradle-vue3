@@ -31,8 +31,7 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
         if (useUserStoreHook().menuList.length > 0) {
             next();
         } else {
-            await initBackEndControlRoutes()
-           console.log( router.getRoutes());
+            // await initBackEndControlRoutes()
             next();
         }
     } else {
