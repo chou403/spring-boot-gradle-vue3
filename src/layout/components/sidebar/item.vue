@@ -2,7 +2,10 @@
   <el-sub-menu v-if="props.menu?.children&&props.menu.name" :index="props.menu.path">
     <template #title>
       <div class="menu-icon">
-        <component :is="props.menu.meta.icon" :inline-tamplate="true"/>
+        <template  v-if="props.menu.meta.icon.startsWith('local')">
+          <SvgIcon :name="props.menu.meta.icon"/>
+        </template>
+        <component v-else :is="props.menu.meta.icon" :inline-tamplate="true"/>
       </div>
       <span class="menu-txt">{{ props.menu.meta.title }}</span>
     </template>
@@ -13,7 +16,10 @@
           :index="child.path"
       >
         <div class="menu-icon">
-          <component :is="child.meta.icon" :inline-tamplate="true"/>
+          <template v-if="child.meta.icon.startsWith('local')">
+            <SvgIcon :name="child.meta.icon"/>
+          </template>
+          <component v-else :is="child.meta.icon" :inline-tamplate="true"/>
         </div>
         <span class="menu-txt">{{ child.meta.title }}</span>
       </el-menu-item>
@@ -25,7 +31,10 @@
   <template v-else>
     <el-menu-item :index="props.menu.path" @click="">
       <div class="menu-icon">
-        <component :is="props.menu.meta.icon" :inline-tamplate="true"/>
+        <template  v-if="props.menu.meta.icon.startsWith('local')">
+          <SvgIcon :name="props.menu.meta.icon"/>
+        </template>
+        <component v-else :is="props.menu.meta.icon" :inline-tamplate="true"/>
       </div>
       <span class="menu-txt">{{ props.menu.meta.title }}</span>
     </el-menu-item>
@@ -36,6 +45,7 @@
 import {childrenType} from "@/layout/types";
 import {PropType} from "vue";
 import SidebarItem from './item.vue'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 const props = defineProps({
   menu: {

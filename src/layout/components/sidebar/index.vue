@@ -27,8 +27,10 @@ const router = useRouter();
 
 const {configure} = storeToRefs(useConfigStoreHook())
 const {menuList} = storeToRefs(useUserStoreHook());
+console.log(222,menuList.value)
 
 const defaultActive=computed(()=>useRouter().currentRoute.value.path)
+console.log(111,defaultActive.value)
 // 选择菜单
 const menuSelect = (path:string) => {
   router.push(path)
