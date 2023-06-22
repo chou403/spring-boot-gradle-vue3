@@ -28,7 +28,6 @@ const route = useRoute();
 
 const {configure} = storeToRefs(useConfigStoreHook())
 const {menuList} = storeToRefs(useUserStoreHook());
-console.log(router.getRoutes())
 
 let defaultActive=''
 
