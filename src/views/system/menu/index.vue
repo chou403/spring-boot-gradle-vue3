@@ -405,7 +405,7 @@ const submit = async () => {
       if(form.value.type === 1) {
         params = {
           name: data.name,
-          parentId: data.parentId,
+          parentId: data.parentId||0,
           icon: data.icon,
           type: data.type,
           code: data.code,
@@ -421,7 +421,7 @@ const submit = async () => {
       }else if (form.value.type === 2) {
         params = {
           name: data.name,
-          parentId: data.parentId,
+          parentId: data.parentId||0,
           type: data.type,
           icon: data.icon,
           code: data.code,
@@ -434,7 +434,7 @@ const submit = async () => {
       } else {
         params = {
           name: data.name,
-          parentId: data.parentId,
+          parentId: data.parentId||0,
           code: data.code,
           type: data.type,
           status: data.status,

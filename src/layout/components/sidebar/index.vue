@@ -20,17 +20,41 @@ import SidebarItem from './item.vue'
 import {storeToRefs} from 'pinia'
 import {useConfigStoreHook} from "@/store/modules/config";
 import {useUserStoreHook} from "@/store/modules/user";
-import { useRouter } from "vue-router";
-import {computed} from "vue";
+import { useRouter,useRoute } from "vue-router";
+import {computed,watch} from "vue";
 
 const router = useRouter();
+const route = useRoute();
 
 const {configure} = storeToRefs(useConfigStoreHook())
 const {menuList} = storeToRefs(useUserStoreHook());
-console.log(222,menuList.value)
+console.log(router.getRoutes())
 
-const defaultActive=computed(()=>useRouter().currentRoute.value.path)
-console.log(111,defaultActive.value)
+let defaultActive=''
+
+// 获取当前隐藏路由的父级不隐藏路由
+const getParentRoute = ():string => {
+  let matched=router.currentRoute.value.matched;
+  for (let i = matched.length-1; i >=0; i--) {
+    if(matched[i]?.meta.isMenu)return matched[i].path
+  }
+  return '';
+}
+watch(
+    () => route.fullPath,
+    () => {
+      if (route.name === 'Login') return;
+      const meta = route.meta;
+      if(!meta.isMenu){
+        defaultActive=getParentRoute()
+      }else{
+        defaultActive=router.currentRoute.value.path
+      }
+    },
+    {
+      immediate: true,
+    },
+);
 // 选择菜单
 const menuSelect = (path:string) => {
   router.push(path)
