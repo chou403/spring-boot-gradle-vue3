@@ -5,22 +5,22 @@
       <el-row :gutter="20">
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
           <el-form-item label="用户名">
-            <el-input v-model="queryForm.username" placeholder="请输入用户名"/>
+            <el-input v-model="queryForm.username" clearable placeholder="请输入用户名"/>
           </el-form-item>
         </el-col>
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
-          <el-form-item label="用户昵称">
-            <el-input v-model="queryForm.nickname" placeholder="请输入用户昵称"/>
+          <el-form-item label="昵称">
+            <el-input v-model="queryForm.nickname" clearable placeholder="请输入昵称"/>
           </el-form-item>
         </el-col>
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
-          <el-form-item label="手机号">
-            <el-input v-model="queryForm.phone" maxlength="11" placeholder="请输入手机号"/>
+          <el-form-item label="手机号码">
+            <el-input v-model="queryForm.phone" clearable maxlength="11" placeholder="请输入手机号码"/>
           </el-form-item>
         </el-col>
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
           <el-form-item label="角色">
-            <el-select v-model="queryForm.roleId" placeholder="请选择角色">
+            <el-select v-model="queryForm.roleId" clearable placeholder="请选择角色">
               <el-option v-for="item in roleList" :label="item.name" :value="item.id"/>
             </el-select>
           </el-form-item>
@@ -32,7 +32,7 @@
         </el-col>
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
           <el-form-item label="状态">
-            <el-select v-model="queryForm.status" placeholder="请选择状态">
+            <el-select v-model="queryForm.status" clearable placeholder="请选择状态">
               <el-option label="启用" :value="true"/>
               <el-option label="禁用" :value="false"/>
             </el-select>
@@ -77,7 +77,7 @@
       <el-table-column prop="nickname" label="昵称" align="center"/>
       <el-table-column prop="roleName" label="角色" align="center"/>
       <el-table-column prop="deptName" label="部门" align="center"/>
-      <el-table-column prop="phone" label="手机号" align="center" width="150"/>
+      <el-table-column prop="phone" label="手机号码" align="center" width="150"/>
       <el-table-column prop="email" label="邮箱" align="center" width="180"/>
       <el-table-column prop="gender" label="性别" align="center">
         <template #default="scope">
@@ -145,7 +145,7 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="部门">
-                <custom-cascader v-model:value="form.deptId" :options="deptList" placeholder="请选择部门"/>
+                <custom-tree-select v-model:value="form.deptId" :options="deptList" placeholder="请选择部门"/>
               </el-form-item>
             </el-col>
             <el-col :span="24">
@@ -288,7 +288,6 @@ const delTable = (row: any) => {
 }
 // 排序
 const sortChange = ({ column, prop, order }) => {
-  console.log(column, prop, order)
   if(order){
     orderBy.value.column="create_time";
     orderBy.value.asc=order==="ascending";
@@ -338,7 +337,7 @@ const rules = reactive<FormRules>({
   ],
   password: [
     {required: true, message: '请输入密码', trigger: 'blur'},
-    {min: 6, max: 12, message: '密码长度应为6到12位', trigger: 'blur'}
+    {min: 6, max: 12, message: '密码长度6到12位', trigger: 'blur'}
   ],
   phone: [
     {validator: validatePhoneNumber, trigger: 'blur'},

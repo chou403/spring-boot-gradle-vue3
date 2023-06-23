@@ -5,22 +5,22 @@
       <el-row :gutter="20">
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
           <el-form-item label="菜单名称">
-            <el-input v-model="queryForm.name" placeholder="请输入菜单名称"/>
+            <el-input v-model="queryForm.name" clearable placeholder="请输入菜单名称"/>
           </el-form-item>
         </el-col>
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
           <el-form-item label="权限编码">
-            <el-input v-model="queryForm.code" placeholder="请输入权限编码"/>
+            <el-input v-model="queryForm.code" clearable placeholder="请输入权限编码"/>
           </el-form-item>
         </el-col>
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
           <el-form-item label="路由">
-            <el-input v-model="queryForm.routeUrl" placeholder="请输入路由"/>
+            <el-input v-model="queryForm.routeUrl" clearable placeholder="请输入路由"/>
           </el-form-item>
         </el-col>
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
           <el-form-item label="菜单类型">
-            <el-select v-model="queryForm.type" placeholder="请选择菜单类型">
+            <el-select v-model="queryForm.type" clearable placeholder="请选择菜单类型">
               <el-option label="导航菜单" :value="1" />
               <el-option label="菜单" :value="2" />
               <el-option label="权限" :value="3" />
@@ -29,7 +29,7 @@
         </el-col>
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
           <el-form-item label="状态">
-            <el-select v-model="queryForm.status" placeholder="请选择状态">
+            <el-select v-model="queryForm.status" clearable placeholder="请选择状态">
               <el-option label="启用" :value="1" />
               <el-option label="禁用" :value="0" />
             </el-select>
@@ -64,7 +64,7 @@
     </div>
     <!--    表格-->
     <el-table :data="tableData.data" border style="width: 100%" row-key="id" :expand-row-keys="expandRowKeys">
-      <el-table-column prop="name" label="菜单名称" align="center" width="300">
+      <el-table-column prop="name" label="菜单名称" width="300">
         <template #default="scope">
           <div class="flex-inline flex item-center">
             <template v-if="scope.row.icon?.indexOf('local')>=0">
@@ -122,7 +122,7 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="上级菜单">
-                <custom-cascader v-model:value="form.parentId" :options="tableData.data" placeholder="请选择上级菜单"/>
+                <custom-tree-select v-model:value="form.parentId" :options="tableData.data" placeholder="请选择上级菜单"/>
               </el-form-item>
             </el-col>
             <el-col :span="12">

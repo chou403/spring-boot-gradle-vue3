@@ -16,6 +16,11 @@
   line-height: 48px !important;
 }
 
+/** Button 按钮*/
+.el-button{
+  font-weight: normal !important;
+}
+
 /** Card 卡片*/
 .el-card__body{
   padding: 10px;
@@ -45,6 +50,15 @@
   align-items: center;
   .el-dialog{
     margin: auto !important;
+  }
+}
+
+/** Message Box 消息弹出框*/
+.el-message-box__btns{
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  button:nth-child(1){
+    margin-left: 10px;
   }
 }
 

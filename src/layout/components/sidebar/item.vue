@@ -23,9 +23,7 @@
         </div>
         <span class="menu-txt">{{ child.meta.title }}</span>
       </el-menu-item>
-      <sidebar-item
-          v-else
-          v-for="menu in child?.children" :key="menu.path" :menu="menu"></sidebar-item>
+      <sidebar-item v-else :menu="child"></sidebar-item>
     </template>
   </el-sub-menu>
   <template v-else>
@@ -52,7 +50,6 @@ const props = defineProps({
     type: Object as PropType<childrenType>
   },
 });
-
 </script>
 
 <style scoped lang="scss">

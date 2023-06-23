@@ -1,12 +1,11 @@
 import Axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, CustomParamsSerializer} from 'axios'
 import {stringify} from 'qs'
 import {closeNProgress, startNProgress} from "@/utils/nprogress";
-import {ElMessageBox} from "element-plus";
-import {getToken} from "@/utils/auth";
-import {useUserStoreHook} from "@/store/modules/user";
-import { ElMessage } from 'element-plus'
+import {ElMessage, ElMessageBox} from "element-plus";
+import {getToken, removeToken} from "@/utils/auth";
 
 import {PureHttpRequestConfig, PureHttpResponse, RequestMethods} from "./types.d";
+import {router} from "@/router";
 
 
 const defaultConfig: AxiosRequestConfig = {
@@ -106,6 +105,22 @@ class Http {
                     switch (code) {
                         case 200:
                             resolve(data);
+                            break;
+                        case 5001:
+                            ElMessageBox.confirm(
+                                '登录已过期或登录信息不存在，请重新登录',
+                                '提示',
+                                {
+                                    confirmButtonText: '重新登录',
+                                    cancelButtonText: '取消',
+                                    type: 'warning',
+                                })
+                                .then(async () => {
+                                    removeToken();
+                                    localStorage.removeItem('userinfo');
+                                    await router.push("/login");
+                                }).catch(() => {
+                            })
                             break;
                         default:
                             ElMessage.error(msg || '网络错误');

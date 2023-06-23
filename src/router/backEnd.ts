@@ -53,10 +53,11 @@ function formatRoute(routes: any[]) {
                 ]
             };
         }
+        console.log()
         let obj: any = {
             path: p.routeUrl,
             name: p.routeName,
-            component: p.parentId === '0' ? '/layout/index' : p.componentPath,
+            component: p.parentId === '0'? '/layout/index' : p.componentPath,
             meta: {
                 title: p.name,
                 isLink: p.isLink ? p.linkUrl : '',

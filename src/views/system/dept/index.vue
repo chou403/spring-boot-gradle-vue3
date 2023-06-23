@@ -5,12 +5,12 @@
       <el-row :gutter="20">
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
           <el-form-item label="部门名称">
-            <el-input v-model="queryForm.name" placeholder="请输入部门名称"/>
+            <el-input v-model="queryForm.name" clearable placeholder="请输入部门名称"/>
           </el-form-item>
         </el-col>
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
           <el-form-item label="状态">
-            <el-select v-model="queryForm.status" placeholder="请选择状态">
+            <el-select v-model="queryForm.status" clearable placeholder="请选择状态">
               <el-option label="启用" :value="1" />
               <el-option label="禁用" :value="0" />
             </el-select>
