@@ -1,4 +1,5 @@
 import {darken, lighten, toggleClass} from "@/utils";
+import { useDark, useToggle } from '@vueuse/core'
 
 export function useConfigure() {
 
@@ -20,6 +21,11 @@ export function useConfigure() {
         }
     }
 
+    /** 设置暗黑模式*/
+    function setDark(isDark: boolean) {
+        useToggle(useDark())(isDark);
+    }
+
     /** 设置灰色模式*/
     function setGrey(isGrey: boolean) {
         toggleClass(isGrey, "html-grey", document.getElementsByName('html')[0]);
@@ -33,6 +39,7 @@ export function useConfigure() {
     return {
         setThemeColor,
         setWeakness,
+        setDark,
         setGrey
     }
 }

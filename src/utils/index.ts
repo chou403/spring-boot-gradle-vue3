@@ -96,26 +96,6 @@ export function toggleClass(flag: boolean, clsName: string, target?: HTMLElement
     targetEl.className = flag ? `${className} ${clsName} ` : className;
 }
 
-/** 数组层级格式化 */
-export function formatCascade(arr:Array<any>=[],parentName:string="parentId",idName:string='id'):any {
-    return arr.map((item)=>{
-        if(item[parentName]){
-            let index=arr.findIndex(p=>p[idName]==item[parentName])
-            if(index>=0){
-                if(arr[index].children){
-                    arr[index].children.push(item)
-                }else{
-                    arr[index].children=[item]
-                }
-            }else{
-                return item
-            }
-        }else{
-            return item
-        }
-    }).filter(p=>p)
-}
-
 /** 获取父级数组 */
 export function getCascadeParent(list:Array<any>=[],parentId:string,parentName:string="parentId",idName:string='id') {
     for (const i in list) {
@@ -130,6 +110,13 @@ export function getCascadeParent(list:Array<any>=[],parentId:string,parentName:s
             }
         }
     }
+}
+
+/** 打开外部链接 */
+export function openLink(src:string) {
+    console.log(src)
+    if(!src){return;}
+    window.open(src);
 }
 
 

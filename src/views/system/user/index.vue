@@ -213,21 +213,18 @@
   </el-card>
 </template>
 <script lang="ts" setup>
-import {reactive, ref} from "vue";
 import {addSysUser, deleteSysUser, getSysUser, getSysUserList, resetSysUserPassword, updateSysUser} from "@/api/user";
 import {getSysDeptTreeList} from "@/api/dept";
 import md5 from "js-md5"
 import {ElMessage, ElMessageBox, FormInstance, FormRules} from 'element-plus'
 import {validateEmail, validatePhoneNumber} from "@/utils/validate";
 import {getSysRoleAllList} from "@/api/role";
-import Avatar from "@/components/avatar/index.vue"
 
 const formRef = ref<FormInstance>()
 
 
 /** 查询*/
-let queryForm = ref({
-})
+let queryForm = ref({})
 // 查询
 const onSearch = () => {
   pageData.pageIndex = 1;
@@ -254,7 +251,7 @@ const changePage = (page: number) => {
 }
 
 /** 排序*/
-const orderBy=ref({})
+const orderBy = ref({})
 
 /** 表格*/
 // 表格数据
@@ -263,7 +260,7 @@ const tableData = reactive({
 })
 // 获取表格列表
 const getTableList = () => {
-  getSysUserList({...pageData, ...queryForm.value,orderBy:{...orderBy.value}}).then(res => {
+  getSysUserList({...pageData, ...queryForm.value, orderBy: {...orderBy.value}}).then(res => {
     tableData.data = res.list || [];
     pageData.total = res.total;
   })
@@ -287,12 +284,12 @@ const delTable = (row: any) => {
   })
 }
 // 排序
-const sortChange = ({ column, prop, order }) => {
-  if(order){
-    orderBy.value.column="create_time";
-    orderBy.value.asc=order==="ascending";
-  }else{
-    orderBy.value={}
+const sortChange = ({column, prop, order}) => {
+  if (order) {
+    orderBy.value.column = "create_time";
+    orderBy.value.asc = order === "ascending";
+  } else {
+    orderBy.value = {}
   }
 
   pageData.pageIndex = 1;
@@ -337,7 +334,7 @@ const rules = reactive<FormRules>({
   ],
   password: [
     {required: true, message: '请输入密码', trigger: 'blur'},
-    {min: 6, max: 12, message: '密码长度6到12位', trigger: 'blur'}
+    {min: 6, max: 12, message: '密码长度6到20位', trigger: 'blur'}
   ],
   phone: [
     {validator: validatePhoneNumber, trigger: 'blur'},

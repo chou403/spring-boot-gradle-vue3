@@ -2,6 +2,8 @@ import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path,{resolve} from "path";
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import AutoImport from "unplugin-auto-import/vite";
+import Components from "unplugin-vue-components/vite";
 
 /** 路径查找 */
 const pathResolve = (dir: string): string => {
@@ -13,10 +15,16 @@ const alias: Record<string, string> = {
     "@": pathResolve("src"),
 };
 
-// https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
         vue(),
+        AutoImport({
+            imports: ["vue","vue-router","pinia"],
+            dts: "src/types/auto-imports.d.ts",
+        }),
+        Components({
+            dts: "src/types/components.d.ts",
+        }),
         createSvgIconsPlugin({
             // 指定需要缓存的图标文件夹
             iconDirs: [path.resolve(process.cwd(), 'src/assets/svg')],

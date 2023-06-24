@@ -33,17 +33,17 @@
               </div>
             </el-tooltip>
           </div>
-          <div class="layout-item">
-            <el-tooltip content="混合模式">
-              <div class="layout-item-section" :class="{'active':configure.layoutMode===2}"
-                   @click="layoutModeChange(2)">
-                <div class="layout-item__header"></div>
-                <div class="layout-item__menu__1"></div>
-                <div class="layout-item__menu layout-item__menu__2"></div>
-                <div class="layout-item__title">混合</div>
-              </div>
-            </el-tooltip>
-          </div>
+<!--          <div class="layout-item">-->
+<!--            <el-tooltip content="混合模式">-->
+<!--              <div class="layout-item-section" :class="{'active':configure.layoutMode===2}"-->
+<!--                   @click="layoutModeChange(2)">-->
+<!--                <div class="layout-item__header"></div>-->
+<!--                <div class="layout-item__menu__1"></div>-->
+<!--                <div class="layout-item__menu layout-item__menu__2"></div>-->
+<!--                <div class="layout-item__title">混合</div>-->
+<!--              </div>-->
+<!--            </el-tooltip>-->
+<!--          </div>-->
         </div>
       </div>
       <!--      全局配置-->
@@ -59,6 +59,12 @@
       <!--      界面显示-->
       <div class="theme-color config-item-box">
         <el-divider>界面显示</el-divider>
+        <div class="config-item">
+          <div class="config-item__label">暗黑模式</div>
+          <div class="config-item__value">
+            <el-switch v-model="useConfigStoreHook().configure.isDark"  @change="darkChange"/>
+          </div>
+        </div>
         <div class="config-item">
           <div class="config-item__label">灰色模式</div>
           <div class="config-item__value">
@@ -90,6 +96,12 @@ const isShowDrawer = ref(false)
 const themeColorChange = (color: string) => {
   useConfigStoreHook().storageConfigureChange('themeColor', color);
   useConfigure().setThemeColor(color);
+}
+
+/** 修改暗黑模式*/
+const darkChange = (isDark: boolean) => {
+  useConfigStoreHook().storageConfigureChange('isDark', isDark);
+  useConfigure().setDark(isDark);
 }
 
 /** 修改灰色模式*/

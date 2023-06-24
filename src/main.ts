@@ -2,7 +2,6 @@ import {createApp} from 'vue'
 import App from './App.vue'
 import {setupStore} from "@/store";
 import {setupRouter} from "@/router";
-import {setGlobalComponent} from "@/components/Custom";
 import ElementPlus from "element-plus";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue"
 import 'virtual:svg-icons-register'
@@ -31,9 +30,6 @@ setupStore(app)
 
 /** 配置 路由*/
 setupRouter(app)
-
-/** 配置全局组件*/
-setGlobalComponent(app);
 
 app
     .use(ElementPlus)

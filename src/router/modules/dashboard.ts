@@ -10,8 +10,8 @@ export default {
     },
     children: [
         {
-            path: "/dashboard",
-            name: "Dashboard",
+            path: "/home",
+            name: "Home",
             component: () => import("@/views/dashboard/index.vue"),
             meta: {
                 title: "首页",

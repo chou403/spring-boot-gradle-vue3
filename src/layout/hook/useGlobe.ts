@@ -21,6 +21,7 @@ export function useGlobeConfigure() {
            setThemeColor(configure.themeColor);
            useConfigure().setGrey(configure.isGrey);
            useConfigure().setWeakness(configure.isWeakness);
+           useConfigure().setDark(configure.isDark);
            useConfigStoreHook().setConfigure();
        }else{
            setThemeColor(getComputedStyle(document.documentElement)

@@ -1,8 +1,13 @@
 import {getNavMenuTreeList} from "@/api/menu"
-import {addDynamicRoutes} from "@/router/permission"
+import {useUserStoreHook} from "@/store/modules/user";
+import {RouteRecordRaw} from "vue-router";
+import {router} from "@/router/index";
 
-const layoutModules: any = import.meta.glob('../layout/*.{vue,tsx}');
+const Layout = () => import("@/layout/index.vue");
+
+const layoutModules: any = import.meta.glob(['../layout/*.{vue,tsx}','../layout/routerView/*.{vue,tsx}']);
 const viewsModules: any = import.meta.glob('../views/**/*.{vue,tsx}');
+
 /**
  * 获取目录下的 .vue、.tsx 全部文件
  * @method import.meta.glob
@@ -10,15 +15,34 @@ const viewsModules: any = import.meta.glob('../views/**/*.{vue,tsx}');
  */
 const dynamicViewsModules: Record<string, Function> = Object.assign({}, {...layoutModules}, {...viewsModules});
 
+const rootRoutes:any = [
+    {
+        path: "/",
+        component: Layout,
+        name: 'root',
+        redirect: '/home'
+    }
+]
+
+// 添加动态路由
+export const addDynamicRoutes = async (routes: any) => {
+    // 添加路由
+    routes.forEach((route: RouteRecordRaw) => {
+        const routeName: any = route.name;
+        if (!router.hasRoute(routeName)) router.addRoute(route);
+    })
+}
+
 /**
  * 后端控制路由：初始化方法，防止刷新时路由丢失
  */
 export async function initBackEndControlRoutes() {
     // 获取路由菜单数据
     const res = await getNavMenuTreeList({});
-
     const result = backEndComponent(formatRoute(res));
-    await addDynamicRoutes(result);
+    useUserStoreHook().setMenu(result);
+    rootRoutes[0].children=result;
+    await addDynamicRoutes(rootRoutes);
 }
 
 /**
@@ -27,52 +51,45 @@ export async function initBackEndControlRoutes() {
  * @returns 返回处理好的路由菜单
  */
 function formatRoute(routes: any[]) {
-    return routes.filter((p: any) => p.routeUrl && p.componentPath).map((p: any) => {
-        if (p.parentId === "0" && p.children?.length <= 0) {
+    return routes.map((p: any) => {
+        if (p.isHoem) {
+            rootRoutes[0].redirect = p.routeUrl;
+        }
+        if(p.isLink){
             return {
-                path: p.isHome ? "/" : p.routeUrl + '-layout',
-                component: '/layout/index',
-                redirect: p.routeUrl,
+                path: `/${p.code}Link`,
+                name: p.code,
                 meta: {
                     title: p.name,
                     icon: p.icon,
-                    isMenu: true
+                    isCache:!!p.isCache,
+                    isMenu: !!p.isShow,
+                    isLink: !!p.isLink,
+                    linkUrl: p.linkUrl,
                 },
-                children: [
-                    {
-                        path: p.routeUrl,
-                        name: p.code,
-                        component: p.componentPath,
-                        meta: {
-                            title: p.name,
-                            icon: p.icon,
-                            isHome: true,
-                            isMenu: false
-                        }
-                    }
-                ]
-            };
+            }
         }
-        console.log()
-        let obj: any = {
+        let route: any = {
             path: p.routeUrl,
             name: p.routeName,
-            component: p.parentId === '0'? '/layout/index' : p.componentPath,
+            component: p.componentPath,
             meta: {
                 title: p.name,
-                isLink: p.isLink ? p.linkUrl : '',
-                isMenu: p.isShow,
-                isCache: p.isCache,
-                icon: p.icon
+                icon: p.icon,
+                isCache:!!p.isCache,
+                isMenu: !!p.isShow,
+                isLink: !!p.isLink,
+                linkUrl: p.linkUrl,
             },
         }
         if (p.routeRedirect) {
-            obj.redirect = p.routeRedirect;
+            route.redirect = p.routeRedirect;
         }
         if (p.children?.length > 0) {
-            obj.children = formatRoute(p.children);
+            route.children = formatRoute(p.children);
+            route.component="layout/routerView/parent"
         }
-        return obj;
+        return route;
     })
 }
 

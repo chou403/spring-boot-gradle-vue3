@@ -11,6 +11,7 @@ export const useConfigStore = defineStore({
             themeColor: '#409eff',
             sidebarBgColor:'#f00',
             isGrey:false,
+            isDark:false,
             isWeakness:false,
             locale:'zh',
             layoutMode:0,

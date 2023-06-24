@@ -1,8 +1,8 @@
 <template>
-  <el-sub-menu v-if="props.menu?.children&&props.menu.name" :index="props.menu.path">
+  <el-sub-menu v-if="props.menu?.children" :index="props.menu.path">
     <template #title>
       <div class="menu-icon">
-        <template  v-if="props.menu.meta.icon.startsWith('local')">
+        <template v-if="props.menu.meta?.icon&&props.menu.meta.icon.startsWith('local')">
           <SvgIcon :name="props.menu.meta.icon"/>
         </template>
         <component v-else :is="props.menu.meta.icon" :inline-tamplate="true"/>
@@ -16,40 +16,45 @@
           :index="child.path"
       >
         <div class="menu-icon">
-          <template v-if="child.meta.icon.startsWith('local')">
+          <template v-if="child.meta?.icon&&child.meta?.icon.startsWith('local')">
             <SvgIcon :name="child.meta.icon"/>
           </template>
-          <component v-else :is="child.meta.icon" :inline-tamplate="true"/>
+          <component v-else :is="child.meta?.icon" :inline-tamplate="true"/>
         </div>
-        <span class="menu-txt">{{ child.meta.title }}</span>
+        <span v-if="child.meta.isLink" @click.prevent.stop="openLink(child.meta.linkUrl)" class="menu-txt w100">{{
+            child.meta.title
+          }}</span>
+        <span v-else class="menu-txt">{{ child.meta.title }}</span>
       </el-menu-item>
       <sidebar-item v-else :menu="child"></sidebar-item>
     </template>
   </el-sub-menu>
   <template v-else>
-    <el-menu-item :index="props.menu.path" @click="">
+    <el-menu-item :index="props.menu.path">
       <div class="menu-icon">
-        <template  v-if="props.menu.meta.icon.startsWith('local')">
+        <template v-if="props.menu.meta?.icon&&props.menu.meta?.icon.startsWith('local')">
           <SvgIcon :name="props.menu.meta.icon"/>
         </template>
-        <component v-else :is="props.menu.meta.icon" :inline-tamplate="true"/>
+        <component v-else :is="props.menu.meta?.icon" :inline-tamplate="true"/>
       </div>
-      <span class="menu-txt">{{ props.menu.meta.title }}</span>
+      <span v-if="props.menu.meta.isLink" @click.prevent.stop="openLink(props.menu.meta.linkUrl)"
+            class="menu-txt w100">{{ props.menu.meta.title }}</span>
+      <span v-else class="menu-txt">{{ props.menu.meta.title }}</span>
     </el-menu-item>
   </template>
 </template>
 
 <script lang="ts" setup>
 import {childrenType} from "@/layout/types";
-import {PropType} from "vue";
 import SidebarItem from './item.vue'
-import SvgIcon from '@/components/SvgIcon/index.vue'
+import {openLink} from "@/utils";
 
 const props = defineProps({
   menu: {
     type: Object as PropType<childrenType>
   },
 });
+
 </script>
 
 <style scoped lang="scss">
@@ -67,8 +72,9 @@ const props = defineProps({
 }
 
 .el-menu-item {
-  &.is-active{
+  &.is-active {
     color: #fff !important;
+
     &:before {
       background: var(--el-color-primary) !important;
       border-radius: 3px;

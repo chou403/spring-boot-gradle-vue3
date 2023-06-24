@@ -17,11 +17,8 @@
 
 <script lang="ts" setup>
 import SidebarItem from './item.vue'
-import {storeToRefs} from 'pinia'
 import {useConfigStoreHook} from "@/store/modules/config";
 import {useUserStoreHook} from "@/store/modules/user";
-import { useRouter,useRoute } from "vue-router";
-import {computed,watch} from "vue";
 
 const router = useRouter();
 const route = useRoute();

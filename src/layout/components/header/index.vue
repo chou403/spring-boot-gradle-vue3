@@ -27,7 +27,7 @@
             <notify/>
           </div>
           <div class="header-bar__item">
-            <theme-color-picker/>
+            <theme-picker/>
           </div>
         </div>
         <div class="header-bar__user">
@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts" setup>
-import ThemeColorPicker from "./ThemeColorPicker/index.vue"
+import ThemePicker from "./ThemePicker/index.vue"
 import Notify from "./Notify/index.vue"
 import User from "./User/index.vue"
 import Tags from "./Tags/index.vue"

@@ -35,7 +35,6 @@ class Http {
     private httpInterceptorsRequest(): void {
         Http.axiosInstance.interceptors.request.use(
             async (config: any) => {
-                startNProgress();
                 if (typeof config.beforeRequestCallback === "function") {
                     config.beforeRequestCallback(config);
                     return config;
@@ -64,8 +63,6 @@ class Http {
         instance.interceptors.response.use(
             (response: PureHttpResponse) => {
                 const $config = response.config;
-                // 关闭进度条动画
-                closeNProgress();
                 if (typeof $config.beforeResponseCallback === "function") {
                     $config.beforeResponseCallback(response);
                     return response.data;
@@ -77,7 +74,6 @@ class Http {
                 return response.data;
             },
             (error: AxiosResponse) => {
-                closeNProgress();
                 return Promise.reject(error);
             }
         );
