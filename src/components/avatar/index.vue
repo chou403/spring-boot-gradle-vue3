@@ -21,9 +21,9 @@ import {uploadLocal} from "@/api";
 
 
 const props = withDefaults(defineProps<{
-  value: any,
+  value: string,
 }>(), {
-  placeholder: '请选择'
+  value:''
 })
 
 const emits = defineEmits<{
@@ -36,7 +36,6 @@ const data = reactive({
       return props.value
     },
     set: val => {
-      console.log(1, val)
       emits('update:value', val);
     }
   })
@@ -70,15 +69,15 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 }
 </script>
 
-<style scoped>
+<style>
 .avatar-uploader .avatar {
   width: 100px;
   height: 100px;
   display: block;
 }
-</style>
-
-<style>
+.avatar-uploader .el-upload{
+  border-radius: 50% !important;
+}
 .avatar-uploader .el-upload {
   border: 1px dashed var(--el-border-color);
   border-radius: 6px;
@@ -97,6 +96,7 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   color: #8c939d;
   width: 100px;
   height: 100px;
+  border-radius: 50%;
   text-align: center;
 }
 </style>

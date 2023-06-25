@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { store } from "@/store";
 import {LoginResult,LoginParamsType} from "@/api/types/userTypes";
-import {loginApi,logoutApi,getLoginUserInfoApi} from '@/api/user'
+import {loginApi,logoutApi,getLoginUserInfoApi} from '@/api/system'
 import {ElMessage} from "element-plus";
 import {setToken,removeToken} from "@/utils/auth";
 import {computeDate} from "@/utils";

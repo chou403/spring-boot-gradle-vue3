@@ -1,8 +1,14 @@
 @import 'element-plus/theme-chalk/dark/css-vars.css';
 
-.app-main{
-  background-color: inherit !important;
-}
-.el-table th.el-table__cell{
-  background-color: inherit !important;
+html.dark{
+  .app-main{
+    background-color: inherit !important;
+  }
+  .el-table th.el-table__cell{
+    background-color: inherit !important;
+  }
+  .el-menu-item:hover,.el-sub-menu__title:hover{
+    background-color: #505968;
+    color: #eee;
+  }
 }

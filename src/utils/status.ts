@@ -7,7 +7,7 @@ const color = {
     danger: 'danger',
 }
 
-interface InterfaceStatus {
+export interface InterfaceStatus {
     label: string,
     type?: string
 }
@@ -21,6 +21,14 @@ type StatusType = Record<string, Record<number | string, InterfaceStatus>>
 
 /** 系统模块*/
 export const system_status: StatusType = {
+    //===================================================================TODO 系统用户
+    // 性别
+    gender: {
+        1: {label: '男'},
+        2: {label: '女'},
+    },
+
+
     //===================================================================TODO 操作日志
     //日志类型
     logType: {
