@@ -20,6 +20,7 @@
 import {useUserStoreHook} from "@/store/modules/user";
 import {Lock, User} from "@element-plus/icons-vue"
 import md5 from "js-md5"
+import {NextLoading} from "@/utils/loading"
 
 const router = useRouter();
 
@@ -44,10 +45,14 @@ const login = () => {
     username: ruleForm.username,
     password: md5(ruleForm.password)
   }).then(async () => {
+    NextLoading.start();
     await router.push('/')
   })
 }
-
+// 页面加载时
+onMounted(() => {
+  NextLoading.done();
+});
 </script>
 
 <style scoped lang="scss">

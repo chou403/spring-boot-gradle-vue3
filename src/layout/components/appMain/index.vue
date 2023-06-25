@@ -23,7 +23,12 @@
 </template>
 
 <script lang="ts" setup>
+// 页面加载时
+import {NextLoading} from "@/utils/loading";
 
+onMounted(() => {
+  NextLoading.done(600);
+});
 </script>
 
 <style lang="scss" scoped>

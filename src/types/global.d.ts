@@ -62,5 +62,10 @@ declare global {
         children?: Array<RouteChildrenConfigsTable>;
     }
 
+    // 声明文件，定义全局变量
+    declare interface Window {
+        nextLoading: boolean;
+    }
 }
+
 

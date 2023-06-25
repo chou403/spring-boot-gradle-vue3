@@ -14,7 +14,6 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, reactive} from 'vue'
 import type {UploadProps, UploadRequestOptions} from 'element-plus'
 import {ElMessage} from 'element-plus'
 import {uploadLocal} from "@/api";

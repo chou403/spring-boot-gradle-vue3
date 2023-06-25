@@ -3,7 +3,7 @@
     <el-row class="user-box">
       <el-col>
         <el-form-item prop="nickname">
-          <avatar v-model:value="userForm.head"/>
+          <Avatar v-model:value="userForm.head"/>
         </el-form-item>
       </el-col>
       <el-col>
