@@ -1,25 +1,47 @@
-// 各种数据状态颜色
-let color = {
-    primary: 'primary',
+// 各种数据状态颜色类型
+const color = {
+    primary: '',
     success: 'success',
     info: 'info',
     warning: 'warning',
     danger: 'danger',
 }
-/*
-* 各种数据状态
-* key:状态值 value:状态信息（状态名，状态颜色）
-* */
-export const status: any = {
-    //===================================================================TODO 赛事管理
+
+interface InterfaceStatus {
+    label: string,
+    type?: string
+}
+
+type StatusType = Record<string, Record<number | string, InterfaceStatus>>
+
+
+/**
+ * 各种数据状态
+ * */
+
+/** 系统模块*/
+export const system_status: StatusType = {
+    //===================================================================TODO 操作日志
     //日志类型
     logType: {
-        0: { label: '其他' },
-        1: { label: '新增' },
-        2: { label: '修改' },
-        3: { label: '删除' },
-        4: { label: '详情查询' },
-        5: { label: '所有列表' },
-        6: { label: '分页列表' },
+        0: {label: '其他'},
+        1: {label: '新增'},
+        2: {label: '修改'},
+        3: {label: '删除'},
+        4: {label: '详情查询'},
+        5: {label: '所有列表'},
+        6: {label: '分页列表'},
+        7: {label: '其它查询'},
+        8: {label: '上传文件'},
+    },
+    // 响应状态
+    responseSuccess: {
+        true: {label: '成功', type: color.success},
+        false: {label: '失败', type: color.danger},
+    },
+    // 设备信息
+    isMobile: {
+        true: {label: '移动端'},
+        false: {label: 'PC端'},
     },
 }

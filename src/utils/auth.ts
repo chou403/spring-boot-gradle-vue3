@@ -7,7 +7,7 @@ export interface DataInfo<T> {
     expires: T;
 }
 
-export const TokenKey = "token";
+export const TokenKey = "account-token";
 
 /** 获取`token` */
 export function getToken(): DataInfo<number> {

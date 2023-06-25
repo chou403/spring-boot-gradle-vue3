@@ -8,14 +8,14 @@ export default [
             title: '登录'
         },
     },
-    // {
-    //     path: '/404',
-    //     name: '404',
-    //     component: () => import('@/views/error/404.vue'),
-    //     meta: {
-    //         title: "404",
-    //     }
-    // },
+    {
+        path: '/404',
+        name: '404',
+        component: () => import('@/views/error/404.vue'),
+        meta: {
+            title: "404",
+        }
+    },
     // {
     //     path: '/:pathMatch(.*)*',
     //     redirect: '/404',

@@ -8,7 +8,7 @@ export const useConfigStore = defineStore({
     state: (): configStoreType => ({
         configure: {
             isCollapse: false,
-            themeColor: '#409eff',
+            themeColor: '#2e5cf6',
             sidebarBgColor:'#f00',
             isGrey:false,
             isDark:false,

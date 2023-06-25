@@ -21,7 +21,11 @@ const rootRoutes:any = [
         component: Layout,
         name: 'root',
         redirect: '/home'
-    }
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        redirect: '/404',
+    },
 ]
 
 // 添加动态路由

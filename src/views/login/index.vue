@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="form">
-      <div class="sys-name mb30"><i class="iconfont icon-logo_skype logo-txt"></i>SPRING BOOT</div>
+      <div class="sys-name mb30 flex-center"><img class="logo-img mr5" src="@/assets/logo.png" alt="">SPRING-BOOT-PLUS</div>
       <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules">
         <el-form-item class="mb25" prop="username">
           <el-input :prefix-icon="User" size="large" clearable v-model="ruleForm.username" placeholder="请输入用户名"/>
@@ -17,8 +17,6 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive} from "vue";
-import {useRouter} from "vue-router";
 import {useUserStoreHook} from "@/store/modules/user";
 import {Lock, User} from "@element-plus/icons-vue"
 import md5 from "js-md5"
@@ -71,12 +69,11 @@ const login = () => {
     .sys-name {
       font-weight: bold;
       font-size: 20px;
-      color: var(--el-color-primary);
       white-space: nowrap;
       animation: logoAnimation .3s ease;
 
-      .logo-txt {
-        font-size: 30px;
+      .logo-img {
+        width: 40px;
       }
     }
   }

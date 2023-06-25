@@ -19,6 +19,7 @@ declare module 'vue' {
     CustomSearch: typeof import('./../components/Custom/CustomSearch/index.vue')['default']
     CustomSelect: typeof import('./../components/Custom/CustomSelect/index.vue')['default']
     CustomTable: typeof import('./../components/Custom/CustomTable/index.vue')['default']
+    CustomTag: typeof import('./../components/Custom/CustomTag/index.vue')['default']
     CustomTreeSelect: typeof import('./../components/Custom/CustomTreeSelect/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
