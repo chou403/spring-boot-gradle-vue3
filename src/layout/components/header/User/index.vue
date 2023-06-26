@@ -2,8 +2,8 @@
   <div>
     <el-dropdown trigger="click">
     <span class="el-dropdown-content flex-center">
-      <el-avatar :size="25" :src="userinfo.head||'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'"/>
-      <span class="el-dropdown-username">{{ userinfo.username }}</span>
+      <img :src="userinfo.head||logo" class="avatar-img">
+      <span class="el-dropdown-username">{{ userinfo.nickname }}</span>
       <el-icon class="el-icon--right"><ele-arrow-down/></el-icon>
     </span>
       <template #dropdown>
@@ -39,11 +39,12 @@
 import {useUserStoreHook} from "@/store/modules/user";
 import Password from "./password.vue"
 import UserInfo from "./userinfo.vue"
+import logo from "@/assets/logo.png"
 
 const userRef = ref()
 const pswRef = ref()
 
-const userinfo = storeToRefs(useUserStoreHook()).getUserInfo;
+const {userinfo} = storeToRefs(useUserStoreHook());
 
 
 const drawerData = reactive({
@@ -72,7 +73,11 @@ const logout = () => {
 .user-box {
   padding: 20px 10px;
 }
-
+.avatar-img{
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
 .el-dropdown-username {
   margin-left: 5px;
   user-select: none;

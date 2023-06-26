@@ -20,14 +20,15 @@ import {uploadLocal} from "@/api";
 
 
 const props = withDefaults(defineProps<{
-  value: string,
+  value: NullType<string>,
 }>(), {
   value:''
 })
-
 const emits = defineEmits<{
   (event: 'update:value', name: any): void
 }>()
+
+const imgFileType=['image/gif','image/jpeg','image/jpg','image/png']
 
 const data = reactive({
   imageUrl: computed({
@@ -42,10 +43,7 @@ const data = reactive({
 
 const uploadSuccess: UploadProps['onSuccess'] = (
     response,
-    uploadFile
 ) => {
-  console.log(response, data.imageUrl)
-  // fileList = URL.createObjectURL(uploadFile.raw!)
   data.imageUrl = response;
 }
 
@@ -57,11 +55,11 @@ const uploadAvatar = (options: UploadRequestOptions) => {
 }
 
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
-  if (rawFile.type !== 'image/jpeg') {
-    ElMessage.error('Avatar picture must be JPG format!')
+  if (imgFileType.indexOf(rawFile.type)==-1 ) {
+    ElMessage.error('抱歉，图片格式不正确')
     return false
-  } else if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.error('Avatar picture size can not exceed 2MB!')
+  } else if (rawFile.size / 1024 / 1024 > 5) {
+    ElMessage.error('抱歉，暂时不支持大于5M的图片文件上传')
     return false
   }
   return true

@@ -8,13 +8,18 @@ export type LoginResult = {
     token: string;
 };
 
+/** 获取当前登录用户信息返回数据类型*/
 export type LoginUserInfoResult = {
+    id:string
     deptId:NullType<string>,
     deptName:NullType<string>,
     nickname:string,
-    roleCodes:Array<string>,
     roleIds:Array<string>,
     roleNames:Array<string>,
-    userId:string,
     username:string
+    phone:string
+    email:string
+    gender:number
+    head:NullType<string>
+    createTime:string
 };

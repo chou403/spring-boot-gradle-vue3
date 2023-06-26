@@ -2,7 +2,7 @@
   <el-form ref="formRef" :rules="rules" :model="userForm" label-width="90px">
     <el-row class="user-box">
       <el-col>
-        <el-form-item prop="nickname">
+        <el-form-item prop="head">
           <Avatar v-model:value="userForm.head"/>
         </el-form-item>
       </el-col>
@@ -13,7 +13,7 @@
       </el-col>
       <el-col>
         <el-form-item label="手机号码" prop="phone">
-          <el-input v-model="userForm.phone" placeholder="请输入手机号码"/>
+          <el-input v-model="userForm.phone" maxlength="11" placeholder="请输入手机号码"/>
         </el-form-item>
       </el-col>
       <el-col>
@@ -39,8 +39,8 @@
         </el-form-item>
       </el-col>
       <el-col>
-        <el-form-item label="登录日期">
-          <el-input v-model="userForm.loginTime" disabled/>
+        <el-form-item label="创建时间">
+          <el-input v-model="userForm.createTime" disabled/>
         </el-form-item>
       </el-col>
       <el-col :sm="24" :md="12" :lg="8" :xl="6">
@@ -60,19 +60,19 @@ import {system_status} from "@/utils/status";
 import {updateProfile} from "@/api/user";
 import {ElMessage} from "element-plus";
 
-const userinfo = storeToRefs(useUserStoreHook()).getUserInfo;
+const {userinfo} = storeToRefs(useUserStoreHook());
 const formRef = ref<FormInstance>()
 
 
 interface UserInfoType {
-  head: string
+  head: NullType<string>
   nickname: string
   phone: string
   email: string
   gender: NullType<number>
   roleNames: string[]
   deptName: NullType<string>
-  loginTime:string
+  createTime:string
 }
 
 // 个人信息
@@ -84,7 +84,7 @@ const userForm = ref<UserInfoType>({
   gender:null,
   roleNames:[],
   deptName:'',
-  loginTime:'',
+  createTime:'',
 })
 userForm.value={...userForm.value,...userinfo.value}
 // 效验规则
@@ -105,13 +105,15 @@ const submitUserInfo = async () => {
   await formRef.value.validate((valid) => {
     if (valid) {
       updateProfile({
-        id:userinfo.value.userId,
+        id:userinfo.value.id,
         nickname:userForm.value.nickname,
         phone:userForm.value.phone,
         email:userForm.value.email,
         gender:userForm.value.gender,
+        head:userForm.value.head,
       }).then(()=>{
         ElMessage.success('修改成功');
+        useUserStoreHook().getLoginUserInfo();
       })
     }
   })

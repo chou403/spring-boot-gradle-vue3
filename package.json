@@ -17,6 +17,7 @@
     "js-md5": "^0.7.3",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.34",
+    "pinia-plugin-persist": "^1.0.0",
     "qs": "^6.11.1",
     "vue": "^3.2.47",
     "vue-router": "^4.0.13"

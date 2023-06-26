@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import {store} from "@/store";
 import {LoginParamsType, LoginUserInfoResult} from "@/api/types/systemTypes";
-import {getLoginUserInfoApi, loginApi, logoutApi} from '@/api/system'
+import {loginApi, logoutApi,getLoginUserInfoApi} from '@/api/system'
 import {ElMessage} from "element-plus";
 import {removeToken, setToken} from "@/utils/auth";
 import {computeDate} from "@/utils";
@@ -19,20 +19,27 @@ export const useUserStore = defineStore({
             deptId: null,
             deptName: null,
             nickname: '',
-            roleCodes: [],
             roleIds: [],
             roleNames: [],
-            userId: '',
-            username: ''
+            id: '',
+            username: '',
+            head:'',
+            gender:0,
+            email:'',
+            phone:'',
+            createTime:''
         },
         menuList: []
     }),
-    getters: {
-        /** 获取本地用户信息*/
-        getUserInfo(): LoginUserInfoResult {
-            const userinfo = <string>localStorage.getItem('userinfo');
-            return JSON.parse(userinfo) || this.userinfo;
-        }
+    persist: {
+        enabled: true,
+        strategies: [
+            {
+                storage: localStorage,
+                key: "userinfo",
+                paths: ['userinfo']
+            },
+        ]
     },
     actions: {
         /**
@@ -44,9 +51,10 @@ export const useUserStore = defineStore({
                     if (res) {
                         setToken({
                             token: res.token,
-                            expires: computeDate(1, 2)
+                            expires: computeDate(1, 3)
                         });
                         this.getLoginUserInfo().then(() => {
+                            ElMessage.success('登录成功');
                             resolve(res);
                         });
                     }
@@ -60,8 +68,6 @@ export const useUserStore = defineStore({
             return new Promise((resolve) => {
                 getLoginUserInfoApi().then((res) => {
                     this.userinfo = res;
-                    localStorage.setItem('userinfo', JSON.stringify(res));
-                    ElMessage.success('登录成功');
                     resolve(res);
                 })
             })
@@ -73,6 +79,7 @@ export const useUserStore = defineStore({
         async logout() {
             logoutApi().then(() => {
                 removeToken();
+                this.$reset();
                 localStorage.removeItem('userinfo');
                 router.push("/login");
             })

@@ -32,8 +32,7 @@ import {ElMessage} from "element-plus";
 import {useUserStoreHook} from "@/store/modules/user";
 import md5 from "js-md5"
 
-const userStore=useUserStoreHook();
-const userinfo = storeToRefs(userStore).getUserInfo;
+const {userinfo} = storeToRefs(useUserStoreHook());
 const pswFormRef = ref<FormInstance>()
 
 interface PasswordType {
@@ -83,13 +82,13 @@ const submitPsw = async () => {
   await pswFormRef.value.validate((valid) => {
     if (valid) {
       updatePassword({
-        id:userinfo.value.userId,
+        id:userinfo.value.id,
         oldPassword: md5(pswData.value.oldPassword),
         password: md5(pswData.value.password),
         confirmPassword: md5(pswData.value.confirmPassword),
       }).then(()=>{
         ElMessage.success('修改成功');
-        userStore.logout();
+        useUserStoreHook().logout();
       })
     }
   })

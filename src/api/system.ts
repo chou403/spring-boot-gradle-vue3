@@ -1,10 +1,10 @@
 import {http} from '@/utils/http'
-import {LoginParamsType,LoginResult,LoginUserInfoResult} from './types/userTypes'
+import {LoginParamsType,LoginResult,LoginUserInfoResult} from './types/systemTypes'
 
 enum Api {
     Login = '/login',
     Logout = '/logout',
-    GetLoginUserInfo = '/getLoginUserInfo',
+    GetProfile = '/sysUser/getProfile',
 }
 
 /** 登录*/
@@ -14,7 +14,7 @@ export function loginApi(data:LoginParamsType) {
 
 /** 获取登录用户信息*/
 export function getLoginUserInfoApi() {
-    return http.post<LoginUserInfoResult>(Api.GetLoginUserInfo)
+    return http.post<LoginUserInfoResult>(Api.GetProfile)
 }
 
 /** 退出登录*/

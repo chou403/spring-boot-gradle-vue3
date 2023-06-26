@@ -25,6 +25,7 @@ export type updateUserParamsType = {
     nickname: string,
     phone: string,
     email: string,
+    head:NullType<string>,
     gender: NullType<number>,
 }
 

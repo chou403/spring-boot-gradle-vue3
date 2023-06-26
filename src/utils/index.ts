@@ -114,7 +114,6 @@ export function getCascadeParent(list:Array<any>=[],parentId:string,parentName:s
 
 /** 打开外部链接 */
 export function openLink(src:string) {
-    console.log(src)
     if(!src){return;}
     window.open(src);
 }
