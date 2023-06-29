@@ -2,6 +2,9 @@ import {getNavMenuTreeList} from "@/api/menu"
 import {useUserStoreHook} from "@/store/modules/user";
 import {RouteRecordRaw} from "vue-router";
 import {router} from "@/router/index";
+import {ElMessage} from "element-plus";
+import {useRoute} from "vue-router";
+const route=useRoute();
 
 const Layout = () => import("@/layout/index.vue");
 
@@ -42,11 +45,13 @@ export const addDynamicRoutes = async (routes: any) => {
  */
 export async function initBackEndControlRoutes() {
     // 获取路由菜单数据
-    const res = await getNavMenuTreeList({});
+    let res = await getNavMenuTreeList({});
+    res=[];
     const result = backEndComponent(formatRoute(res));
     useUserStoreHook().setMenu(result);
     rootRoutes[0].children=result;
     await addDynamicRoutes(rootRoutes);
+    return Promise.resolve(res);
 }
 
 /**

@@ -10,6 +10,7 @@ import { getToken } from "@/utils/auth";
 import { initBackEndControlRoutes } from "@/router/backEnd"
 import { useUserStoreHook } from "@/store/modules/user";
 import { NextLoading } from '@/utils/loading';
+import {ElMessage} from "element-plus";
 
 
 /** 路由白名单 */
@@ -25,8 +26,14 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
         } else {
             // 界面 loading 动画开始执行
             if (window.nextLoading === undefined) NextLoading.start();
-            await initBackEndControlRoutes()
-            next({ path: to.path, query: to.query });
+            const routers=await initBackEndControlRoutes();
+            if(routers.length>0){
+                next({ path: to.path, query: to.query });
+            }else{
+                ElMessage.error('当前账号权限不足');
+                NextLoading.done(600);
+                next(`/login`)
+            }
         }
     } else {
         next(`/login?redirect=${to.fullPath}`)

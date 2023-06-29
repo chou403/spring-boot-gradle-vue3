@@ -51,7 +51,7 @@ export const useUserStore = defineStore({
                     if (res) {
                         setToken({
                             token: res.token,
-                            expires: computeDate(1, 3)
+                            expires: computeDate(1, 2)
                         });
                         this.getLoginUserInfo().then(() => {
                             ElMessage.success('登录成功');
