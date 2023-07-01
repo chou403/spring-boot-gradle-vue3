@@ -71,7 +71,13 @@
     <!--    表格-->
     <el-table :data="tableData.data" border style="width: 100%" row-key="id">
       <el-table-column prop="moduleName" label="模块名称" align="center"/>
-      <el-table-column prop="logName" label="日志名称" align="center"/>
+      <el-table-column prop="logName" label="日志名称" width="230">
+        <template #default="{row}">
+          <el-tooltip :content="`${row.requestMethod} ${row.requestUrl}`">
+            <span>{{ row.logName }}</span>
+          </el-tooltip>
+        </template>
+      </el-table-column>
       <el-table-column prop="logType" label="日志类型" align="center">
         <template #default="{row}">
           <span>{{ system_status.logType[row.logType].label }}</span>
@@ -87,7 +93,7 @@
       <el-table-column prop="username" label="操作人" align="center"/>
       <el-table-column prop="requestIp" label="请求IP" align="center" width="150">
         <template #default="{row}">
-          <el-tooltip :content="row.ipAreaDesc">
+          <el-tooltip :content="row.requestMethod">
             <span>{{ row.requestIp }}</span>
           </el-tooltip>
         </template>

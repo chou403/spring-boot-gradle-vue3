@@ -32,15 +32,17 @@ export const system_status: StatusType = {
     //===================================================================TODO 操作日志
     //日志类型
     logType: {
-        0: {label: '其他'},
+        0: {label: '访问日志'},
         1: {label: '新增'},
         2: {label: '修改'},
         3: {label: '删除'},
-        4: {label: '详情查询'},
+        4: {label: '详情'},
         5: {label: '所有列表'},
         6: {label: '分页列表'},
         7: {label: '其它查询'},
         8: {label: '上传文件'},
+        9: {label: '登录'},
+        10: {label: '退出'},
     },
     // 响应状态
     responseSuccess: {
