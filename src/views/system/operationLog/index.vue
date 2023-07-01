@@ -32,9 +32,9 @@
         </el-col>
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
           <el-form-item label="响应状态">
-            <el-select v-model="queryForm.responseCode" placeholder="请选择响应状态" clearable>
-              <el-option label="成功" :value="1"/>
-              <el-option label="失败" :value="0"/>
+            <el-select v-model="queryForm.responseSuccess" placeholder="请选择响应状态" clearable>
+              <el-option label="成功" :value="true"/>
+              <el-option label="失败" :value="false"/>
             </el-select>
           </el-form-item>
         </el-col>
@@ -69,7 +69,7 @@
       </el-row>
     </el-form>
     <!--    表格-->
-    <el-table :data="tableData.data" border style="width: 100%" row-key="id">
+    <el-table :data="tableData.data" border style="width: 100%" row-key="id" @sort-change="sortChange">
       <el-table-column prop="moduleName" label="模块名称" align="center"/>
       <el-table-column prop="logName" label="日志名称" width="230">
         <template #default="{row}">
@@ -98,8 +98,8 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column prop="diffTimeDesc" label="耗时" align="center" sortable/>
-      <el-table-column prop="createTime" label="创建时间" align="center" sortable width="180"/>
+      <el-table-column prop="diffTimeDesc" label="耗时" align="center" sortable="custom"/>
+      <el-table-column prop="createTime" label="创建时间" align="center"  sortable="custom" width="180"/>
       <el-table-column label="操作" fixed="right" align="center">
         <template #default="{ row }">
           <el-button link type="primary" @click="openDialog(row)">
@@ -115,35 +115,35 @@
     <div v-if="dialogData.isShow">
       <el-dialog :model-value="true" destroy-on-close title="日志详情" @close="closeDialog">
         <div>
-          <div class="align-center">
+          <div class="details-item">
             <div class="label">日志链路ID</div>
             <div class="content">{{ form.traceId }}</div>
           </div>
-          <div class="align-center">
+          <div class="details-item">
             <div class="label">模块名称</div>
             <div class="content">{{ form.moduleName }}</div>
           </div>
-          <div class="align-center">
+          <div class="details-item">
             <div class="label">用户信息</div>
             <div class="content">{{ form.username }} {{ form.requestIp }} {{ form.ipAreaDesc }}</div>
           </div>
-          <div class="align-center">
+          <div class="details-item">
             <div class="label">请求路径</div>
             <div class="content">{{ form.requestMethod }} {{ form.requestUrl }}</div>
           </div>
-          <div class="align-center">
+          <div class="details-item">
             <div class="label">请求参数</div>
             <div class="content">{{ form.requestParam }}</div>
           </div>
-          <div class="align-center">
+          <div class="details-item">
             <div class="label">日志名称</div>
             <div class="content">{{ form.logName }}</div>
           </div>
-          <div class="align-center">
+          <div class="details-item">
             <div class="label">日志类型</div>
             <div class="content">{{ system_status.logType[form.logType]?.label }}</div>
           </div>
-          <div class="align-center">
+          <div class="details-item">
             <div class="label">响应信息</div>
             <div class="content">
               <custom-tag :type="system_status.responseSuccess[form.responseSuccess]?.type">
@@ -152,26 +152,26 @@
               {{ form.responseCode }} {{ form.responseMessage }}
             </div>
           </div>
-          <div class="align-center">
+          <div class="details-item">
             <div class="label">用户环境</div>
             <div class="content">{{ system_status.isMobile[form.isMobile]?.label }} {{ form.platformName }} {{
                 form.browserName
               }}
             </div>
           </div>
-          <div class="align-center">
+          <div class="details-item">
             <div class="label">请求时间</div>
             <div class="content">{{ form.requestTime }} ~ {{ form.responseTime }}</div>
           </div>
-          <div class="align-center">
+          <div class="details-item">
             <div class="label">请求耗时</div>
             <div class="content">{{ form.diffTimeDesc }}</div>
           </div>
-          <div v-if="form.exceptionName" class="align-center">
+          <div v-if="form.exceptionName" class="details-item">
             <div class="label">异常类</div>
             <div class="content">{{ form.exceptionName }}</div>
           </div>
-          <div v-if="form.exceptionMessage" class="align-center">
+          <div v-if="form.exceptionMessage" class="details-item">
             <div class="label">异常信息</div>
             <div class="content">
               <el-input v-model="form.exceptionMessage" :autosize="{ minRows: 2, maxRows: 15 }"
@@ -231,10 +231,29 @@ const tableData = reactive({
 })
 // 获取表格列表
 const getTableList = () => {
-  getSysLogList({...pageData, ...queryForm.value}).then(res => {
+  getSysLogList({...pageData, ...queryForm.value, orderBy: {...orderBy.value}}).then(res => {
     tableData.data = res.list || [];
     pageData.total = res.total;
   })
+}
+/** 排序*/
+const orderBy = ref({})
+// 排序
+const sortChange = ({column, prop, order}) => {
+  console.log(121,order,column,prop)
+  if (order) {
+    if(prop==="diffTimeDesc"){
+      orderBy.value.column = "diff_time";
+    }else if(prop==="createTime"){
+      orderBy.value.column = "create_time";
+    }
+    orderBy.value.asc = order === "ascending";
+  } else {
+    orderBy.value = {}
+  }
+
+  pageData.pageIndex = 1;
+  getTableList();
 }
 
 /** 添加，编辑*/
@@ -275,19 +294,26 @@ getTableList();
 </script>
 <style lang="scss" scoped>
 .label {
-  width: 100px;
-  height: 40px;
-  text-align: right;
+  flex:0 0 100px;
   padding: 10px;
+  border-right: 1px solid #eee;
   box-sizing: border-box;
-  border: 1px solid #eee;
-  border-right: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
-
-.content {
-  flex: 1;
-  height: 40px;
+.details-item{
+  width: 100%;
+  display: flex;
   border: 1px solid #eee;
+  border-bottom: none;
+  &:last-child{
+    border-bottom: 1px solid #eee;
+  }
+}
+.content {
+  flex:auto;
   padding: 10px;
+  word-break: break-all;
 }
 </style>

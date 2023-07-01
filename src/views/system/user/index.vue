@@ -92,7 +92,7 @@
           <el-tag v-else type="danger" disable-transitions>禁用</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" sortable label="创建时间" align="center" width="180"/>
+      <el-table-column prop="createTime" sortable="custom" label="创建时间" align="center" width="180"/>
       <el-table-column label="操作" fixed="right" align="center" width="200">
         <template #default="{row}">
           <template v-if="!row.isAdmin">
