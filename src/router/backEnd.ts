@@ -46,7 +46,6 @@ export const addDynamicRoutes = async (routes: any) => {
 export async function initBackEndControlRoutes() {
     // 获取路由菜单数据
     let res = await getNavMenuTreeList({});
-    res=[];
     const result = backEndComponent(formatRoute(res));
     useUserStoreHook().setMenu(result);
     rootRoutes[0].children=result;
