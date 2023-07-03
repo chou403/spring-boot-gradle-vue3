@@ -1,6 +1,8 @@
 import {computeDateType} from "@/utils/types";
 
-/** 时间格式化 */
+/**
+ * 时间格式化
+ * */
 export function dateFormat (timestamp: number|string|Date, format = 'YYYY-MM-DD hh:mm:ss'): string {
     const date = new Date(timestamp)
     function fixedTwo (value: number): string {
@@ -38,7 +40,9 @@ export function dateFormat (timestamp: number|string|Date, format = 'YYYY-MM-DD 
     return showTime
 }
 
-/** 时间加减 */
+/**
+ * 时间加减
+ * */
 export function computeDate(num:number, type:computeDateType, timestamp:number|string|Date=new Date()):Date|string{
     const date = new Date(timestamp)
     switch (type) {
@@ -57,14 +61,18 @@ export function computeDate(num:number, type:computeDateType, timestamp:number|s
     }
 }
 
-/** hex转rgb */
+/**
+ * hex转rgb
+ * */
 export function hexToRgb(str:any) {
     let hxs = str.replace("#", "").match(/../g)
     for (let i = 0; i < 3; i++) hxs[i] = parseInt(hxs[i], 16)
     return hxs
 }
 
-/** rgb转hex */
+/**
+ * rgb转hex
+ * */
 export function rgbToHex(a:number, b:number, c:number) {
     let hexes = [a.toString(16), b.toString(16), c.toString(16)]
     for (let i = 0; i < 3; i++) {
@@ -73,14 +81,18 @@ export function rgbToHex(a:number, b:number, c:number) {
     return `#${hexes.join("")}`
 }
 
-/** 加深颜色值 */
+/**
+ * 加深颜色值
+ * */
 export function darken(color:string, level:number) {
     let rgba = hexToRgb(color)
     for (let i = 0; i < 3; i++) rgba[i] = Math.floor(rgba[i] * (1 - level))
     return rgbToHex(rgba[0], rgba[1], rgba[2])
 }
 
-/** 变浅颜色值 */
+/**
+ * 变浅颜色值
+ * */
 export function lighten(color:string, level:number) {
     let rgba = hexToRgb(color)
     for (let i = 0; i < 3; i++)
@@ -88,7 +100,9 @@ export function lighten(color:string, level:number) {
     return rgbToHex(rgba[0], rgba[1], rgba[2])
 }
 
-/** class设置 */
+/**
+ * class设置
+ * */
 export function toggleClass(flag: boolean, clsName: string, target?: HTMLElement) {
     const targetEl = target || document.body;
     let { className } = targetEl;
@@ -96,7 +110,9 @@ export function toggleClass(flag: boolean, clsName: string, target?: HTMLElement
     targetEl.className = flag ? `${className} ${clsName} ` : className;
 }
 
-/** 获取父级数组 */
+/**
+ * 获取父级数组
+ * */
 export function getCascadeParent(list:Array<any>=[],parentId:string,parentName:string="parentId",idName:string='id') {
     for (const i in list) {
         if(list[i][idName]==parentId){
@@ -112,10 +128,30 @@ export function getCascadeParent(list:Array<any>=[],parentId:string,parentName:s
     }
 }
 
-/** 打开外部链接 */
+/**
+ * 打开外部链接
+ * */
 export function openLink(src:string) {
     if(!src){return;}
     window.open(src);
+}
+
+/**
+ * 时间问候语
+ * @param param 当前时间，new Date() 格式
+ * @description param 调用 `formatAxis(new Date())` 输出 `上午好`
+ * @returns 返回拼接后的时间字符串
+ */
+export function formatGreet(param: Date): string {
+    let hour: number = new Date(param).getHours();
+    if (hour < 6) return '凌晨好';
+    else if (hour < 9) return '早上好';
+    else if (hour < 12) return '上午好';
+    else if (hour < 14) return '中午好';
+    else if (hour < 17) return '下午好';
+    else if (hour < 19) return '傍晚好';
+    else if (hour < 22) return '晚上好';
+    else return '夜里好';
 }
 
 

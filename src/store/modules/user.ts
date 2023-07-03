@@ -4,7 +4,7 @@ import {LoginParamsType, LoginUserInfoResult} from "@/api/types/systemTypes";
 import {loginApi, logoutApi,getLoginUserInfoApi} from '@/api/system'
 import {ElMessage} from "element-plus";
 import {removeToken, setToken} from "@/utils/auth";
-import {computeDate} from "@/utils";
+import {computeDate, formatGreet} from "@/utils";
 import {router} from "@/router";
 
 interface userType {
@@ -53,8 +53,8 @@ export const useUserStore = defineStore({
                             token: res.token,
                             expires: computeDate(1, 2)
                         });
-                        this.getLoginUserInfo().then(() => {
-                            ElMessage.success('登录成功');
+                        this.getLoginUserInfo().then((userRes) => {
+                            ElMessage.success(`${formatGreet(new Date())}，${userRes.nickname}`);
                             resolve(res);
                         });
                     }

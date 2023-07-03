@@ -114,114 +114,19 @@
                       :total="pageData.total" @changePage="changePage"/>
 
     <!--    添加，编辑弹框-->
-    <div v-if="dialogData.isShow">
-      <el-dialog :model-value="true" destroy-on-close :title="dialogData.title" @close="closeDialog">
-        <el-form :model="form" ref="formRef" :rules="rules" label-width="90px">
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="用户名" prop="username">
-                <el-input v-model="form.username" :disabled="!!form.id" placeholder="请输入用户名"/>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="昵称" prop="nickname">
-                <el-input v-model="form.nickname" placeholder="请输入昵称"/>
-              </el-form-item>
-            </el-col>
-            <el-col v-if="!form.id" :span="12">
-              <el-form-item label="密码" prop="password">
-                <el-input v-model="form.password" type="password" placeholder="请输入密码"/>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="手机号" prop="phone">
-                <el-input v-model="form.phone" placeholder="请输入手机号" maxlength="11"/>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="邮箱" prop="email">
-                <el-input v-model="form.email" placeholder="请输入邮箱"/>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="部门">
-                <custom-tree-select v-model:value="form.deptId" :options="deptList" placeholder="请选择部门"/>
-              </el-form-item>
-            </el-col>
-            <el-col :span="24">
-              <el-form-item label="角色" prop="roleIds">
-                <el-select v-model="form.roleIds" multiple clearable placeholder="请选择角色">
-                  <el-option v-for="item in roleList" :label="item.name" :value="item.id"/>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="性别">
-                <el-radio-group v-model="form.gender">
-                  <el-radio :label="1" border>男</el-radio>
-                  <el-radio :label="0" border>女</el-radio>
-                </el-radio-group>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="状态">
-                <el-radio-group v-model="form.status">
-                  <el-radio :label="true" border>启用</el-radio>
-                  <el-radio :label="false" border>禁用</el-radio>
-                </el-radio-group>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-        <template #footer>
-          <div class="dialog-footer">
-            <el-button type="primary" @click="submit">确定</el-button>
-            <el-button @click="closeDialog">取消</el-button>
-          </div>
-        </template>
-      </el-dialog>
-    </div>
+    <TableForm ref="tableDialogRef" @refresh="getTableList" :deptList="deptList" :roleList="roleList"/>
 
     <!--    重置密码-->
-    <el-dialog width="400px" :model-value="pswData.isShow" destroy-on-close title="重置密码" @closed="closePswDialog">
-      <el-form :model="pswData" ref="pswFormRef" :rules="pswRules" label-width="90px">
-        <el-row>
-          <el-col>
-            <el-form-item label="用户名">
-              <el-input v-model="pswData.row.username" disabled/>
-            </el-form-item>
-          </el-col>
-          <el-col>
-            <el-form-item label="昵称">
-              <el-input v-model="pswData.row.nickname" disabled/>
-            </el-form-item>
-          </el-col>
-          <el-col>
-            <el-form-item label="新密码" prop="password">
-              <el-input v-model="pswData.password" type="password" placeholder="请输入新密码"/>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button type="primary" @click="resetPsw">确定</el-button>
-          <el-button @click="closePswDialog">取消</el-button>
-        </div>
-      </template>
-    </el-dialog>
+    <ResetPassword ref="passwordDialogRef"/>
   </el-card>
 </template>
 <script lang="ts" setup>
-import {addSysUser, deleteSysUser, getSysUser, getSysUserList, resetSysUserPassword, updateSysUser} from "@/api/user";
+import {deleteSysUser, getSysUserList} from "@/api/user";
+import {ElMessage, ElMessageBox} from 'element-plus'
+import TableForm from './table-form.vue'
+import ResetPassword from './reset-password.vue'
 import {getSysDeptTreeList} from "@/api/dept";
-import md5 from "js-md5"
-import {ElMessage, ElMessageBox, FormInstance, FormRules} from 'element-plus'
-import {validateEmail, validatePhoneNumber} from "@/utils/validate";
 import {getSysRoleAllList} from "@/api/role";
-
-const formRef = ref<FormInstance>()
-
 
 /** 查询*/
 let queryForm = ref({})
@@ -296,8 +201,7 @@ const sortChange = ({column, prop, order}) => {
   getTableList();
 }
 
-/** 添加，编辑*/
-// 部门信息
+/** 部门信息*/
 const deptList = ref([])
 // 获取部门数据
 const getDeptList = () => {
@@ -308,7 +212,8 @@ const getDeptList = () => {
     })
   })
 }
-// 角色信息
+
+/** 角色信息*/
 const roleList = ref([])
 // 获取部门数据
 const getRoleList = () => {
@@ -319,131 +224,19 @@ const getRoleList = () => {
     })
   })
 }
-// 表单
-let form: any = ref({
-  gender: 1,
-  status: true,
-})
-// 效验规则
-const rules = reactive<FormRules>({
-  username: [
-    {required: true, message: '请输入用户名', trigger: 'blur'},
-  ],
-  nickname: [
-    {required: true, message: '请输入昵称', trigger: 'blur'},
-  ],
-  password: [
-    {required: true, message: '请输入密码', trigger: 'blur'},
-    {min: 6, max: 12, message: '密码长度6到20位', trigger: 'blur'}
-  ],
-  phone: [
-    {validator: validatePhoneNumber, trigger: 'blur'},
-  ],
-  email: [
-    {validator: validateEmail, trigger: 'blur'},
-  ],
-  roleIds: [
-    {required: true, message: '请选择角色', trigger: 'blur'},
-  ],
-})
-// 获取详情
-const getDetails = (id: number | string) => {
-  getSysUser(id).then(res => {
-    form.value = Object.assign({}, form.value, res);
-  })
-}
-// 弹框数据
-const dialogData = reactive({
-  isShow: false,
-  title: "新增用户",
-  id: null,
-})
-// 打开弹框
-const openDialog = async (row: any) => {
-  dialogData.isShow = true;
-  dialogData.title = '新增用户';
-  if (row?.id) {
-    dialogData.id = row.id;
-    dialogData.title = '编辑用户';
-    getDetails(row.id);
-  }
-}
-// 关闭弹框
-const closeDialog = () => {
-  dialogData.isShow = false;
-  dialogData.id = null;
-  form.value = {
-    gender: 1,
-    status: true
-  };
-}
-// 提交
-const submit = async () => {
-  if (!formRef.value) return;
-  await formRef.value.validate((valid) => {
-    if (valid) {
-      let data = form.value;
-      if (data.id) {
-        updateSysUser({...data}).then(() => {
-          ElMessage.success('操作成功');
-          closeDialog();
-          getTableList();
-        })
-      } else {
-        data.password = md5(data.password)
-        addSysUser({...data}).then(() => {
-          ElMessage.success('操作成功');
-          closeDialog();
-          getTableList();
-        })
-      }
-    }
-  })
 
+/** 添加，编辑*/
+const tableDialogRef = ref()
+// 打开弹框
+const openDialog = async (row: any = {}) => {
+  await tableDialogRef.value.openDialog(row);
 }
 
 /** 重置密码*/
-const pswFormRef = ref()
-let pswData = reactive({
-  isShow: false,
-  row: {},
-  password: ''
-})
-// 效验规则
-const pswRules = reactive<FormRules>({
-  password: [
-    {required: true, message: '请输入密码', trigger: 'blur'},
-    {min: 6, max: 12, message: '密码长度应为6到12位', trigger: 'blur'}
-  ],
-})
-// 打开授权弹框
-const openPswDialog = (row: any) => {
-  if (row?.id) {
-    pswData.row = row;
-    pswData.isShow = true;
-  }
-}
-// 关闭授权弹框
-const closePswDialog = () => {
-  pswData.isShow = false;
-  pswData.row = {};
-  pswData.password = '';
-}
-// 提交
-const resetPsw = async () => {
-  if (!pswFormRef.value) return;
-  await pswFormRef.value.validate((valid) => {
-    if (valid) {
-      let params = {
-        userId: pswData.row.id,
-        password: md5(pswData.password)
-      }
-      resetSysUserPassword(params).then(() => {
-        ElMessage.success('重置成功');
-        closePswDialog();
-      })
-    }
-  })
+const passwordDialogRef = ref()
+// 打开弹框
+const openPswDialog = async (row: any) => {
+  await passwordDialogRef.value.openPswDialog(row);
 }
 
 getDeptList();

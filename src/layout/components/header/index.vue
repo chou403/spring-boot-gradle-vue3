@@ -35,7 +35,6 @@
         </div>
       </div>
     </div>
-    <Tags/>
   </div>
 </template>
 
@@ -43,11 +42,8 @@
 import ThemePicker from "./ThemePicker/index.vue"
 import Notify from "./Notify/index.vue"
 import User from "./User/index.vue"
-import Tags from "./Tags/index.vue"
 import Sidebar from '@/layout/components/sidebar/index.vue'
 import Logo from '@/layout/components/sidebar/logo.vue'
-import {useRoute} from "vue-router";
-import {storeToRefs} from 'pinia'
 import {useConfigStoreHook} from "@/store/modules/config";
 
 

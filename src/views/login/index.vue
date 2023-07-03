@@ -63,8 +63,6 @@ onMounted(() => {
   width: 100vw;
   height: 100vh;
 
-  background: url("@/assets/login-bg.webp") no-repeat center/cover;
-
   .form {
     width: 400px;
     // padding: 40px;
