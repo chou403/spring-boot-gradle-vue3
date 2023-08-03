@@ -215,7 +215,7 @@ const getDeptList = () => {
 
 /** 角色信息*/
 const roleList = ref([])
-// 获取部门数据
+// 获取角色数据
 const getRoleList = () => {
   return new Promise((resolve) => {
     getSysRoleAllList({}).then(res => {

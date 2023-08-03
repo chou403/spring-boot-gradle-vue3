@@ -60,7 +60,7 @@ export async function initBackEndControlRoutes() {
  */
 function formatRoute(routes: any[]) {
     return routes.map((p: any) => {
-        if (p.isHoem) {
+        if (p.isHome) {
             rootRoutes[0].redirect = p.routeUrl;
         }
         if(p.isLink){
