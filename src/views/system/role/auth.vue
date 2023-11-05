@@ -8,6 +8,7 @@
             node-key="id"
             :props="props"
             default-expand-all
+            check-strictly
             show-checkbox
         />
       </div>
