@@ -26,11 +26,6 @@
           </el-form-item>
         </el-col>
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
-          <el-form-item label="部门">
-            <custom-tree-select v-model:value="queryForm.deptId" :options="deptList" placeholder="请选择部门"/>
-          </el-form-item>
-        </el-col>
-        <el-col :sm="24" :md="12" :lg="8" :xl="6">
           <el-form-item label="状态">
             <el-select v-model="queryForm.status" clearable placeholder="请选择状态">
               <el-option label="启用" :value="true"/>
@@ -76,7 +71,6 @@
       <el-table-column prop="username" label="用户名" align="center"/>
       <el-table-column prop="nickname" label="昵称" align="center"/>
       <el-table-column prop="roleName" label="角色" align="center"/>
-      <el-table-column prop="deptName" label="部门" align="center"/>
       <el-table-column prop="phone" label="手机号码" align="center" width="150"/>
       <el-table-column prop="email" label="邮箱" align="center" width="180"/>
       <el-table-column prop="gender" label="性别" align="center">
@@ -114,7 +108,7 @@
                       :total="pageData.total" @changePage="changePage"/>
 
     <!--    添加，编辑弹框-->
-    <TableForm ref="tableDialogRef" @refresh="getTableList" :deptList="deptList" :roleList="roleList"/>
+    <TableForm ref="tableDialogRef" @refresh="getTableList" :roleList="roleList"/>
 
     <!--    重置密码-->
     <ResetPassword ref="passwordDialogRef"/>
@@ -125,7 +119,6 @@ import {deleteSysUser, getSysUserList} from "@/api/user";
 import {ElMessage, ElMessageBox} from 'element-plus'
 import TableForm from './table-form.vue'
 import ResetPassword from './reset-password.vue'
-import {getSysDeptTreeList} from "@/api/dept";
 import {getSysRoleAllList} from "@/api/role";
 
 /** 查询*/
@@ -201,18 +194,6 @@ const sortChange = ({column, prop, order}) => {
   getTableList();
 }
 
-/** 部门信息*/
-const deptList = ref([])
-// 获取部门数据
-const getDeptList = () => {
-  return new Promise((resolve) => {
-    getSysDeptTreeList({}).then(res => {
-      deptList.value = res || [];
-      resolve(deptList.value)
-    })
-  })
-}
-
 /** 角色信息*/
 const roleList = ref([])
 // 获取角色数据
@@ -239,7 +220,6 @@ const openPswDialog = async (row: any) => {
   await passwordDialogRef.value.openPswDialog(row);
 }
 
-getDeptList();
 getRoleList();
 getTableList();
 </script>

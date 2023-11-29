@@ -8,14 +8,14 @@ import {
 import {ResultType} from "@/api/types";
 
 enum Api {
-    updateSysUser = '/sysUser/updateSysUser',
-    getSysUserList = '/sysUser/getSysUserList',
-    getSysUser = '/sysUser/getSysUser/',
-    deleteSysUser = '/sysUser/deleteSysUser/',
-    addSysUser = '/sysUser/addSysUser',
-    resetSysUserPassword = '/sysUser/resetSysUserPassword',
-    updatePassword = '/sysUser/updatePassword',
-    updateProfile = '/sysUser/updateProfile',
+    updateSysUser = '/api/admin/sysUser/updateSysUser',
+    getSysUserList = '/api/admin/sysUser/getSysUserPage',
+    getSysUser = '/api/admin/sysUser/getSysUser/',
+    deleteSysUser = '/api/admin/sysUser/deleteSysUser/',
+    addSysUser = '/api/admin/sysUser/addSysUser',
+    resetSysUserPassword = '/api/admin/sysUser/resetSysUserPassword',
+    updatePassword = '/api/admin/sysUser/updatePassword',
+    updateProfile = '/api/admin/sysUser/updateProfile',
 }
 
 

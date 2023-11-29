@@ -53,7 +53,7 @@ export const useUserStore = defineStore({
                             token: res.token,
                             expires: computeDate(1, 2)
                         });
-                        this.getLoginUserInfo().then((userRes) => {
+                        this.getLoginUserInfo().then((userRes:any) => {
                             ElMessage.success(`${formatGreet(new Date())}，${userRes.nickname}`);
                             resolve(res);
                         });

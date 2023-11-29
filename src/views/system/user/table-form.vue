@@ -29,13 +29,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="部门">
-              <custom-tree-select v-model:value="form.deptId" :options="deptList" placeholder="请选择部门"/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
             <el-form-item label="角色" prop="roleIds">
-              <el-select v-model="form.roleIds" multiple clearable placeholder="请选择角色">
+              <el-select v-model="form.roleIds" clearable placeholder="请选择角色">
                 <el-option v-for="item in roleList" :label="item.name" :value="item.id"/>
               </el-select>
             </el-form-item>
@@ -69,7 +64,6 @@
 </template>
 
 <script setup lang="ts">
-// 部门信息
 import {ElMessage, FormInstance, FormRules} from "element-plus";
 import {validateEmail, validatePhoneNumber} from "@/utils/validate";
 import {addSysUser, getSysUser, updateSysUser} from "@/api/user";
@@ -83,7 +77,6 @@ const emits = defineEmits<{
 
 const props = withDefaults(defineProps<{
   roleList: any[],
-  deptList: any[],
 }>(), {})
 
 

@@ -23,10 +23,10 @@ export interface OrderByParams {
  * */
 export type ResultType = {
     code:number,
-    data:NullType<any>
+    data:any
     msg:string
     success:boolean
-    time:string|Date|number
+    time:string
 }
 
 /**
