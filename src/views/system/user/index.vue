@@ -27,16 +27,37 @@
         </el-col>
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
           <el-form-item label="状态">
-            <el-select v-model="queryForm.status" clearable placeholder="请选择状态">
-              <el-option label="启用" :value="true"/>
-              <el-option label="禁用" :value="false"/>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :sm="24" :md="12" :lg="8" :xl="6">
-          <el-form-item label="创建时间">
-            <custom-date-picker type="daterange" v-model:startDate="queryForm.createStartTime"
-                                v-model:endDate="queryForm.createEndTime"/>
+            <el-select v-model="queryForm.status" clearable placeholder="请选择状// 定义一个tableConfig类型，用于配置表格
+type tableConfig = {
+  // 初始化参数
+  initParam?: Object
+  // 请求函数，参数为任意类型，返回值为Promise类型
+  request: (params: any) => Promise<any>
+  // 是否立即执行
+  immediate?:boolean
+}
+
+// 定义props，用于接收配置和列的参数
+const props = defineProps<{
+  config: tableConfig
+  columns: columnsType[]
+}>()
+
+// 使用useTable函数，传入配置参数，获取表格数据
+const {tableData, pagination,search, loading, changePage, getTableData} = useTable({
+  // 请求函数，参数为任意类型，返回值为Promise类型
+  request: props.config.request,
+  // 初始化参数，默认为空对象
+  initParam: props.config?.initParam||{},
+  // 是否立即执行
+  immediate:  props.config.immediate
+})
+
+// 定义一个接口，用于暴露表格数据和搜索参数
+defineExpose({
+  getTableData,
+  search
+})ime"/>
           </el-form-item>
         </el-col>
         <el-col :sm="24" :md="12" :lg="8" :xl="6">

@@ -15,7 +15,7 @@ export const useConfigStore = defineStore({
             isWeakness:false,
             locale:'zh',
             layoutMode:0,
-        } as configType
+        }
     }),
     getters: {
         getSidebarStatus(): boolean {

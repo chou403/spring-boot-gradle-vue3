@@ -21,7 +21,7 @@ export interface OrderByParams {
 /**
  * @description 接口返回值类型
  * */
-export type ResultType = {
+export interface ResultType {
     code:number,
     data:any
     msg:string
@@ -32,7 +32,7 @@ export type ResultType = {
 /**
  * @description 列表接口返回值类型
  * */
-export type ListResultType = {
+export interface ListResultType {
     list:Array<any>
     total?:number
 }

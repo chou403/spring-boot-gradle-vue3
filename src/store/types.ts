@@ -5,16 +5,18 @@ export enum layoutModeEnum {
     'mixed'//混合
 }
 
-export type configType = {
+export interface configType {
     isCollapse: boolean
     themeColor: string
     isGrey: boolean
+    isDark: boolean
     isWeakness: boolean
     locale: string
     layoutMode: layoutModeEnum
+    sidebarBgColor: string
 }
 
-export type configStoreType = {
+export interface configStoreType {
     configure: configType
 }
 

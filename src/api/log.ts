@@ -1,8 +1,8 @@
 import {http} from '@/utils/http'
 
 enum Api {
-    getSysLogList = '/api/admin/sysLog/getSysLogPage',
-    getSysLog = '/api/admin/sysLog/getSysLog/',
+    getSysLogList = '/admin/sysLog/getSysLogPage',
+    getSysLog = '/admin/sysLog/getSysLog/',
 
 }
 /** 日志*/

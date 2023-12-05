@@ -1,12 +1,11 @@
 import Axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, CustomParamsSerializer} from 'axios'
 import {stringify} from 'qs'
-import {closeNProgress, startNProgress} from "@/utils/nprogress";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {getToken, removeToken} from "@/utils/auth";
 
 import {PureHttpRequestConfig, PureHttpResponse, RequestMethods} from "./types.d";
 import {router} from "@/router";
-
+import {ResultType} from "@/api/types";
 
 const defaultConfig: AxiosRequestConfig = {
     // 请求超时时间
@@ -61,17 +60,17 @@ class Http {
     private httpInterceptorsResponse(): void {
         const instance = Http.axiosInstance;
         instance.interceptors.response.use(
-            (response: PureHttpResponse) => {
-                const $config = response.config;
+            (response) => {
+                const $config = response.config as PureHttpRequestConfig;
                 if (typeof $config.beforeResponseCallback === "function") {
                     $config.beforeResponseCallback(response);
-                    return response.data;
+                    return response;
                 }
                 if (Http.initConfig.beforeResponseCallback) {
                     Http.initConfig.beforeResponseCallback(response);
-                    return response.data;
+                    return response;
                 }
-                return response.data;
+                return response;
             },
             (error: AxiosResponse) => {
                 return Promise.reject(error);
@@ -96,8 +95,8 @@ class Http {
         return new Promise((resolve, reject) => {
             Http.axiosInstance
                 .request(config)
-                .then((response: any) => {
-                    const {code, data, msg} = response;
+                .then((response:AxiosResponse<ResultType>) => {
+                    const {code, data, msg} = response.data;
                     switch (code) {
                         case 200:
                             resolve(data);
@@ -113,6 +112,7 @@ class Http {
                                 })
                                 .then(async () => {
                                     removeToken();
+                                    localStorage.removeItem('tabsList');
                                     localStorage.removeItem('userinfo');
                                     await router.push("/login");
                                 }).catch(() => {

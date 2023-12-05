@@ -24,23 +24,31 @@ const props = withDefaults(defineProps<{
 }>(), {
   pageSize: 10,
 })
-
 let paginationData = reactive({
-  currentPage: props.currentPage,
-  pageSize: props.pageSize,
+  currentPage: computed({
+    get: () => props.currentPage,
+    set: (val: number) => {
+      emits('update:currentPage', val)
+    }
+  }),
+  pageSize: computed({
+    get: () => props.pageSize,
+    set: (val: number) => {
+      emits('update:pageSize', val)
+    }
+  }),
 })
 
 // 每页条数
 const changeSize = (page: number) => {
   paginationData.currentPage = 1;
-  emits('update:pageSize', page)
-  emits('update:currentPage', 1)
+  paginationData.pageSize = page;
   emits('changePage', 1)
 }
 
-// 选页
+// 翻页
 const changePage = (page: number) => {
-  emits('update:currentPage', page)
+  paginationData.currentPage = page;
   emits('changePage', page)
 }
 

@@ -1,13 +1,13 @@
 import {http} from '@/utils/http'
 
 enum Api {
-    getAllSysMenuTreeList = '/api/admin/sysMenu/getAllSysMenuTreeList',
-    getSysMenuTreeList = '/api/admin/sysMenu/getSysMenuTreeList',
-    getNavMenuTreeList = '/api/admin/sysMenu/getNavMenuTreeList',
-    addSysMenu = '/api/admin/sysMenu/addSysMenu',
-    getSysMenu = '/api/admin/sysMenu/getSysMenu/',
-    updateSysMenu = '/api/admin/sysMenu/updateSysMenu',
-    deleteSysMenu = '/api/admin/sysMenu/deleteSysMenu/',
+    getAllSysMenuTreeList = '/admin/sysMenu/getAllSysMenuTreeList',
+    getSysMenuTreeList = '/admin/sysMenu/getSysMenuTreeList',
+    getNavMenuTreeList = '/admin/sysMenu/getNavMenuTreeList',
+    addSysMenu = '/admin/sysMenu/addSysMenu',
+    getSysMenu = '/admin/sysMenu/getSysMenu/',
+    updateSysMenu = '/admin/sysMenu/updateSysMenu',
+    deleteSysMenu = '/admin/sysMenu/deleteSysMenu/',
 }
 
 /** 菜单*/

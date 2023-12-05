@@ -33,7 +33,7 @@ export function useGlobeConfigure() {
             setThemeColor(getComputedStyle(document.documentElement)
                 .getPropertyValue('--el-color-primary'));
         }
-        setNightMode();
+        // setNightMode();
     }
 
 

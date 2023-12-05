@@ -12,6 +12,8 @@ declare module 'vue' {
     CustomDatePicker: typeof import('./../components/Custom/CustomDatePicker/index.vue')['default']
     CustomIconInput: typeof import('./../components/Custom/CustomIconInput/index.vue')['default']
     CustomPagination: typeof import('./../components/Custom/CustomPagination/index.vue')['default']
+    CustomSearch: typeof import('./../components/Custom/CustomSearch/index.vue')['default']
+    CustomTable: typeof import('./../components/Custom/CustomTable/index.vue')['default']
     CustomTag: typeof import('./../components/Custom/CustomTag/index.vue')['default']
     CustomTreeSelect: typeof import('./../components/Custom/CustomTreeSelect/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

@@ -2,9 +2,9 @@ import {http} from '@/utils/http'
 import {LoginParamsType,LoginResult,LoginUserInfoResult} from './types/systemTypes'
 
 enum Api {
-    Login = '/api/admin/login',
-    Logout = '/api/admin/logout',
-    GetProfile = '/api/admin/getLoginUserInfo',
+    Login = '/admin/login',
+    Logout = '/admin/logout',
+    GetProfile = '/admin/getLoginUserInfo',
 }
 
 /** 登录*/

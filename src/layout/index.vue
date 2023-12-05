@@ -43,5 +43,8 @@ const {configure} = storeToRefs(useConfigStoreHook())
     flex:1;
     min-width: 800px;
   }
+  .layout-parent{
+    overflow-x: hidden;
+  }
 }
 </style>

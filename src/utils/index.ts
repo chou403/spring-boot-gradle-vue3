@@ -154,7 +154,14 @@ export function formatGreet(param: Date): string {
     else return '夜里好';
 }
 
-
+/**
+ * @description 驼峰转下划线
+ * @param {string} str 转化目标字符串
+ * @returns {string}
+ * */
+export function toSnakeCase(str:string):string {
+    return str.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase();
+}
 
 
 

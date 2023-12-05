@@ -6,6 +6,7 @@ import {ElMessage} from "element-plus";
 import {removeToken, setToken} from "@/utils/auth";
 import {computeDate, formatGreet} from "@/utils";
 import {router} from "@/router";
+import {useTabsStore} from "@/store/modules/tabs";
 
 interface userType {
     userinfo: LoginUserInfoResult,
@@ -80,7 +81,9 @@ export const useUserStore = defineStore({
             logoutApi().then(() => {
                 removeToken();
                 this.$reset();
+                useTabsStore().$reset();
                 localStorage.removeItem('userinfo');
+                localStorage.removeItem('tabsList');
                 router.push("/login");
             })
         },

@@ -5,24 +5,24 @@ import {
     updatePasswordParamsType,
     updateUserParamsType,
 } from "@/api/types/userTypes";
-import {ResultType} from "@/api/types";
+import {ListResultType, ResultType} from "@/api/types";
 
 enum Api {
-    updateSysUser = '/api/admin/sysUser/updateSysUser',
-    getSysUserList = '/api/admin/sysUser/getSysUserPage',
-    getSysUser = '/api/admin/sysUser/getSysUser/',
-    deleteSysUser = '/api/admin/sysUser/deleteSysUser/',
-    addSysUser = '/api/admin/sysUser/addSysUser',
-    resetSysUserPassword = '/api/admin/sysUser/resetSysUserPassword',
-    updatePassword = '/api/admin/sysUser/updatePassword',
-    updateProfile = '/api/admin/sysUser/updateProfile',
+    updateSysUser = '/admin/sysUser/updateSysUser',
+    getSysUserList = '/admin/sysUser/getSysUserPage',
+    getSysUser = '/admin/sysUser/getSysUser/',
+    deleteSysUser = '/admin/sysUser/deleteSysUser/',
+    addSysUser = '/admin/sysUser/addSysUser',
+    resetSysUserPassword = '/admin/sysUser/resetSysUserPassword',
+    updatePassword = '/admin/sysUser/updatePassword',
+    updateProfile = '/admin/sysUser/updateProfile',
 }
 
 
 /** 系统用户*/
 // 用户分页列表
 export function getSysUserList(data: GetSysUserListParamsType) {
-    return http.post<GetSysUserListResult>(Api.getSysUserList, data)
+    return http.post<ListResultType>(Api.getSysUserList, data)
 }
 
 // 添加用户

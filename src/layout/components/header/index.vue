@@ -35,6 +35,7 @@
         </div>
       </div>
     </div>
+    <Tabs/>
   </div>
 </template>
 
@@ -42,6 +43,7 @@
 import ThemePicker from "./ThemePicker/index.vue"
 import Notify from "./Notify/index.vue"
 import User from "./User/index.vue"
+import Tabs from "./Tabs/index.vue"
 import Sidebar from '@/layout/components/sidebar/index.vue'
 import Logo from '@/layout/components/sidebar/logo.vue'
 import {useConfigStoreHook} from "@/store/modules/config";

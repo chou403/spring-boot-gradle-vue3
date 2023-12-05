@@ -34,7 +34,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .app-main {
   width: 100%;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 90px);
   position: relative;
   overflow-x: hidden;
   background-color: #f8f8f8;

@@ -24,7 +24,7 @@ declare global {
             /** 菜单图标 `可选` */
             icon?: string;
             /** 是否在菜单中显示（默认`true`）`可选` */
-            isMenu?: boolean;
+            isShow?: boolean;
             /** 是否缓存路由（默认`false`）`可选` */
             isCache?: boolean;
             /** 是否是首页（默认`false`）`可选` */
@@ -52,7 +52,7 @@ declare global {
             /** 菜单图标 `可选` */
             icon?: string;
             /** 是否在菜单中显示（默认`true`）`可选` */
-            isMenu?: boolean;
+            isShow?: boolean;
             /** 是否缓存路由`可选` */
             isCache?: boolean;
             /** 是否是首页（默认`false`）`可选` */
@@ -60,6 +60,13 @@ declare global {
         };
         /** 子路由配置项 */
         children?: Array<RouteChildrenConfigsTable>;
+    }
+
+    /**
+     * @description tableData
+     * */
+    interface TableDataType {
+        data:any[]
     }
 
     // 声明文件，定义全局变量
