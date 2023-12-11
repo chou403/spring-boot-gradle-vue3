@@ -10,15 +10,17 @@
           </el-col>
           <el-col>
             <el-form-item label="角色编码" prop="code">
-              <el-input v-model="form.code" placeholder="请输入角色编码"/>
+              <el-input v-model="form.code" :disabled="!!dialogData.id" placeholder="请输入角色编码"/>
             </el-form-item>
           </el-col>
           <el-col>
-            <el-form-item label="状态">
-              <el-radio-group v-model="form.status">
-                <el-radio :label="true" border>启用</el-radio>
-                <el-radio :label="false" border>禁用</el-radio>
-              </el-radio-group>
+            <el-form-item label="备注">
+              <el-input
+                  v-model="form.remark"
+                  :autosize="{ minRows: 2, maxRows: 8 }"
+                  type="textarea"
+                  placeholder="请输入备注"
+              />
             </el-form-item>
           </el-col>
         </el-row>

@@ -6,7 +6,7 @@
           <el-col>
             <el-form-item label="字典类型">
               <el-select v-model="form.dictCode" disabled>
-                <el-option v-for="item in typeList" :label="item.name" :value="item.id" />
+                <el-option v-for="item in typeList" :label="item.name" :value="item.code" />
               </el-select>
             </el-form-item>
           </el-col>

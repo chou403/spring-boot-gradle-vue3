@@ -24,7 +24,7 @@
           <div class="dict-type-list mt10 mb10">
             <template v-if="dictTypeData.data.length>0">
               <div v-for="item in dictTypeData.data" :class="tableConfig.initParam?.dictCode===item.id?'selected':''"
-                   class="dict-type-item flex-between" @click="pickDictType(item.id)">
+                   class="dict-type-item flex-between" @click="pickDictType(item.code)">
                 <span>{{ item.name }}</span>
                 <span class="color-info font12">{{ item.code }}</span>
                 <div class="dict-type-operation">
@@ -198,8 +198,8 @@ function delDictType(row: any) {
 }
 
 // 选择字典类型
-function pickDictType(id: string) {
-  tableConfig.initParam.dictCode = id;
+function pickDictType(code: string) {
+  tableConfig.initParam.dictCode = code;
   if (dictTableRef.value) dictTableRef.value.getTableData();
 }
 

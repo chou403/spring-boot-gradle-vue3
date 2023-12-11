@@ -18,7 +18,7 @@
           </el-col>
           <el-col>
             <el-form-item label="类型编码" prop="code">
-              <el-input v-model="form.code" placeholder="请输入类型编码"/>
+              <el-input v-model="form.code" :disabled="!!id" placeholder="请输入类型编码"/>
             </el-form-item>
           </el-col>
           <el-col>
@@ -68,6 +68,7 @@ const rules = {
 
 // 提交
 const submit = async () => {
+  console.log(id);return;
   if (!formRef.value) return;
   await formRef.value.validate((valid) => {
     if (valid) {
@@ -86,8 +87,11 @@ const submit = async () => {
       }
     }
   })
-
 }
+
+onMounted(()=>{
+
+})
 
 defineExpose({
   openDialog,

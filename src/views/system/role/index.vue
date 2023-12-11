@@ -14,14 +14,6 @@
           </el-form-item>
         </el-col>
         <el-col :sm="24" :md="12" :lg="8" :xl="6">
-          <el-form-item label="状态">
-            <el-select v-model="queryForm.status" clearable placeholder="请选择状态">
-              <el-option label="启用" :value="1"/>
-              <el-option label="禁用" :value="0"/>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :sm="24" :md="12" :lg="8" :xl="6">
           <el-form-item label-width="0">
             <el-button type="primary" @click="onSearch">
               <el-icon>
@@ -52,12 +44,7 @@
     <el-table :data="tableData.data" border style="width: 100%" row-key="id">
       <el-table-column prop="name" label="角色名称" align="center"/>
       <el-table-column prop="code" label="角色编码" align="center"/>
-      <el-table-column prop="status" label="状态" align="center">
-        <template #default="scope">
-          <el-tag v-if="scope.row.status===true" type="success" disable-transitions>启用</el-tag>
-          <el-tag v-else type="danger" disable-transitions>禁用</el-tag>
-        </template>
-      </el-table-column>
+      <el-table-column prop="remark" label="备注" align="center"/>
       <el-table-column prop="createTime" label="创建时间" align="center"/>
       <el-table-column label="操作" fixed="right" align="center">
         <template #default="{row}">

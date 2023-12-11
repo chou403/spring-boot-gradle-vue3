@@ -46,10 +46,42 @@ import {delTable} from "@/utils/table";
 // 搜索栏配置
 const searchConfig = [
   {
-    label: '配置名称',
+    label: '搜索',
     prop: 'keyword',
-    placeholder: '请输入配置名称',
-  }
+    placeholder: '请输入配置名称/配置key/配置值',
+  },
+  {
+    label: '类型',
+    prop: 'isSystem',
+    type: 'select',
+    placeholder: '请选择类型',
+    options: [
+      {
+        name: '系统类型',
+        id: 1,
+      },
+      {
+        name: '其他类型',
+        id: 0,
+      },
+    ],
+  },
+  {
+    label: '状态',
+    prop: 'status',
+    type: 'select',
+    placeholder: '请选择状态',
+    options: [
+      {
+        name: '启用',
+        id: 1,
+      },
+      {
+        name: '禁用',
+        id: 0,
+      },
+    ],
+  },
 ]
 
 // 查询

@@ -29,8 +29,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="角色" prop="roleIds">
-              <el-select v-model="form.roleIds" clearable placeholder="请选择角色">
+            <el-form-item label="角色" prop="roleId">
+              <el-select v-model="form.roleId" clearable placeholder="请选择角色">
                 <el-option v-for="item in roleList" :label="item.name" :value="item.id"/>
               </el-select>
             </el-form-item>
@@ -103,7 +103,7 @@ const rules = reactive<FormRules>({
   email: [
     {validator: validateEmail, trigger: 'blur'},
   ],
-  roleIds: [
+  roleId: [
     {required: true, message: '请选择角色', trigger: 'blur'},
   ],
 })

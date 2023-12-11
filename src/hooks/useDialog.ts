@@ -27,6 +27,9 @@ export default function useDialog({initFormParam={},getDetailsApi}:dialogType) {
             state.title='编辑';
             state.id=row.id;
             getDetails(row.id);
+        }else{
+            state.title='新增';
+            state.id='';
         }
         state.isShow=true;
     }
