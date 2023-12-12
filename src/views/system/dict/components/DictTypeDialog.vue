@@ -68,7 +68,6 @@ const rules = {
 
 // 提交
 const submit = async () => {
-  console.log(id);return;
   if (!formRef.value) return;
   await formRef.value.validate((valid) => {
     if (valid) {

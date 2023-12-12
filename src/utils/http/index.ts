@@ -1,11 +1,11 @@
 import Axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, CustomParamsSerializer} from 'axios'
 import {stringify} from 'qs'
 import {ElMessage, ElMessageBox} from "element-plus";
-import {getToken, removeToken} from "@/utils/auth";
+import {getToken} from "@/utils/auth";
 
-import {PureHttpRequestConfig, PureHttpResponse, RequestMethods} from "./types.d";
-import {router} from "@/router";
+import {PureHttpRequestConfig, RequestMethods} from "./types.d";
 import {ResultType} from "@/api/types";
+import {useUserStore} from "@/store/modules/user";
 
 const defaultConfig: AxiosRequestConfig = {
     // 请求超时时间
@@ -95,7 +95,7 @@ class Http {
         return new Promise((resolve, reject) => {
             Http.axiosInstance
                 .request(config)
-                .then((response:AxiosResponse<ResultType>) => {
+                .then((response: AxiosResponse<ResultType>) => {
                     const {code, data, msg} = response.data;
                     switch (code) {
                         case 200:
@@ -111,10 +111,7 @@ class Http {
                                     type: 'warning',
                                 })
                                 .then(async () => {
-                                    removeToken();
-                                    localStorage.removeItem('tabsList');
-                                    localStorage.removeItem('userinfo');
-                                    await router.push("/login");
+                                    await useUserStore().logout();
                                 }).catch(() => {
                             })
                             break;

@@ -1,4 +1,4 @@
-import {computeDateType} from "@/utils/types";
+import {computeDateType} from "@/enum";
 
 /**
  * 时间格式化
