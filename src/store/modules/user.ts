@@ -74,16 +74,21 @@ export const useUserStore = defineStore({
             })
         },
 
+        // 清除登录修改信息
+        async clear(){
+            removeToken();
+            this.$reset();
+            useTabsStore().$reset();
+            localStorage.removeItem('userinfo');
+            localStorage.removeItem('tabsList');
+        },
+
         /**
          * @description:退出登录
          * */
         async logout() {
             logoutApi().then(() => {
-                removeToken();
-                this.$reset();
-                useTabsStore().$reset();
-                localStorage.removeItem('userinfo');
-                localStorage.removeItem('tabsList');
+                this.clear();
                 router.push("/login");
             })
         },

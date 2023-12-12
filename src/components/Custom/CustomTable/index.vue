@@ -48,7 +48,9 @@ type tableConfig = {
   // 请求函数，参数为任意类型，返回值为Promise类型
   request: (params: any) => Promise<any>
   // 是否立即执行
-  immediate?:boolean
+  immediate?:boolean,
+  // 是否显示分页
+  isShowPage?:boolean,
 }
 
 // 定义props，用于接收配置和列的参数
@@ -64,7 +66,9 @@ const {tableData, pagination,search, loading, changePage, getTableData,sortChang
   // 初始化参数，默认为空对象
   initParam: props.config?.initParam||{},
   // 是否立即执行
-  immediate:  props.config.immediate
+  immediate:  props.config.immediate,
+  // 是否显示分页
+  isShowPage:  props.config.isShowPage
 })
 
 // 排序

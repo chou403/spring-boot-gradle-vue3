@@ -6,6 +6,7 @@ import {getToken} from "@/utils/auth";
 import {PureHttpRequestConfig, RequestMethods} from "./types.d";
 import {ResultType} from "@/api/types";
 import {useUserStore} from "@/store/modules/user";
+import {router} from "@/router";
 
 const defaultConfig: AxiosRequestConfig = {
     // 请求超时时间
@@ -111,7 +112,13 @@ class Http {
                                     type: 'warning',
                                 })
                                 .then(async () => {
-                                    await useUserStore().logout();
+                                    await useUserStore().clear();
+                                    await router.push({
+                                        path:"/login",
+                                        query: {
+                                            redirect: router.currentRoute.value.fullPath,
+                                        },
+                                    });
                                 }).catch(() => {
                             })
                             break;
