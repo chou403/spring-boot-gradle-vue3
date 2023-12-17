@@ -60,8 +60,8 @@ const menuSelect = (path:string) => {
 
 <style lang="scss" scoped>
 .menu-vertical-box {
-  height: 100%;
   flex: 1;
+  height: calc(100vh - 50px);
 
   .el-menu-vertical {
     height: 100%;

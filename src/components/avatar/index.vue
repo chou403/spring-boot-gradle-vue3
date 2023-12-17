@@ -16,7 +16,8 @@
 <script lang="ts" setup>
 import type {UploadProps, UploadRequestOptions} from 'element-plus'
 import {ElMessage} from 'element-plus'
-import {uploadLocal} from "@/api";
+import {uploadApi} from "@/api";
+import {imageType} from "@/enum";
 
 
 const props = withDefaults(defineProps<{
@@ -28,9 +29,8 @@ const emits = defineEmits<{
   (event: 'update:value', name: any): void
 }>()
 
-const imgFileType=['image/gif','image/jpeg','image/jpg','image/png']
-
 const data = reactive({
+  type:'head',
   imageUrl: computed({
     get: () => {
       return props.value
@@ -44,18 +44,19 @@ const data = reactive({
 const uploadSuccess: UploadProps['onSuccess'] = (
     response,
 ) => {
-  data.imageUrl = response;
+  data.imageUrl = response.url;
 }
 
 // 上传头像
 const uploadAvatar = (options: UploadRequestOptions) => {
-  return uploadLocal({
-    multipartFile: options.file
-  })
+  return uploadApi({
+    file: options.file,
+  },'head')
 }
 
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
-  if (imgFileType.indexOf(rawFile.type)==-1 ) {
+  const extension= rawFile.name.split('.').pop() as string;
+  if (!(extension in imageType)) {
     ElMessage.error('抱歉，图片格式不正确')
     return false
   } else if (rawFile.size / 1024 / 1024 > 5) {
@@ -66,7 +67,7 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 }
 </script>
 
-<style>
+<style scoped>
 .avatar-uploader .avatar {
   width: 100px;
   height: 100px;

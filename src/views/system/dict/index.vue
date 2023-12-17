@@ -27,7 +27,29 @@
                    class="dict-type-item flex-between" @click="pickDictType(item.code)">
                 <span>{{ item.name }}</span>
                 <span class="color-info font12">{{ item.code }}</span>
-                <div class="dict-type-operation">
+                <div v-if="item.isSystem" class="dict-type-operation">
+                  <el-tooltip
+                      content="系统字典类型，无法修改"
+                      placement="top"
+                  >
+                    <el-button size="small" disabled @click="openDictTypeDialog(item)">
+                      <el-icon>
+                        <ele-edit/>
+                      </el-icon>
+                    </el-button>
+                  </el-tooltip>
+                  <el-tooltip
+                      content="系统字典类型，无法删除"
+                      placement="top"
+                  >
+                    <el-button size="small" disabled @click="delDictType(item)">
+                      <el-icon>
+                        <ele-delete/>
+                      </el-icon>
+                    </el-button>
+                  </el-tooltip>
+                </div>
+                <div v-else class="dict-type-operation">
                   <el-button size="small" @click="openDictTypeDialog(item)">
                     <el-icon>
                       <ele-edit/>
@@ -56,7 +78,7 @@
             </el-icon>
             新 增
           </el-button>
-          <custom-table ref="dictTableRef" :columns="columns" :config="tableConfig" :initParam="dictTypeData.initParam">
+          <custom-table :columns="columns" :data="tableData" :initParam="dictTypeData.initParam">
             <template #status="{row}">
               <el-tag v-if="row.status" type="success" disable-transitions>启用</el-tag>
               <el-tag v-else type="danger" disable-transitions>禁用</el-tag>
@@ -70,12 +92,14 @@
               </el-button>
             </template>
           </custom-table>
+          <custom-pagination :total="pagination.total" :currentPage="pagination.pageIndex"
+          :pageSize="pagination.pageSize" @changePage="changePage" @changeSize="changeSize"/>
         </el-card>
       </el-col>
     </el-row>
 
     <!--    字典列表：添加，编辑弹框-->
-    <DictDialog ref="dictDialogRef" :dictCode="tableConfig.initParam?.dictCode" :typeList="dictTypeData.data" @refresh="refreshTable"/>
+    <DictDialog ref="dictDialogRef" :dictCode="tableConfig.initParam?.dictCode" :typeList="dictTypeData.data" @refresh="getTableData"/>
 
     <!--    字典类型：添加，编辑弹框-->
     <DictTypeDialog ref="dictTypeDialogRef" @refresh="getSysDictTypeList"/>
@@ -86,11 +110,12 @@ import DictTypeDialog from "./components/DictTypeDialog.vue";
 import DictDialog from "./components/DictDialog.vue";
 import {getSysDictPageApi,deleteSysDictApi, deleteSysDictTypeApi, getSysDictTypeListApi} from "@/api/dict";
 import {delTable} from "@/utils/table";
+import useTable from "@/components/Custom/CustomTable/useTable";
+import {getCourseTypeTreeListApi} from "@/api/course";
 
 /**
  * 字典列表
  * */
-const dictTableRef = ref();
 const dictDialogRef = ref();
 // 表格列信息
 const columns = [
@@ -122,6 +147,7 @@ const columns = [
   {
     prop: 'createTime',
     label: '创建时间',
+    width:170,
   },
   {
     prop: 'operation',
@@ -136,14 +162,16 @@ const columns = [
 function openDictDialog(data = {}) {
   dictDialogRef.value.openDialog(data);
 }
-// 表格配置信息
-const tableConfig = reactive({
+
+const tableConfig=reactive({
+  request: getSysDictPageApi,
   initParam: {
     dictCode: ''
   },
   immediate:false,
-  request: getSysDictPageApi
 })
+// 获取表格数据
+const {tableData,search,pagination, getTableData,changePage,changeSize} = useTable(tableConfig)
 
 // 删除字典列表
 function delDict(row: any) {
@@ -151,15 +179,11 @@ function delDict(row: any) {
     id: row.id,
     request: deleteSysDictApi,
     callback: () => {
-      if (dictTableRef.value) dictTableRef.value.getTableData();
+      getTableData();
     }
   })
 }
 
-// 刷新表格
-function refreshTable() {
-  if (dictTableRef.value) dictTableRef.value.getTableData();
-}
 
 /**
  * 字典类型
@@ -200,7 +224,7 @@ function delDictType(row: any) {
 // 选择字典类型
 function pickDictType(code: string) {
   tableConfig.initParam.dictCode = code;
-  if (dictTableRef.value) dictTableRef.value.getTableData();
+  getTableData();
 }
 
 

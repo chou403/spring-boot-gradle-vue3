@@ -1,12 +1,13 @@
 import {http} from '@/utils/http'
+import {UploadParamsTypes} from "@/api/types/uploadTypes";
 
 enum Api {
-    uploadLocal = '/upload/uploadLocal',
+    upload = '/common/upload/',
 }
 
-/** 文件上传到本地*/
-export function uploadLocal(data:any) {
-    return http.post<any>(Api.uploadLocal,data,{
+/** 单个文件上传*/
+export function uploadApi(data:UploadParamsTypes,type:string) {
+    return http.post<any>(Api.upload+type, data,{
         headers:{
             'Content-Type':'multipart/form-data'
         }

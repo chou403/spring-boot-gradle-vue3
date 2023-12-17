@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--    表格-->
-    <el-table v-loading="loading" :data="tableData" border style="width: 100%" row-key="id" @sort-change="onSort">
+    <el-table :data="data" border style="width: 100%" row-key="id" @sort-change="onSort">
       <template v-for="item in props.columns">
         <el-table-column :prop="item.prop" :sortable="item.isSort?'custom':false" :label="item.label" :min-width="item.minWidth" :width="item.width"
                          :fixed="item.fixed" :align="item.align||'center'">
@@ -11,16 +11,11 @@
         </el-table-column>
       </template>
     </el-table>
-    <!--    分页-->
-    <CustomPagination v-model:currentPage="pagination.pageIndex" v-model:pageSize="pagination.pageSize"
-                      :total="pagination.total" @changePage="changePage"/>
+
   </div>
 </template>
 
 <script setup lang="ts">
-import useTable from "@/components/Custom/CustomTable/useTable";
-import {toSnakeCase} from "@/utils";
-
 // 定义一个columnsType类型，用于描述表格列的属性
 type columnsType = {
   // 属性名
@@ -41,49 +36,20 @@ type columnsType = {
   isSort?:boolean
 }
 
-// 定义一个tableConfig类型，用于配置表格
-type tableConfig = {
-  // 初始化参数
-  initParam?: Object
-  // 请求函数，参数为任意类型，返回值为Promise类型
-  request: (params: any) => Promise<any>
-  // 是否立即执行
-  immediate?:boolean,
-  // 是否显示分页
-  isShowPage?:boolean,
-}
-
 // 定义props，用于接收配置和列的参数
 const props = defineProps<{
-  config: tableConfig
+  data:any[],
   columns: columnsType[]
 }>()
 
-// 使用useTable函数，传入配置参数，获取表格数据
-const {tableData, pagination,search, loading, changePage, getTableData,sortChange} = useTable({
-  // 请求函数，参数为任意类型，返回值为Promise类型
-  request: props.config.request,
-  // 初始化参数，默认为空对象
-  initParam: props.config?.initParam||{},
-  // 是否立即执行
-  immediate:  props.config.immediate,
-  // 是否显示分页
-  isShowPage:  props.config.isShowPage
-})
+const emits=defineEmits(['onSort'])
+
 
 // 排序
 function onSort({prop, order}:Record<string, string>) {
-  sortChange({
-    orderByColumn:toSnakeCase(prop),
-    orderByAsc:order === "ascending"
-  });
+  emits('onSort', {prop, order})
 }
 
-// 定义一个接口，用于暴露表格数据和搜索参数
-defineExpose({
-  getTableData,
-  search
-})
 
 </script>
 

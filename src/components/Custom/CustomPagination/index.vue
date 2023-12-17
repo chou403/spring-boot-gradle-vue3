@@ -40,10 +40,10 @@ let paginationData = reactive({
 })
 
 // 每页条数
-const changeSize = (page: number) => {
+const changeSize = (size: number) => {
   paginationData.currentPage = 1;
-  paginationData.pageSize = page;
-  emits('changePage', 1)
+  paginationData.pageSize = size;
+  emits('changeSize', size)
 }
 
 // 翻页
@@ -53,9 +53,10 @@ const changePage = (page: number) => {
 }
 
 const emits = defineEmits<{
-  (event: 'changePage', name: number): void
-  (event: 'update:pageSize', name: number): void
-  (event: 'update:currentPage', name: number): void
+  (event: 'changePage', page: number): void
+  (event: 'changeSize', size: number): void
+  (event: 'update:pageSize', size: number): void
+  (event: 'update:currentPage', page: number): void
 }>()
 </script>
 

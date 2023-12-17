@@ -11,7 +11,7 @@
         新 增
       </el-button>
       <!--      表格-->
-      <custom-table ref="tableRef" :columns="columns" :config="tableConfig">
+      <custom-table :columns="columns" :data="tableData">
         <template #status="{row}">
           <el-tag v-if="row.status" type="success" disable-transitions>启用</el-tag>
           <el-tag v-else type="danger" disable-transitions>禁用</el-tag>
@@ -24,21 +24,25 @@
           <el-button link type="primary" @click="openDialog(row)">
             修改
           </el-button>
-          <el-button @click="delTableData(row)" link type="danger">
+          <el-button v-if="!row.isSystem" @click="delTableData(row)" link type="danger">
             删除
           </el-button>
         </template>
       </custom-table>
+<!--      分页-->
+      <custom-pagination :total="pagination.total" :currentPage="pagination.pageIndex"
+                         :pageSize="pagination.pageSize" @changePage="changePage" @changeSize="changeSize"/>
     </el-card>
 
     <!--    字典列表：添加，编辑弹框-->
-    <Dialog ref="dialogRef" @refresh="refreshTable"/>
+    <Dialog ref="dialogRef" @refresh="getTableData"/>
   </div>
 </template>
 <script lang="ts" setup>
 import Dialog from "./components/dialog.vue";
 import {deleteSysConfigApi, getSysConfigPageApi} from "@/api/configuration";
 import {delTable} from "@/utils/table";
+import useTable from "@/components/Custom/CustomTable/useTable";
 
 /**
  * @description查询
@@ -83,16 +87,14 @@ const searchConfig = [
     ],
   },
 ]
-
 // 查询
-function search(data) {
-  if (tableRef.value) tableRef.value.search(data);
+function onSearch(data:any) {
+  search(data);
 }
 
 /**
  * @description表格
  * */
-const tableRef = ref();
 const dialogRef = ref();
 // 表格列信息
 const columns = [
@@ -126,6 +128,7 @@ const columns = [
     prop: 'createTime',
     label: '创建时间',
     isSort: true,
+    width:180,
   },
   {
     prop: 'operation',
@@ -135,33 +138,29 @@ const columns = [
     width: 120
   },
 ]
-
 // 表格配置信息
 const tableConfig = reactive({
-  initParam: {},
-  searchParam: {},
   request: getSysConfigPageApi
 })
-
-// 打开表格操作弹框
-function openDialog(data = {}) {
-  dialogRef.value.openDialog(data);
-}
-
+// 获取表格数据
+const {tableData,search,pagination, getTableData,changePage,changeSize} = useTable(tableConfig)
 // 删除列表数据
 function delTableData(row: any) {
   delTable({
     id: row.id,
     request: deleteSysConfigApi,
     callback: () => {
-      refreshTable();
+      getTableData();
     }
   })
 }
 
-// 刷新表格数据
-function refreshTable() {
-  if (tableRef.value) tableRef.value.getTableData();
+/**
+ * @description新增、编辑弹框
+ * */
+// 打开表格操作弹框
+function openDialog(data = {}) {
+  dialogRef.value.openDialog(data);
 }
 
 </script>

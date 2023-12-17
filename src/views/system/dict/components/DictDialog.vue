@@ -77,10 +77,10 @@ const {title,id,isShow,form,openDialog,closeDialog} =useDialog({
 // 效验规则
 const rules = {
   label: [
-    {required: true, message: '请输入字典名称'},
+    {required: true, message: '请输入字典名称',trigger: 'blur'},
   ],
   value: [
-    {required: true, message: '请输入字典值'},
+    {required: true, message: '请输入字典值',trigger: 'blur'},
   ],
 }
 

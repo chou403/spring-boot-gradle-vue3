@@ -1,45 +1,45 @@
 <template>
-  <el-sub-menu v-if="props.menu?.children" :index="props.menu.path">
+  <el-sub-menu v-if="menu?.children" :index="menu.path">
     <template #title>
       <div class="menu-icon">
-        <template v-if="props.menu.meta?.icon&&props.menu.meta.icon.startsWith('local')">
-          <SvgIcon :name="props.menu.meta.icon"/>
+        <template v-if="menu.meta?.icon&&menu.meta.icon.startsWith('local')">
+          <SvgIcon :name="menu.meta.icon"/>
         </template>
-        <component v-else :is="props.menu.meta.icon" :inline-tamplate="true"/>
+        <component v-else :is="menu.meta.icon" :inline-tamplate="true"/>
       </div>
-      <span class="menu-txt">{{ props.menu.meta.title }}</span>
+      <span class="menu-txt">{{ menu.meta.title }}</span>
     </template>
-    <template v-for="child in props.menu?.children">
-      <el-menu-item
-          v-if="!child?.children"
-          :key="child.path"
-          :index="child.path"
-      >
-        <div class="menu-icon">
-          <template v-if="child.meta?.icon&&child.meta?.icon.startsWith('local')">
-            <SvgIcon :name="child.meta.icon"/>
-          </template>
-          <component v-else :is="child.meta?.icon" :inline-tamplate="true"/>
-        </div>
-        <span v-if="child.meta.isLink" @click.prevent.stop="openLink(child.meta.linkUrl)" class="menu-txt w100">{{
-            child.meta.title
-          }}</span>
-        <span v-else class="menu-txt">{{ child.meta.title }}</span>
-      </el-menu-item>
-      <sidebar-item v-else :menu="child"></sidebar-item>
+    <template v-for="child in menu?.children">
+        <el-menu-item
+            v-if="!child?.children&&child.meta.isShow"
+            :key="child.path"
+            :index="child.path"
+        >
+          <div class="menu-icon">
+            <template v-if="child.meta?.icon&&child.meta?.icon.startsWith('local')">
+              <SvgIcon :name="child.meta.icon"/>
+            </template>
+            <component v-else :is="child.meta?.icon" :inline-tamplate="true"/>
+          </div>
+          <span v-if="child.meta.isLink" @click.prevent.stop="openLink(child.meta.linkUrl)" class="menu-txt w100">{{
+              child.meta.title
+            }}</span>
+          <span v-else class="menu-txt">{{ child.meta.title }}</span>
+        </el-menu-item>
+        <sidebar-item v-else :menu="child"></sidebar-item>
     </template>
   </el-sub-menu>
-  <template v-else>
-    <el-menu-item :index="props.menu.path">
+  <template v-else-if="menu.meta.isShow">
+    <el-menu-item :index="menu.path">
       <div class="menu-icon">
-        <template v-if="props.menu.meta?.icon&&props.menu.meta?.icon.startsWith('local')">
-          <SvgIcon :name="props.menu.meta.icon"/>
+        <template v-if="menu.meta?.icon&&menu.meta?.icon.startsWith('local')">
+          <SvgIcon :name="menu.meta.icon"/>
         </template>
-        <component v-else :is="props.menu.meta?.icon" :inline-tamplate="true"/>
+        <component v-else :is="menu.meta?.icon" :inline-tamplate="true"/>
       </div>
-      <span v-if="props.menu.meta.isLink" @click.prevent.stop="openLink(props.menu.meta.linkUrl)"
-            class="menu-txt w100">{{ props.menu.meta.title }}</span>
-      <span v-else class="menu-txt">{{ props.menu.meta.title }}</span>
+      <span v-if="menu.meta.isLink" @click.prevent.stop="openLink(menu.meta.linkUrl)"
+            class="menu-txt w100">{{ menu.meta.title }}</span>
+      <span v-else class="menu-txt">{{ menu.meta.title }}</span>
     </el-menu-item>
   </template>
 </template>

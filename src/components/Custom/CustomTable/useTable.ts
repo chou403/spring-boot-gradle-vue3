@@ -1,5 +1,6 @@
 // 封装一个element plus框架 的useTable方法hooks
 import {ElMessage} from "element-plus";
+import {toSnakeCase} from "@/utils";
 
 type tableType = {
     request: Function
@@ -8,6 +9,7 @@ type tableType = {
     searchParam?: Object
     isShowPage?: boolean
     dataCallBack?: Function
+    afterCallback?: (data:any) => void
 }
 
 /**
@@ -18,13 +20,15 @@ type tableType = {
  * @param {Boolean} initParam 获取数据初始化参数(非必传，默认为{})
  * @param {Boolean} isShowPage 是否显示分页组件(非必传，默认为true);
  * @param {Function} dataCallBack 对后台返回的数据进行处理的方法(非必传)
+ * @param {Function} afterCallback 获取数据后执行方法(非必传)
  * */
 export default function useTable({
                                      request,
                                      immediate = true,
                                      initParam = {},
                                      isShowPage = true,
-                                     dataCallBack
+                                     dataCallBack,
+                                     afterCallback
                                  }: tableType) {
     const state = reactive({
         // 表格数据
@@ -66,6 +70,7 @@ export default function useTable({
         } finally {
             state.loading = false;
         }
+        afterCallback && afterCallback(state.tableData);
     }
 
     // 是否立即获取数据
@@ -89,8 +94,11 @@ export default function useTable({
     };
 
     // 排序
-    const sortChange = async (params: any) => {
-        state.sortParam=params;
+    const sortChange = async ({prop, order}:{prop:string,order:string}) => {
+        state.sortParam={
+            orderByColumn:toSnakeCase(prop),
+            orderByAsc:order === "ascending"
+        };
         state.pagination.pageIndex = 1;
         updatedTotalParam();
         await getTableData();
@@ -102,12 +110,20 @@ export default function useTable({
         updatedTotalParam();
         await getTableData()
     };
+    // 修改每页显示数量
+    const changeSize = async (size: number) => {
+        state.pagination.pageIndex = 1;
+        state.pagination.pageSize = size;
+        updatedTotalParam();
+        await getTableData()
+    };
 
     return {
         ...toRefs(state),
         getTableData,
         changePage,
         search,
-        sortChange
+        sortChange,
+        changeSize
     }
 }
