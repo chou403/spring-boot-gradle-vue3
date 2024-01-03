@@ -1,8 +1,9 @@
 import {http} from '@/utils/http'
 
+const server_url = '/system'
 enum Api {
-    getSysLogList = '/admin/sysLog/getSysLogPage',
-    getSysLog = '/admin/sysLog/getSysLog/',
+    getSysLogList = server_url + '/admin/sysLog/getSysLogPage',
+    getSysLog = server_url + '/admin/sysLog/getSysLog/',
 
 }
 /** 日志*/

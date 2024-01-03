@@ -5,12 +5,13 @@
 import {http} from '@/utils/http'
 import {ListResultType, ResultType} from "@/api/types";
 
+const server_url = '/system'
 enum Api {
-    updateSysConfig = '/admin/sysConfig/updateSysConfig',
-    getSysConfigPage = '/admin/sysConfig/getSysConfigPage',
-    getSysConfig = '/admin/sysConfig/getSysConfig/',
-    deleteSysConfig = '/admin/sysConfig/deleteSysConfig/',
-    addSysConfig = '/admin/sysConfig/addSysConfig',
+    updateSysConfig = server_url + '/admin/sysConfig/updateSysConfig',
+    getSysConfigPage = server_url +  '/admin/sysConfig/getSysConfigPage',
+    getSysConfig = server_url +  '/admin/sysConfig/getSysConfig/',
+    deleteSysConfig = server_url +  '/admin/sysConfig/deleteSysConfig/',
+    addSysConfig = server_url +  '/admin/sysConfig/addSysConfig',
 }
 
 // 修改系统配置

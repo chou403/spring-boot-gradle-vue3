@@ -1,14 +1,15 @@
 import {http} from '@/utils/http'
 
+const server_url = '/system'
 enum Api {
-    updateSysRole = '/admin/sysRole/updateSysRole',
-    getSysRoleAllList = '/admin/sysRole/getSysRoleAllList',
-    getMenuIdsByRoleId = '/admin/sysRole/getMenuIdsByRoleId/',
-    setRoleMenus = '/admin/sysRole/setRoleMenus',
-    getSysRoleList = '/admin/sysRole/getSysRolePage',
-    getSysRole = '/admin/sysRole/getSysRole/',
-    deleteSysRole = '/admin/sysRole/deleteSysRole/',
-    addSysRole = '/admin/sysRole/addSysRole',
+    updateSysRole = server_url + '/admin/sysRole/updateSysRole',
+    getSysRoleAllList = server_url + '/admin/sysRole/getSysRoleAllList',
+    getMenuIdsByRoleId = server_url + '/admin/sysRole/getMenuIdsByRoleId/',
+    setRoleMenus = server_url + '/admin/sysRole/setRoleMenus',
+    getSysRoleList = server_url + '/admin/sysRole/getSysRolePage',
+    getSysRole = server_url + '/admin/sysRole/getSysRole/',
+    deleteSysRole = server_url + '/admin/sysRole/deleteSysRole/',
+    addSysRole = server_url + '/admin/sysRole/addSysRole',
 }
 
 /** 角色*/

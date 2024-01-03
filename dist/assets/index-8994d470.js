@@ -1,0 +1,1 @@
+import{_ as t}from"./_plugin-vue_export-helper-c27b6911.js";import{c as o,x as n,w as r,r as c,o as a,z as s}from"./index-94373d68.js";const _={};function l(m,p){const e=c("el-button");return a(),o("div",null,[n(e,{type:"primary"},{default:r(()=>[s("首页")]),_:1})])}const i=t(_,[["render",l]]);export{i as default};

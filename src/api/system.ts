@@ -1,10 +1,11 @@
 import {http} from '@/utils/http'
 import {LoginParamsType,LoginResult,LoginUserInfoResult} from './types/systemTypes'
 
+const server_url = '/login'
 enum Api {
-    Login = '/admin/login',
-    Logout = '/admin/logout',
-    GetProfile = '/admin/getLoginUserInfo',
+    Login = server_url + '/admin/login',
+    Logout = server_url + '/admin/logout',
+    GetProfile = server_url + '/admin/getLoginUserInfo',
 }
 
 /** 登录*/

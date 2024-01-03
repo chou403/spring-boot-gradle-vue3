@@ -1,0 +1,1 @@
+function o(t,e,n){e&&!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(e)?n(new Error("请输入正确的邮箱格式")):n()}function r(t,e,n){e&&!/^1[3456789]\d{9}$/.test(e)?n(new Error("请输入正确的手机号格式")):n()}export{o as a,r as v};

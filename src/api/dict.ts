@@ -4,20 +4,23 @@
 import {http} from '@/utils/http'
 import {ListResultType, ResultType} from "@/api/types";
 
+const server_url = '/system'
 enum Api {
-    updateSysDict = '/admin/sysDict/updateSysDict',
-    getSysDictPage = '/admin/sysDict/getSysDictPage',
-    getSysDict = '/admin/sysDict/getSysDict/',
-    deleteSysDict = '/admin/sysDict/deleteSysDict/',
-    addSysDict = '/admin/sysDict/addSysDict',
+    updateSysDict = server_url + '/admin/sysDict/updateSysDict',
+    getSysDictPage = server_url + '/admin/sysDict/getSysDictPage',
+    getSysDict = server_url + '/admin/sysDict/getSysDict/',
+    deleteSysDict = server_url + '/admin/sysDict/deleteSysDict/',
+    addSysDict = server_url + '/admin/sysDict/addSysDict',
 
     // 字典类型
-    updateSysDictType = '/admin/sysDictType/updateSysDictType',
-    getSysDictTypeList = '/admin/sysDictType/getSysDictTypeList',
-    getSysDictType = '/admin/sysDictType/getSysDictType/',
-    deleteSysDictType = '/admin/sysDictType/deleteSysDictType/',
-    addSysDictType = '/admin/sysDictType/addSysDictType',
+    updateSysDictType = server_url + '/admin/sysDictType/updateSysDictType',
+    getSysDictTypeList = server_url + '/admin/sysDictType/getSysDictTypeList',
+    getSysDictType = server_url + '/admin/sysDictType/getSysDictType/',
+    deleteSysDictType = server_url + '/admin/sysDictType/deleteSysDictType/',
+    addSysDictType = server_url + '/admin/sysDictType/addSysDictType',
 }
+
+
 
 /** 字典列表*/
 // 修改字典数据

@@ -54,11 +54,28 @@ export default defineConfig((mode: ConfigEnv)=>{
             host: '0.0.0.0',
             port: env.VITE_PORT as unknown as number,
             open: JSON.parse(env.VITE_OPEN),
+            // proxy: {
+            //     '/api': {
+            //         target: env.VITE_PROXY_URL,
+            //         changeOrigin: true,
+            //         rewrite: (path) => path.replace(/^\/api/, '')
+            //     }
+            // }
             proxy: {
-                '/api': {
-                    target: env.VITE_PROXY_URL,
+                '/login': {
+                    target: env.VITE_PROXY_URL + "/api/login-service",
                     changeOrigin: true,
-                    rewrite: (path) => path.replace(/^\/api/, '')
+                    rewrite: (path) => path.replace(/^\/login/, '')
+                },
+                '/system': {
+                    target: env.VITE_PROXY_URL + "/api/system-service",
+                    changeOrigin: true,
+                    rewrite: (path) => path.replace(/^\/system/, '')
+                },
+                '/user': {
+                    target: env.VITE_PROXY_URL + "/api/user-service",
+                    changeOrigin: true,
+                    rewrite: (path) => path.replace(/^\/user/, '')
                 }
             }
         }

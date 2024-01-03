@@ -7,15 +7,16 @@ import {
 } from "@/api/types/userTypes";
 import {ListResultType, ResultType} from "@/api/types";
 
+const server_url = '/system'
 enum Api {
-    updateSysUser = '/admin/sysUser/updateSysUser',
-    getSysUserList = '/admin/sysUser/getSysUserPage',
-    getSysUser = '/admin/sysUser/getSysUser/',
-    deleteSysUser = '/admin/sysUser/deleteSysUser/',
-    addSysUser = '/admin/sysUser/addSysUser',
-    resetSysUserPassword = '/admin/sysUser/resetSysUserPassword',
-    updatePassword = '/admin/sysUser/updatePassword',
-    updateProfile = '/admin/sysUser/updateProfile',
+    updateSysUser = server_url + '/admin/sysUser/updateSysUser',
+    getSysUserList = server_url + '/admin/sysUser/getSysUserPage',
+    getSysUser = server_url + '/admin/sysUser/getSysUser/',
+    deleteSysUser = server_url + '/admin/sysUser/deleteSysUser/',
+    addSysUser = server_url + '/admin/sysUser/addSysUser',
+    resetSysUserPassword = server_url + '/admin/sysUser/resetSysUserPassword',
+    updatePassword = server_url + '/admin/sysUser/updatePassword',
+    updateProfile = server_url + '/admin/sysUser/updateProfile',
 }
 
 

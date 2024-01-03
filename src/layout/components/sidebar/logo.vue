@@ -5,7 +5,7 @@
     </div>
     <div v-else class="logo-content">
       <img class="logo-img" src="@/assets/logo.png" alt="">
-      <span class="logo-txt ml5">SPRING-BOOT-PLUS</span>
+      <span class="logo-txt ml5">chou401-vue</span>
     </div>
   </div>
 </template>
