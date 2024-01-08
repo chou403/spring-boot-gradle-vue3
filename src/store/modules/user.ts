@@ -10,7 +10,8 @@ import {useTabsStore} from "@/store/modules/tabs";
 
 interface userType {
     userinfo: LoginUserInfoResult,
-    menuList: Array<RouteConfigsTable>
+    menuList: Array<RouteConfigsTable>,
+    permissionList: Array<string>
 }
 
 export const useUserStore = defineStore({
@@ -28,9 +29,11 @@ export const useUserStore = defineStore({
             gender:0,
             email:'',
             phone:'',
-            createTime:''
+            createTime:'',
+            permissions:[]
         },
-        menuList: []
+        menuList: [],
+        permissionList: []
     }),
     persist: {
         enabled: true,
@@ -99,6 +102,12 @@ export const useUserStore = defineStore({
         setMenu(data: Array<RouteConfigsTable>) {
             this.menuList = data;
         },
+        /**
+         * @description:设置按钮权限
+         * */
+        setPermission(data: Array<string>) {
+            this.permissionList = data;
+        }
     }
 });
 

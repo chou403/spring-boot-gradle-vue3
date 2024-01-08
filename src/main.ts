@@ -14,6 +14,7 @@ import "@/style/index.scss";
 
 import "@/router/permission"
 
+import directive from '@/router/directive'
 
 const app = createApp(App)
 
@@ -33,4 +34,5 @@ setupRouter(app)
 
 app
     .use(ElementPlus)
+    .use(directive)
     .mount('#app')

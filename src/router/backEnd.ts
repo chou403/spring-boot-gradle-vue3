@@ -1,4 +1,5 @@
 import {getNavMenuTreeList} from "@/api/menu"
+import {getLoginUserInfoApi} from '@/api/system'
 import {useUserStoreHook} from "@/store/modules/user";
 import {RouteRecordRaw} from "vue-router";
 import {router} from "@/router/index";
@@ -50,6 +51,16 @@ export async function initBackEndControlRoutes() {
     useUserStoreHook().setMenu(result);
     rootRoutes[0].children=result;
     await addDynamicRoutes(rootRoutes);
+    return Promise.resolve(res);
+}
+
+/**
+ * 后端控制按钮权限：初始化方法，防止刷新时路由丢失
+ */
+export async function initBackEndControlBtnPermission() {
+    // 获取按钮权限
+    let res = await getLoginUserInfoApi();
+    useUserStoreHook().setPermission(res.permissions);
     return Promise.resolve(res);
 }
 

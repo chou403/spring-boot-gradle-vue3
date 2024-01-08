@@ -22,4 +22,5 @@ export type LoginUserInfoResult = {
     gender:number
     head:NullType<string>
     createTime:string
+    permissions:Array<string>
 };

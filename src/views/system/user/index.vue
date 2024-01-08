@@ -52,8 +52,8 @@
       </el-row>
     </el-form>
     <!--    新 增-->
-    <div class="table-btn-box mb10">
-      <el-button type="primary" @click="openDialog">
+    <div class="-btn-box mbtable10">
+      <el-button type="primary" @click="openDialog" v-permission="['sys:user:add']">
         <el-icon class="mr5">
           <ele-circle-plus/>
         </el-icon>
@@ -84,13 +84,13 @@
       <el-table-column label="操作" fixed="right" align="center" width="200">
         <template #default="{row}">
           <template v-if="!row.isAdmin">
-            <el-button link type="primary" @click="openDialog(row)">
+            <el-button link type="primary" @click="openDialog(row)" v-permission="['sys:user:update']">
               修改
             </el-button>
-            <el-button link type="primary" @click="openPswDialog(row)">
+            <el-button link type="primary" @click="openPswDialog(row)" v-permission="['sys:user:reset-password']">
               重置密码
             </el-button>
-            <el-button @click="delTable(row)" link type="danger">
+            <el-button @click="delTable(row)" link type="danger" v-permission="['sys:user:delete']">
               删除
             </el-button>
           </template>
