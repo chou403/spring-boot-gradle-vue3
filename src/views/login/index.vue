@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="form">
-      <div class="sys-name mb30 flex-center"><img class="logo-img mr5" src="@/assets/logo.png" alt="">chou401-vue</div>
+      <div class="sys-name mb30 flex-center"><img class="logo-img mr5" src="@/assets/logo.png" alt="">vue+ts</div>
       <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules">
         <el-form-item class="mb25" prop="username">
           <el-input :prefix-icon="User" size="large" clearable v-model="ruleForm.username" placeholder="请输入用户名"/>

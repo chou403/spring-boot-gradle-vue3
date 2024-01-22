@@ -5,7 +5,7 @@
     </div>
     <div v-else class="logo-content">
       <img class="logo-img" src="@/assets/logo.png" alt="">
-      <span class="logo-txt ml5">chou401-vue</span>
+      <span class="logo-txt ml5">vue+ts</span>
     </div>
   </div>
 </template>
