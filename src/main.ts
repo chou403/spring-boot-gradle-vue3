@@ -5,7 +5,7 @@ import {setupRouter} from "@/router";
 import ElementPlus from "element-plus";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue"
 import 'virtual:svg-icons-register'
-
+import i18n from '@/lang/index'
 
 // import "element-plus/dist/index.css";
 import "@/style/element/variarbles.scss";
@@ -35,4 +35,5 @@ setupRouter(app)
 app
     .use(ElementPlus)
     .use(directive)
+    .use(i18n)
     .mount('#app')

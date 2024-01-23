@@ -1,6 +1,6 @@
 <template>
     <div>
-      <el-button type="primary">首页</el-button>
+      <el-button type="primary">{{ $t('tabBar.home') }}</el-button>
     </div>
 </template>
 
